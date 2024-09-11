@@ -1,16 +1,21 @@
+// pages/step/[step].jsx
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { Container, Col, Row, Button } from 'react-bootstrap';
 
-const StepBar = () => {
+// คอมโพเนนต์สำหรับเนื้อหาของแต่ละขั้นตอน
+import Step1 from '../components/step1';
+import Step2 from '../components/step2';
+import Step3 from '../components/step3';
+import Step4 from '../components/step4';
+
+const StepPage = () => {
     const router = useRouter();
     const [currentStep, setCurrentStep] = useState(1);
     const [isReady, setIsReady] = useState(false);
 
     useEffect(() => {
         if (router.isReady) {
-            console.log('Router is ready');
-            console.log('Router Query:', router.query); // ตรวจสอบค่าทั้งหมดใน query
             const stepFromQuery = parseInt(router.query.step, 10);
             if (!isNaN(stepFromQuery) && stepFromQuery > 0) {
                 setCurrentStep(stepFromQuery);
@@ -31,6 +36,22 @@ const StepBar = () => {
         return null; // รอจนกว่าค่า router จะพร้อม
     }
 
+    // เลือกเนื้อหาตามค่าของ currentStep
+    const renderContent = () => {
+        switch (currentStep) {
+            case 1:
+                return <Step1 />;
+            case 2:
+                return <Step2 />;
+            case 3:
+                return <Step3 />;
+            case 4:
+                return <Step4 />;
+            default:
+                return <Step1 />;
+        }
+    };
+
     return (
         <div className='stepbar-bg py-5'>
             <Container className='justify-content-center'>
@@ -38,8 +59,8 @@ const StepBar = () => {
                     <Row className="step-row">
                         {[1, 2, 3, 4].map(step => (
                             <Col key={step} className={`step-col ${currentStep >= step ? 'active' : ''}`}>
-                                <Button
-                                    className={`box-step ${currentStep === step ? 'active' : ''} mb-2`}
+                                 <Button
+                                    className={`box-step ${currentStep >= step ? 'step-active' : ''} mb-2`}
                                     onClick={() => handleStepClick(step)}
                                     disabled={step > currentStep}
                                 >
@@ -51,10 +72,13 @@ const StepBar = () => {
                             </Col>
                         ))}
                     </Row>
+                    <div className="content">
+                        {renderContent()} {/* แสดงเนื้อหาตามขั้นตอน */}
+                    </div>
                 </Col>
             </Container>
         </div>
     );
 };
 
-export default StepBar;
+export default StepPage;

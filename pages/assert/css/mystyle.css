@@ -211,7 +211,6 @@ a:hover, a:active {
 .step-row {
     position: relative;
     display: flex;
-    justify-content: space-between;
     align-items: center;
 }
 
@@ -221,27 +220,35 @@ a:hover, a:active {
     text-align: center;
 }
 
+/* เส้นเชื่อมทั้งหมด */
 .step-col:not(:last-child)::after {
     content: '';
     position: absolute;
-    top: 30%;
-    left: 56%;
-    width: 100%;
+    top: 50%;
+    left: 100%;
+    width: calc(100% - 1rem); /* ความกว้างของเส้นเชื่อม */
     height: 2px;
-    background-color: #C1C3C5;
-    transform: translateY(-50%);
+    background-color: #C1C3C5; /* สีพื้นฐานของเส้น */
+    transform: translateX(10px); /* ระยะห่างระหว่างปุ่ม */
     z-index: 0;
 }
 
-.step-col.active:not(:last-child)::after {
-    background-color: #034078; /* เส้นสีฟ้าเข้มเมื่อขั้นตอน active */
+.step-row .step-col:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 30%;
+    left: 55%;
+    width: calc(100% - 1rem); /* ความกว้างของเส้นเชื่อม */
+    height: 2px;
+    background-color: #C1C3C5; /* สีพื้นฐานของเส้น */
+    transform: translateX(10px); /* ระยะห่างระหว่างปุ่ม */
+    z-index: 0;
 }
 
-/* ทำให้เส้นเปลี่ยนสีเฉพาะจาก Step ที่ Active ไปยัง Step ถัดไป */
-.step-row .step-col.active ~ .step-col:not(:last-child)::after {
-    background-color: #C1C3C5; /* เส้นของขั้นตอนถัดไปที่ไม่ได้ active */
+.step-active {
+    background-color: #034078; /* เปลี่ยนเป็นสีที่ต้องการ */
+    color: white;
 }
-
 
 .btn.disabled, .btn:disabled, fieldset:disabled .btn {
     background-color: #C1C3C5 !important;
