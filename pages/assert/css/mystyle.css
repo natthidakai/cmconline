@@ -1,0 +1,271 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100..900&display=swap');
+
+body {
+    background-color: #fff !important;
+    background: #fff !important;
+}
+
+
+.textlogo {
+    font-size: 35px;
+    font-weight: 800;
+    margin-bottom: -5px;
+}
+
+.text-title {
+    font-size: 2.3rem;
+    font-weight: 700;
+}
+
+.navbar-brand:hover {
+    color: #000 !important;
+}
+
+.textmenu {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.project-name {
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.price {
+    font-size: 18px;
+    font-weight: 600;
+    color: #034078;
+}
+
+.en {
+    font-family: "Inter", sans-serif;
+}
+
+.th {
+    font-family: "Noto Sans Thai", sans-serif;
+}
+
+.navbar-text {
+    padding: .5rem 1rem;
+}
+
+.box-login-menu {
+    border: 2px solid #eee;
+    border-radius: 35px;
+    padding: .3rem .8rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover, a:active {
+    color: #034078 !important;
+}
+
+.menu-shadows {
+    box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.1);
+}
+
+.footer-shadows {
+    box-shadow: 0px -1px 4px 0px rgba(0,0,0,0.1);
+}
+
+.project-shadows {
+    box-shadow: 2px 0px 18px 5px rgba(0,0,0,0.1);
+}
+
+.full-100 {
+    width: 100%;
+    text-align: center;
+}
+
+.img-100 {
+    height: 100%;
+    width: 100%;
+}
+
+.footer {
+    background-color: #fff;
+}
+
+.right {
+    text-align: right;
+}
+
+/* .bg-white {
+    background-color: #fff;
+} */
+
+.align-items-baseline {
+    display: flex;
+    align-items: baseline;
+}
+
+.border-radius-top {
+    border-radius: 20px 20px 0 0;
+}
+
+.border-radius-bottom {
+    border-radius: 0 0 20px 20px;
+}
+
+.border-radius {
+    border-radius: 20px;
+}
+
+.hoverImageWrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px 20px 0 0;
+}
+
+.hoverImage {
+    position: relative;
+    align-self: stretch;
+    height: auto;
+    flex-shrink: 0;
+    object-fit: cover;
+    border-radius: inherit;
+    max-width: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+.hoverImageWrapper:hover .hoverImage {
+    transform: scale(1.1);
+}
+
+.btn-xl {
+    padding: .6rem 2.5rem;
+    border-radius: 2em;
+    font-size: 1.1rem;
+}
+
+.justify-content-center {
+    justify-content: center !important;
+    display: flex;
+}
+
+.ready2move {
+    background-color: #e56b36;
+    padding: .4rem 1rem;
+    width: 50%;
+    color: #fff;
+    top: 5rem;
+    position: relative;
+    z-index: 10;
+}
+
+.newproject {
+    background-color: #034078;
+    padding: .4rem 1rem;
+    width: 50%;
+    color: #fff;
+    top: 5rem;
+    position: relative;
+    z-index: 10;
+}
+
+.img-full {
+    width: 100%;
+    height: 100%;
+}
+
+.stepbar-bg {
+    background-color: #eee;
+}
+
+.text-align-center {
+    text-align: center;
+}
+
+.box-step {
+    width: 2.5rem;
+    height: 2.5rem;
+    text-align: center;
+    display: grid;
+    place-items: center; /* ใช้แทน align-content เพื่อให้ข้อความอยู่กึ่งกลาง */
+    background-color: #C1C3C5; /* สีปุ่มพื้นฐาน */
+    border-radius: 50%;
+    color: #fff;
+    margin: 0 auto;
+    border: none !important;
+    transition: background-color 0.3s ease, border 0.3s ease; /* ให้มี animation ในการเปลี่ยนสี */
+    z-index: 1;
+    position: relative;
+}
+
+.box-step.active {
+    background-color: #034078 !important; /* สีฟ้าเข้มสำหรับปุ่มที่ active */
+    border: none !important;
+}
+
+.box-step:hover {
+    border: 3px solid #034078; /* เส้นขอบสีฟ้าเข้มเมื่อ hover */
+    background-color: #034078 !important;
+    cursor: pointer;
+}
+
+/* สำหรับเส้นเชื่อมระหว่างปุ่ม */
+.step-row {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.step-col {
+    position: relative;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.step-col:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 30%;
+    left: 56%;
+    width: 100%;
+    height: 2px;
+    background-color: #C1C3C5;
+    transform: translateY(-50%);
+    z-index: 0;
+}
+
+.step-col.active:not(:last-child)::after {
+    background-color: #034078; /* เส้นสีฟ้าเข้มเมื่อขั้นตอน active */
+}
+
+/* ทำให้เส้นเปลี่ยนสีเฉพาะจาก Step ที่ Active ไปยัง Step ถัดไป */
+.step-row .step-col.active ~ .step-col:not(:last-child)::after {
+    background-color: #C1C3C5; /* เส้นของขั้นตอนถัดไปที่ไม่ได้ active */
+}
+
+
+.btn.disabled, .btn:disabled, fieldset:disabled .btn {
+    background-color: #C1C3C5 !important;
+    opacity: 100;
+}
+
+
+.btn.active {
+    background-color: #034078 !important;
+}
+
+.font-14 {
+    font-size: 14px;
+}
+
+
+@media (max-width: 575.98px) {
+    /* .newproject, .ready2move {
+        width: 40%;
+        padding: .5rem;
+    } */
+
+    .justify-content-center-m {
+        justify-content: center !important;
+        display: flex;
+    }
+}
