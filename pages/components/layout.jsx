@@ -1,3 +1,4 @@
+import BackToTop from "./backTotop";
 import Footer from "./footer";
 import Menubar from "./navbar";
 
@@ -6,6 +7,7 @@ const Layout = ({ children }) => {
     <>
       <Menubar/>
         {children}
+        <BackToTop/>
       <Footer/>
     </>
   );

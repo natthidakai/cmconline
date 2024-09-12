@@ -6,6 +6,9 @@ body {
     background: #fff !important;
 }
 
+.pl-2 {
+    padding-left: 2rem;
+}
 
 .textlogo {
     font-size: 35px;
@@ -111,7 +114,7 @@ a:hover, a:active {
     border-radius: 0 0 20px 20px;
 }
 
-.border-radius {
+.border-radius-20 {
     border-radius: 20px;
 }
 
@@ -121,13 +124,19 @@ a:hover, a:active {
     border-radius: 20px 20px 0 0;
 }
 
+.hoverImageProjectInfo {
+    position: relative;
+    overflow: hidden;
+    border-radius: 25px;
+}
+
 .hoverImage {
     position: relative;
     align-self: stretch;
     height: auto;
     flex-shrink: 0;
     object-fit: cover;
-    border-radius: inherit;
+    /* border-radius: inherit; */
     max-width: 100%;
     transition: transform 0.5s ease-in-out;
 }
@@ -136,10 +145,16 @@ a:hover, a:active {
     transform: scale(1.1);
 }
 
+.hoverImageProjectInfo:hover .hoverImage {
+    transform: scale(1.1);
+}
+
 .btn-xl {
     padding: .6rem 2.5rem;
     border-radius: 2em;
     font-size: 1.1rem;
+    background-color: #034078;
+    border-color: #034078;
 }
 
 .justify-content-center {
@@ -262,6 +277,42 @@ a:hover, a:active {
 
 .font-14 {
     font-size: 14px;
+}
+
+.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    transition: opacity 0.3s, transform 0.3s;
+    background-color: #034078;
+    border-color: #034078;
+}
+
+.back-to-top:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.name-info {
+    font-size: 2.3rem;
+}
+
+.name-location {
+    font-size: 1.3rem;
+}
+
+.projectinfo-dec {
+    font-size: 18px;
+    font-style: italic;
+    font-weight: 300;
 }
 
 

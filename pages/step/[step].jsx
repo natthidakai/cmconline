@@ -1,83 +1,68 @@
-// pages/step/[step].jsx
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { Container, Col, Row, Button } from 'react-bootstrap';
-
-// คอมโพเนนต์สำหรับเนื้อหาของแต่ละขั้นตอน
 import Step1 from '../components/step1';
 import Step2 from '../components/step2';
 import Step3 from '../components/step3';
 import Step4 from '../components/step4';
+import StepBar from '../components/stepbar';
 
 const StepPage = () => {
     const router = useRouter();
     const [currentStep, setCurrentStep] = useState(1);
+    const [projectID, setProjectID] = useState(null); // เพิ่ม state สำหรับ projectID
     const [isReady, setIsReady] = useState(false);
+
+    const { step } = router.query;
+
+    // รายการของขั้นตอนที่มี
+    const totalSteps = 4;
 
     useEffect(() => {
         if (router.isReady) {
-            const stepFromQuery = parseInt(router.query.step, 10);
-            if (!isNaN(stepFromQuery) && stepFromQuery > 0) {
+            const stepFromQuery = parseInt(step, 10);
+            const projectIDFromQuery = router.query.projectID; // ดึง projectID จาก query
+            if (!isNaN(stepFromQuery) && stepFromQuery > 0 && stepFromQuery <= totalSteps) {
                 setCurrentStep(stepFromQuery);
+                setProjectID(projectIDFromQuery); // ตั้งค่า projectID
             } else {
-                setCurrentStep(1); // ใช้ค่าเริ่มต้นถ้าพารามิเตอร์ไม่ถูกต้อง
+                setCurrentStep(1); // ตั้งค่าขั้นตอนเริ่มต้นเป็น 1 ถ้าข้อมูล query ไม่ถูกต้อง
             }
             setIsReady(true);
         }
-    }, [router.isReady, router.query.step]);
+    }, [router.isReady, step, router.query.projectID]);
 
     const handleStepClick = (step) => {
         if (step <= currentStep) {
-            router.push(`/step/${step}`);
+            router.push(`/step/${step}?projectID=${projectID}`); // ส่ง projectID ไปพร้อมกับ query
         }
     };
 
     if (!isReady) {
-        return null; // รอจนกว่าค่า router จะพร้อม
+        return null; // รอจนกว่า router จะพร้อม
     }
 
-    // เลือกเนื้อหาตามค่าของ currentStep
     const renderContent = () => {
         switch (currentStep) {
             case 1:
-                return <Step1 />;
+                return <Step1 currentStep={currentStep} projectID={projectID} />;
             case 2:
-                return <Step2 />;
+                return <Step2 currentStep={currentStep} projectID={projectID} />;
             case 3:
-                return <Step3 />;
+                return <Step3 currentStep={currentStep} projectID={projectID} />;
             case 4:
-                return <Step4 />;
+                return <Step4 currentStep={currentStep} projectID={projectID} />;
             default:
-                return <Step1 />;
+                return <div>ไม่พบขั้นตอนที่คุณกำลังค้นหา</div>; // แสดงข้อผิดพลาดหากไม่พบขั้นตอน
         }
     };
 
     return (
-        <div className='stepbar-bg py-5'>
-            <Container className='justify-content-center'>
-                <Col xxl="6" xl="6" lg="7" md="10" sm="12" xs="12">
-                    <Row className="step-row">
-                        {[1, 2, 3, 4].map(step => (
-                            <Col key={step} className={`step-col ${currentStep >= step ? 'active' : ''}`}>
-                                 <Button
-                                    className={`box-step ${currentStep >= step ? 'step-active' : ''} mb-2`}
-                                    onClick={() => handleStepClick(step)}
-                                    disabled={step > currentStep}
-                                >
-                                    {step}
-                                </Button>
-                                <div className='th text-align-center font-14'>
-                                    ขั้นตอนที่ {step}
-                                </div>
-                            </Col>
-                        ))}
-                    </Row>
-                    <div className="content">
-                        {renderContent()} {/* แสดงเนื้อหาตามขั้นตอน */}
-                    </div>
-                </Col>
-            </Container>
-        </div>
+        <>
+            <StepBar currentStep={currentStep} handleStepClick={handleStepClick} />
+            <div className="step-content">
+                {renderContent()} {/* แสดงเนื้อหาตาม currentStep */}
+            </div>
+        </>
     );
 };
 
