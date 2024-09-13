@@ -279,6 +279,22 @@ a:hover, a:active {
     font-size: 14px;
 }
 
+.font-16 {
+    font-size: 16px;
+}
+
+.font-20 {
+    font-size: 20px;
+}
+
+.font-300 {
+    font-weight: 300;
+}
+
+.pl-1 {
+    padding-left: 1rem;
+}
+
 .back-to-top {
     position: fixed;
     bottom: 20px;
@@ -294,6 +310,10 @@ a:hover, a:active {
     transition: opacity 0.3s, transform 0.3s;
     background-color: #034078;
     border-color: #034078;
+}
+
+a:hover {
+    color: #fff !important;
 }
 
 .back-to-top:hover {
@@ -315,6 +335,14 @@ a:hover, a:active {
     font-weight: 300;
 }
 
+.plan-box {
+    background-color: #eee;
+    border-radius: 35px;
+}
+
+.box-facility {
+    padding-left: 2rem;
+}
 
 @media (max-width: 575.98px) {
     /* .newproject, .ready2move {
@@ -326,4 +354,22 @@ a:hover, a:active {
         justify-content: center !important;
         display: flex;
     }
+}
+
+@media (max-width: 767.98px) {
+    
+}
+
+@media (max-width: 991.98px) {
+    
+}
+
+@media (max-width: 1199.98px) { 
+    .box-facility {
+        padding-left: 0;
+    }
+}
+
+@media (max-width: 1399.98px) {
+    
 }

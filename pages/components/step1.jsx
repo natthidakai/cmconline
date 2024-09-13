@@ -5,10 +5,13 @@ import Loading from "../components/loading";
 import Image from "next/image";
 
 import Pin from "../assert/images/pin.png";
+import Map from "../assert/images/map.png";
+import Check from "../assert/images/check.png";
 
 const Step1 = ({ projectID }) => {
   const [loading, setLoading] = useState(true);
   const [projects, setProjects] = useState([]);
+  const [status, setStatus] = useState([]);
   const [error, setError] = useState(null);
 
   const fetchProjects = async () => {
@@ -26,8 +29,24 @@ const Step1 = ({ projectID }) => {
     }
   };
 
+  const fetchStatus = async () => {
+    try {
+      const res = await fetch(`/api/callStatus?projectID=${projectID}`);
+      if (!res.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await res.json();
+      setStatus(data.status);
+    } catch (err) {
+      setError("Error fetching data");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    fetchProjects(); // เรียกใช้ API เมื่อโหลดหน้า
+    fetchProjects();
+    fetchStatus();
   }, []);
 
   if (loading) {
@@ -41,6 +60,11 @@ const Step1 = ({ projectID }) => {
   const currentProject = projects.find((p) => p.ProjectID === projectID);
   const projectInfo = ProjectInfo.find((s) => s.id === projectID); // ข้อมูลเพิ่มเติมจาก ProjectInfo
 
+  // สร้างรายการ TowerName และ FloorName ที่ไม่ซ้ำกัน
+  const towerNames = [...new Set(status.map((unit) => unit.TowerName))];
+  const floorNames = [...new Set(status.map((unit) => unit.FloorName))];
+  const unitModels = [...new Set(status.map((unit) => unit.ModelID))];
+
   return (
     <Container className="py-5">
       <Row>
@@ -49,24 +73,23 @@ const Step1 = ({ projectID }) => {
             <Col xxl="4" className="hoverImageProjectInfo border-radius-20">
               {projectInfo.pic ? (
                 <Image
-                  src={projectInfo.pic} // ใช้เส้นทางที่เริ่มต้นด้วย /
+                  src={projectInfo.pic}
                   alt={`ภาพของโปรเจค ${projectID}`}
                   className="img-100 border-radius-20 hoverImage"
-                  width={600} // ปรับขนาดตามต้องการ
-                  height={400} // ปรับขนาดตามต้องการ
+                  width={600}
+                  height={400}
                 />
               ) : (
                 <Image
-                  src="/path/to/default.jpg" // รูปภาพเริ่มต้นถ้าไม่มีข้อมูล
+                  src="/path/to/default.jpg"
                   alt="Default image"
                   className="img-100 border-radius-20 hoverImage"
                   width={600}
                   height={400}
                 />
               )}
-              {/* คุณยังสามารถแสดงรายละเอียดเพิ่มเติมที่นี่ */}
             </Col>
-            <Col xl="8" className="pl-2">
+            <Col xl="8" className="pl-2 py-4">
               <Col className="mb-5">
                 <Col className="th project-name name-info">
                   {currentProject.BrandName}
@@ -79,23 +102,98 @@ const Step1 = ({ projectID }) => {
                 </Col>
               </Col>
 
-              <Row>
-                <Col xxl="7">
+              <Row className="mb-4">
+                <Col xxl="6" className="mb-4">
                   <Col className="th projectinfo-dec mb-3">
                     {projectInfo.description}
                   </Col>
-                  <Button className="btn-xl">ดูแผนที่</Button>
                 </Col>
-                <Col xxl="5">
-                  <Col className="th">สิ่งอำนวยความสะดวก</Col>
+                <Col xxl="6" className="box-facility">
+                  <Col className="th font-20">
+                    <strong>สิ่งอำนวยความสะดวก</strong>
+                    <Row className="pl-1 mt-3">
+                      {projectInfo.facilities.map((facility, index) => (
+                        <Col
+                          key={index}
+                          className="font-16 font-300 pb-2"
+                          xxl="6" xl="6" lg="6" md="6" sm="6" xs="6"
+                        >
+                          <Image src={Check} alt="" width={16} /> {facility}
+                        </Col>
+                      ))}
+                    </Row>
+                  </Col>
                 </Col>
               </Row>
+              <Button className="btn-xl" href={projectInfo.map} target="_blank">
+                <Image src={Map} alt="" width={20} />{" "}
+                <span className="th">ดูแผนที่</span>
+              </Button>
             </Col>
           </>
         ) : (
-          <div>ไม่พบข้อมูลโปรเจค</div> // ถ้าไม่พบข้อมูลโปรเจค
+          <div>ไม่พบข้อมูลโปรเจค</div>
         )}
       </Row>
+
+      <hr className="my-5" />
+
+      <Col xxl="12" xl="12" lg="12" md="10" sm="11" xs="11">
+        <h3 className="th px-3 mb-4">แบบแปลน</h3>
+        <Row className="plan-box p-4">
+          <Col>
+            <label htmlFor="building" className="form-label th">
+              อาคาร
+            </label>
+            <select
+              className="form-select th"
+              aria-label=""
+              id="building"
+              disabled={towerNames.length <= 1}
+            >
+              {towerNames.map((towerName, index) => (
+                <option key={index} value={towerName}>
+                  {towerName}
+                </option>
+              ))}
+            </select>
+          </Col>
+
+          <Col>
+            <label htmlFor="floor" className="form-label th">
+              ชั้น
+            </label>
+            <select
+              className="form-select th"
+              aria-label="เลือกชั้น"
+              id="floor"
+            >
+              {floorNames.map((floorName, index) => (
+                <option key={index} value={floorName}>
+                  {floorName}
+                </option>
+              ))}
+            </select>
+          </Col>
+
+          <Col>
+            <label htmlFor="unit" className="form-label th">
+              ประเภทยูนิต
+            </label>
+            <select
+              className="form-select th"
+              aria-label="เลือกประเภทยูนิต"
+              id="unit"
+            >
+              {unitModels.map((modelID, index) => (
+                <option key={index} value={modelID}>
+                  {modelID}
+                </option>
+              ))}
+            </select>
+          </Col>
+        </Row>
+      </Col>
     </Container>
   );
 };
