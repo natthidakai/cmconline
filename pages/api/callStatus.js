@@ -16,6 +16,7 @@ const callStatus = async (req, res) => {
             WHERE ProjectID = ${projectID}
             AND UnitStatus = 'Available'
             AND FloorName != '01'
+            AND FloorName != '1'
             ORDER BY UnitNumber ASC`;
 
         console.log('Query result:', result);

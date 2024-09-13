@@ -13,32 +13,31 @@ const Step1 = ({ projectID }) => {
   const [projects, setProjects] = useState([]);
   const [status, setStatus] = useState([]);
   const [error, setError] = useState(null);
+  const [selectedTower, setSelectedTower] = useState(""); // Store selected tower
+  const [selectedFloor, setSelectedFloor] = useState(""); // Store selected floor
+  const [unitNumbers, setUnitNumbers] = useState([]); // Store unit numbers for the selected floor
 
+  // Fetch Projects
   const fetchProjects = async () => {
     try {
       const res = await fetch("/api/callProject");
-      if (!res.ok) {
-        throw new Error("Network response was not ok");
-      }
+      if (!res.ok) throw new Error("เครือข่ายมีปัญหา");
       const data = await res.json();
       setProjects(data.projects);
     } catch (err) {
-      setError("Error fetching data");
-    } finally {
-      setLoading(false);
+      setError("เกิดข้อผิดพลาดในการดึงข้อมูล");
     }
   };
 
+  // Fetch Status
   const fetchStatus = async () => {
     try {
       const res = await fetch(`/api/callStatus?projectID=${projectID}`);
-      if (!res.ok) {
-        throw new Error("Network response was not ok");
-      }
+      if (!res.ok) throw new Error("เครือข่ายมีปัญหา");
       const data = await res.json();
       setStatus(data.status);
     } catch (err) {
-      setError("Error fetching data");
+      setError("เกิดข้อผิดพลาดในการดึงข้อมูล");
     } finally {
       setLoading(false);
     }
@@ -47,23 +46,50 @@ const Step1 = ({ projectID }) => {
   useEffect(() => {
     fetchProjects();
     fetchStatus();
-  }, []);
+  }, [projectID]);
 
-  if (loading) {
-    return <Loading />;
-  }
-  if (error) {
-    return <p style={{ color: "red" }}>{error}</p>;
-  }
+  useEffect(() => {
+    if (status.length > 0) {
+      const initialTower = [...new Set(status.map((unit) => unit.TowerName))][0];
+      setSelectedTower(initialTower);
+    }
+  }, [status]);
 
-  // ค้นหาข้อมูลโปรเจคที่ตรงกับ projectID
+  useEffect(() => {
+    if (selectedTower) {
+      const filteredFloors = status
+        .filter((unit) => unit.TowerName === selectedTower)
+        .map((unit) => unit.FloorName);
+      setSelectedFloor([...new Set(filteredFloors)][0]);
+    }
+  }, [selectedTower, status]);
+
+  useEffect(() => {
+    if (selectedTower && selectedFloor) {
+      const filteredUnits = status
+        .filter((unit) => unit.TowerName === selectedTower && unit.FloorName === selectedFloor)
+        .map((unit) => unit.UnitNumber); // Changed from ModelID to UnitNumber
+      setUnitNumbers([...new Set(filteredUnits)]); // Store unique unit numbers for the selected floor
+    }
+  }, [selectedTower, selectedFloor, status]);
+
+  if (loading) return <Loading />;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
+
   const currentProject = projects.find((p) => p.ProjectID === projectID);
-  const projectInfo = ProjectInfo.find((s) => s.id === projectID); // ข้อมูลเพิ่มเติมจาก ProjectInfo
+  const projectInfo = ProjectInfo.find((s) => s.id === projectID);
 
-  // สร้างรายการ TowerName และ FloorName ที่ไม่ซ้ำกัน
   const towerNames = [...new Set(status.map((unit) => unit.TowerName))];
-  const floorNames = [...new Set(status.map((unit) => unit.FloorName))];
-  const unitModels = [...new Set(status.map((unit) => unit.ModelID))];
+  const uniqueFilteredFloors = [
+    ...new Set(
+      status
+        .filter((unit) => unit.TowerName === selectedTower)
+        .map((unit) => unit.FloorName)
+    ),
+  ];
+
+  // Dynamically construct the path to the floor plan image
+  const floorPlanImagePath = `/images/${projectID}/${selectedTower}/Floor/${selectedFloor}.jpg`;
 
   return (
     <Container className="py-5">
@@ -116,7 +142,12 @@ const Step1 = ({ projectID }) => {
                         <Col
                           key={index}
                           className="font-16 font-300 pb-2"
-                          xxl="6" xl="6" lg="6" md="6" sm="6" xs="6"
+                          xxl="6"
+                          xl="6"
+                          lg="6"
+                          md="6"
+                          sm="6"
+                          xs="6"
                         >
                           <Image src={Check} alt="" width={16} /> {facility}
                         </Col>
@@ -147,9 +178,9 @@ const Step1 = ({ projectID }) => {
             </label>
             <select
               className="form-select th"
-              aria-label=""
               id="building"
-              disabled={towerNames.length <= 1}
+              value={selectedTower}
+              onChange={(e) => setSelectedTower(e.target.value)}
             >
               {towerNames.map((towerName, index) => (
                 <option key={index} value={towerName}>
@@ -165,34 +196,47 @@ const Step1 = ({ projectID }) => {
             </label>
             <select
               className="form-select th"
-              aria-label="เลือกชั้น"
               id="floor"
+              value={selectedFloor}
+              onChange={(e) => setSelectedFloor(e.target.value)}
             >
-              {floorNames.map((floorName, index) => (
+              {uniqueFilteredFloors.map((floorName, index) => (
                 <option key={index} value={floorName}>
                   {floorName}
                 </option>
               ))}
             </select>
           </Col>
+        </Row>
 
-          <Col>
-            <label htmlFor="unit" className="form-label th">
-              ประเภทยูนิต
-            </label>
-            <select
-              className="form-select th"
-              aria-label="เลือกประเภทยูนิต"
-              id="unit"
-            >
-              {unitModels.map((modelID, index) => (
-                <option key={index} value={modelID}>
-                  {modelID}
-                </option>
-              ))}
-            </select>
+        {/* Display Floor Plan Image */}
+        <Row className="py-4">
+          <Col className="justify-content-center">
+            <Image
+              src={floorPlanImagePath}
+              alt={`Floor plan for ${selectedFloor} of ${selectedTower}`}
+              width={800}
+              height={500}
+              className="img-75"
+            />
           </Col>
         </Row>
+
+        {/* Display Selected Unit Information */}
+
+        {unitNumbers.length > 0 ? (
+          <Col className="py-4 justify-content-center" xxl="12">
+            <Row >
+
+              {unitNumbers.map((unitNumber, index) => (
+                <Col xxl="1" key={index}>{unitNumber}</Col>
+              ))}
+            </Row>
+          </Col>
+        ) : (
+          <p>ไม่มีข้อมูลยูนิตสำหรับชั้นนี้</p>
+        )}
+
       </Col>
     </Container>
   );

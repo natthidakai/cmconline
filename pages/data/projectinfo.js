@@ -148,11 +148,16 @@ const ProjectInfo = [
         description: 'คอนโดใหม่เริ่ม 1.79 ล้าน* ใกล้รถไฟฟ้าสายสีเหลือง เชื่อมต่อถนนหลักได้หลายเส้นทาง ห่างจากมหาวิทยาลัย ราชภัฏจันทรเกษม คอนโดมิเนียม 8 ชั้น 2 อาคาร 325 ห้อง ที่จอดรถไฮโดรลิค 4 คัน', 
         pic: CTR362,
         facilities: [
-            "สระว่ายน้ำ",
-            "สวนส่วนกลาง",
-            "ฟิตเนส",
-            "พื้นที่โถงต้อนรับ",
-            "ที่จอดรถ"
+            "Key Card",
+            "Digital Door Lock",
+            "CCTV",
+            "Digital TV",
+            "Rooftop Garden",
+            "Swimming Pool",
+            "Wireless Internet",
+            "Fitness",
+            "Coworking Space",
+            "Sauna"
         ],
         map: 'https://maps.app.goo.gl/Bvree2r9mL6DapZx5'
     },
