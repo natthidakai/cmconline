@@ -7,18 +7,24 @@ const callProject = async (req, res) => {
     await sql.connect(sqlConfig);
     console.log('Database connection successful');
 
+    // const result = await sql.query`
+    //     SELECT * 
+    //     FROM [CRMRE_Production].[dbo].[vw_ITF_ProjectInfo] 
+    //     WHERE ProjectStatus != '3'  
+    //         AND isDelete != '1' 
+    //         AND ProjectType = 'C'  -- Use a single '=' for comparison
+    //         AND BrandID != ''
+    //         AND ProjectID != 'BH_BW'
+    //         AND ProjectID != 'BHLT'
+    //         AND ProjectID != 'CPR8'
+    //         AND ProjectID != 'CT-ST32'
+    //         AND ProjectID != 'BH-RAMC'
+    // `;
+
     const result = await sql.query`
         SELECT * 
         FROM [CRMRE_Production].[dbo].[vw_ITF_ProjectInfo] 
-        WHERE ProjectStatus != '3'  
-            AND isDelete != '1' 
-            AND ProjectType = 'C'  -- Use a single '=' for comparison
-            AND BrandID != ''
-            AND ProjectID != 'BH_BW'
-            AND ProjectID != 'BHLT'
-            AND ProjectID != 'CPR8'
-            AND ProjectID != 'CT-ST32'
-            AND ProjectID != 'BH-RAMC'
+        WHERE ProjectID = 'BH-BN36'
     `;
 
     console.log('Query result:', result);

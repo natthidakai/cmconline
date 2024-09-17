@@ -15,6 +15,8 @@ import BHNWSR from "../assert/images/BH-NWSR.jpg";
 const ProjectInfo = [
     {
         id: 'BH-BN36',
+        nameProject: 'ซีรอคโค',
+        location: 'บางนา 36',
         description: 'คอนโดตรงข้ามเซ็นทรัลบางนา คอนโดมิเนียม 8 ชั้น 4 อาคาร 752 ยูนิต Facilities มากมาย เดินทางสะดวกใกล้ BTS สถานีบางนา เพียงไม่กี่นาที',
         pic: BHBN36,
         facilities: [
@@ -28,6 +30,8 @@ const ProjectInfo = [
     },
     {
         id: 'BH-CPWS',
+        nameProject: 'เดอะ เคลฟ ริเวอร์ไลน์',
+        location: 'เจ้าพระยา-วงศ์สว่าง',
         description: 'คอนโด วิวโค้งแม่น้ำ คอนโดใหม่! สูง 36 ชั้น 598 ยูนิต ใกล้ทางด่วนศรีรัช ส่วนกลางครบ สัมผัสสุนทรียภาพ… แห่งการใช้ชีวิตเหนือสายน้ำ',
         pic: BHCPWS,
         facilities: [
@@ -41,6 +45,8 @@ const ProjectInfo = [
     },
     { 
         id: 'BH-NWSR', 
+        nameProject: 'เดอะ คิวเว่ เซ็นทรัลพาร์ค',
+        location: 'นวมินทร์ - รามอินทรา',
         description: 'คอนโดใหม่! แห่งแรกในย่าน " นวมิทร์-รามอินทรา " ที่คุณจะสัมผัสธรรมชาติกับวิว Park & Lake ได้เต็มตา ด้านหลังโครงการ ติดสวนสาธารณะกว่า 100ไร่ @สวนนวมินทร์ฯ. สะดวก สบาย กับการเดินทาง ด้านหน้าโครงการ เพียง 200 ม.* ถึงสถานี MRT นวมินทร์ภิรมย์', 
         pic: BHNWSR,
         facilities: [
@@ -53,20 +59,9 @@ const ProjectInfo = [
         map: 'https://maps.app.goo.gl/t8vH7BsRke9Uy9Dn8'
     },
     { 
-        id: 'BH-RAMC', 
-        description: 'คอนโดใหม่ เลี้ยงสัตว์ได้ ใกล้มหาวิทยาลัยรามคำแหง บิ๊กซี หัวหมาก เดอะไนน์ พระราม 9 คอนโดมิเนียม 8 ชั้น 121 ยูนิต เริ่ม 2.19 ล้าน* 26 ตร.ม.', 
-        pic: BHRAMC,
-        facilities: [
-            "สระว่ายน้ำ",
-            "สวนส่วนกลาง",
-            "ฟิตเนส",
-            "พื้นที่โถงต้อนรับ",
-            "ที่จอดรถ"
-        ],
-        map: 'https://maps.app.goo.gl/wyYzqbMF6Ux2ffkE8'
-    },
-    { 
         id: 'BHRH',
+        nameProject: 'แบงค์คอก ฮอไรซอน',
+        location: 'รัชดา-ท่าพระ',
         description: 'ขั้คอนโดสูง วิวสวย สะดวกในการเดินทาง ใกล้ BTS ตลาดพลู เพียง 1 กม. และเดินทางได้หลากหลายเส้นทาง ท่าพระ สะพานกรุงเทพ สาทร สีลม', 
         pic: BHRH,
         facilities: [
@@ -80,6 +75,8 @@ const ProjectInfo = [
      },
     { 
         id: 'BH-SUKS',
+        nameProject: 'เดอะ คิวเว่',
+        location: 'พระราม 3 - สุขสวัสดิ์',
         description: 'เดอะ คิวเว่ สุขสวัสดิ์ คอนโดมิเนียมหรูใหม่วิวโค้งแม่น้ำ ครบทุกกิจกรรมมากกว่า 60 โซน เทียบรวบรวมไว้ในแห่งเดียว', 
         pic: BHSUKS,
         facilities: [
@@ -93,6 +90,8 @@ const ProjectInfo = [
     },
     { 
         id: 'BH-TWN1', 
+        nameProject: 'เดอะ คิวเว่',
+        location: 'แยกติวานนท์',
         description: 'คอนโดมิเนียมระดับพรีเมียม คอนโดทำเลดี ติด MRT สถานีแยกติวานนท์ เดินทางสะดวก สิ่งอำนวยความสะดวกจัดเต็ม เริ่ม 3.19 ล้าน* ขนาด 31 ตร.ม.', 
         pic: BHTWN1,
         facilities: [
@@ -106,6 +105,8 @@ const ProjectInfo = [
      },
     { 
         id: 'BK52', 
+        nameProject: 'แบงค์คอก เฟ’ลิซ',
+        location: 'สถานีกรุงธนบุรี',
         description: 'Bangkok Feliz สถานีกรุงธนบุรี ยูนิตสุดท้าย 2 ห้องนอน 4.99 ล้าน* ใกล้ BTS สถานีกรุงธนบุรี เพียง 150 เมตร แต่งครบพร้อมอยู่ ห้องใหญ่ ยูนิตน้อย สงบเป็นส่วนตัว', 
         pic: BK52,
         facilities: [
@@ -119,6 +120,8 @@ const ProjectInfo = [
      },
     { 
         id: 'CP00',
+        nameProject: 'ชาโตว์ อินทาวน์',
+        location: 'ปิ่นเกล้า',
         description: 'ชาโตว์ อินทาวน์ ปิ่นเกล้า คอนโดพร้อมอยู่ เฟอร์ฯ ครบ ทำเลดี ใกล้ปิ่นเกล้า ศิริราช พร้อม Shuttle service 24 ชม.', 
         pic: CP00,
         facilities: [
@@ -132,6 +135,8 @@ const ProjectInfo = [
      },
     { 
         id: 'CT-KSCP',
+        nameProject: 'ชาโตว์ อินทาวน์',
+        location: 'เกษตร แคมปัส',
         description: 'เดินทางสะดวกใกล้ BTS ม.เกษตรฯ นั่งรถไฟฟ้าต่อเดียวเข้าถึงใจกลางเมือง ใกล้แหล่ง Shopping / แหล่ง Office Building พร้อมบริการรถรับส่ง Shuttle Service และส่วนกลางตลอด 24 ชั่วโมง ใกล้ ม.เกษตร และ ม.ศรีปทุม ตอบโจทย์นักศึกษา', 
         pic: CTKSCP,
         facilities: [
@@ -145,6 +150,8 @@ const ProjectInfo = [
      },
     { 
         id: 'CT-R362',
+        nameProject: 'ไซบิค',
+        location: 'รัชดา 32',
         description: 'คอนโดใหม่เริ่ม 1.79 ล้าน* ใกล้รถไฟฟ้าสายสีเหลือง เชื่อมต่อถนนหลักได้หลายเส้นทาง ห่างจากมหาวิทยาลัย ราชภัฏจันทรเกษม คอนโดมิเนียม 8 ชั้น 2 อาคาร 325 ห้อง ที่จอดรถไฮโดรลิค 4 คัน', 
         pic: CTR362,
         facilities: [
@@ -162,7 +169,9 @@ const ProjectInfo = [
         map: 'https://maps.app.goo.gl/Bvree2r9mL6DapZx5'
     },
     { 
-        id: 'P392', 
+        id: 'P392',
+        nameProject: 'แบงค์คอก เฟ’ลิซ',
+        location: 'สถานีบางแค', 
         description: 'Bangkok Feliz สถานีบางแค 2 ยูนิตสุดท้าย ขนาด 2 ห้องนอน 3.19 ล้าน* Private Condo เพียง 180 ม. จาก MRT สถานีบางแค พร้อมความเป็นส่วนตัว เพียง 79 ยูนิต', 
         pic: P392,
         facilities: [

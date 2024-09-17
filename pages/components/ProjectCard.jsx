@@ -47,7 +47,7 @@ const ProjectCard = ({ projects, visibleProjects, setVisibleProjects, loading, e
 
   return (
     <>
-      <Row className="pt-2 justify-content-center mb-3">
+      <Row className="pt-2 mb-3">
         {projects.slice(0, visibleProjects).map((project) => {
           const status = parseInt(project.ProjectStatus, 10);
           
