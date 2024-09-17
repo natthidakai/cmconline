@@ -63,20 +63,21 @@ a {
     text-decoration: none;
 }
 
-a:hover, a:active {
+a:hover,
+a:active {
     color: #034078 !important;
 }
 
 .menu-shadows {
-    box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.1);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
 }
 
 .footer-shadows {
-    box-shadow: 0px -1px 4px 0px rgba(0,0,0,0.1);
+    box-shadow: 0px -1px 4px 0px rgba(0, 0, 0, 0.1);
 }
 
 .project-shadows {
-    box-shadow: 2px 0px 18px 5px rgba(0,0,0,0.1);
+    box-shadow: 2px 0px 18px 5px rgba(0, 0, 0, 0.1);
 }
 
 .full-100 {
@@ -200,24 +201,29 @@ a:hover, a:active {
     height: 2.5rem;
     text-align: center;
     display: grid;
-    place-items: center; /* ใช้แทน align-content เพื่อให้ข้อความอยู่กึ่งกลาง */
-    background-color: #C1C3C5; /* สีปุ่มพื้นฐาน */
+    place-items: center;
+    /* ใช้แทน align-content เพื่อให้ข้อความอยู่กึ่งกลาง */
+    background-color: #C1C3C5;
+    /* สีปุ่มพื้นฐาน */
     border-radius: 50%;
     color: #fff;
     margin: 0 auto;
     border: none !important;
-    transition: background-color 0.3s ease, border 0.3s ease; /* ให้มี animation ในการเปลี่ยนสี */
+    transition: background-color 0.3s ease, border 0.3s ease;
+    /* ให้มี animation ในการเปลี่ยนสี */
     z-index: 1;
     position: relative;
 }
 
 .box-step.active {
-    background-color: #034078 !important; /* สีฟ้าเข้มสำหรับปุ่มที่ active */
+    background-color: #034078 !important;
+    /* สีฟ้าเข้มสำหรับปุ่มที่ active */
     border: none !important;
 }
 
 .box-step:hover {
-    border: 3px solid #034078; /* เส้นขอบสีฟ้าเข้มเมื่อ hover */
+    border: 3px solid #034078;
+    /* เส้นขอบสีฟ้าเข้มเมื่อ hover */
     background-color: #034078 !important;
     cursor: pointer;
 }
@@ -241,10 +247,13 @@ a:hover, a:active {
     position: absolute;
     top: 50%;
     left: 100%;
-    width: calc(100% - 1rem); /* ความกว้างของเส้นเชื่อม */
+    width: calc(100% - 1rem);
+    /* ความกว้างของเส้นเชื่อม */
     height: 2px;
-    background-color: #C1C3C5; /* สีพื้นฐานของเส้น */
-    transform: translateX(10px); /* ระยะห่างระหว่างปุ่ม */
+    background-color: #C1C3C5;
+    /* สีพื้นฐานของเส้น */
+    transform: translateX(10px);
+    /* ระยะห่างระหว่างปุ่ม */
     z-index: 0;
 }
 
@@ -253,19 +262,25 @@ a:hover, a:active {
     position: absolute;
     top: 30%;
     left: 55%;
-    width: calc(100% - 1rem); /* ความกว้างของเส้นเชื่อม */
+    width: calc(100% - 1rem);
+    /* ความกว้างของเส้นเชื่อม */
     height: 2px;
-    background-color: #C1C3C5; /* สีพื้นฐานของเส้น */
-    transform: translateX(10px); /* ระยะห่างระหว่างปุ่ม */
+    background-color: #C1C3C5;
+    /* สีพื้นฐานของเส้น */
+    transform: translateX(10px);
+    /* ระยะห่างระหว่างปุ่ม */
     z-index: 0;
 }
 
 .step-active {
-    background-color: #034078; /* เปลี่ยนเป็นสีที่ต้องการ */
+    background-color: #034078;
+    /* เปลี่ยนเป็นสีที่ต้องการ */
     color: white;
 }
 
-.btn.disabled, .btn:disabled, fieldset:disabled .btn {
+.btn.disabled,
+.btn:disabled,
+fieldset:disabled .btn {
     background-color: #C1C3C5 !important;
     opacity: 100;
 }
@@ -349,37 +364,1313 @@ select {
     padding: 10px 20px !important;
 }
 
-.img-75 {
+.img-floorplan {
     width: 75%;
     object-fit: contain;
 }
 
-@media (max-width: 575.98px) {
-    /* .newproject, .ready2move {
-        width: 40%;
-        padding: .5rem;
-    } */
+.box-booking {
+    width: 20px;
+    height: 20px;
+    border: 3px solid #fff;
+    background-color: #1faf06;
+    border-radius: 50%;
+    transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
+}
+
+.box-booking:hover {
+    width: 23px;
+    height: 23px;
+    border: 4px solid #fff;
+    transform: scale(1.1);
+}
+
+.margin-auto {
+    margin: 0 auto;
+}
+
+
+
+.BH-BN36-A201 {
+    top: 80rem;
+    right: 39rem;
+    position: absolute;
+}
+
+.BH-BN36-A203 {
+    top: 80rem;
+    right: 47.7rem;
+    position: absolute;
+}
+
+.BH-BN36-A211 {
+    top: 74rem;
+    right: 74rem;
+    position: absolute;
+}
+
+.BH-BN36-A213 {
+    top: 74rem;
+    right: 65.5rem;
+    position: absolute;
+}
+
+.BH-BN36-A214 {
+    top: 74rem;
+    right: 61rem;
+    position: absolute;
+}
+
+.BH-BN36-A215 {
+    top: 74rem;
+    right: 56.5rem;
+    position: absolute;
+}
+
+.BH-BN36-A216 {
+    top: 74rem;
+    right: 52rem;
+    position: absolute;
+}
+
+.BH-BN36-A217 {
+    top: 74rem;
+    right: 47.5rem;
+    position: absolute;
+}
+
+.BH-BN36-A218 {
+    top: 74rem;
+    right: 43.2rem;
+    position: absolute;
+}
+
+.BH-BN36-A219 {
+    top: 74rem;
+    right: 39.1rem;
+    position: absolute;
+}
+
+.BH-BN36-A220 {
+    top: 74rem;
+    right: 34.5rem;
+    position: absolute;
+}
+
+.BH-BN36-A222 {
+    top: 78rem;
+    right: 28.9rem;
+    position: absolute;
+}
+
+
+
+
+
+
+
+
+
+/* iPhone SE (2nd generation) แนวตั้ง */
+@media (min-width: 320px) and (max-width: 667px) {
+    .img-floorplan {
+        width: 115%;
+        object-fit: contain;
+        height: auto;
+    }
 
     .justify-content-center-m {
         justify-content: center !important;
         display: flex;
     }
-}
 
-@media (max-width: 767.98px) {
-    
-}
-
-@media (max-width: 991.98px) {
-    
-}
-
-@media (max-width: 1199.98px) { 
     .box-facility {
         padding-left: 0;
     }
+
+    .box-booking {
+        width: 12px;
+        height: 12px;
+        border: 2px solid #fff;
+    }
+
+    .BH-BN36-A201 {
+        top: 102.2rem;
+        right: 5.4rem;
+    }
+
+    .BH-BN36-A203 {
+        top: 102.2rem;
+        right: 8.3rem;
+    }
+
+    .BH-BN36-A211 {
+        top: 100.2rem;
+        right: 16.8rem;
+    }
+
+    .BH-BN36-A213 {
+        top: 100.2rem;
+        right: 14rem;
+    }
+
+    .BH-BN36-A214 {
+        top: 100.2rem;
+        right: 12.6rem;
+    }
+
+    .BH-BN36-A215 {
+        top: 100.2rem;
+        right: 11.2rem;
+    }
+
+    .BH-BN36-A216 {
+        top: 100.2rem;
+        right: 9.7rem;
+    }
+
+    .BH-BN36-A217 {
+        top: 100.2rem;
+        right: 8.3rem;
+    }
+
+    .BH-BN36-A218 {
+        top: 100.2rem;
+        right: 6.8rem;
+    }
+
+    .BH-BN36-A219 {
+        top: 100.2rem;
+        right: 5.4rem;
+    }
+
+    .BH-BN36-A220 {
+        top: 100.2rem;
+        right: 4rem;
+    }
+
+    .BH-BN36-A222 {
+        top: 101.6rem;
+        right: 2.3rem;
+    }
+
 }
 
-@media (max-width: 1399.98px) {
-    
+
+
+
+/* iPhone 6/7/8 แนวตั้ง */
+@media (min-width: 375px) and (max-width: 667px)  {
+    .img-floorplan {
+        width: 115%;
+        object-fit: contain;
+        height: auto;
+    }
+
+    .justify-content-center-m {
+        justify-content: center !important;
+        display: flex;
+    }
+
+    .box-facility {
+        padding-left: 0;
+    }
+
+    .box-booking {
+        width: 15px;
+        height: 15px;
+        border: 2px solid #fff;
+    }
+
+    .BH-BN36-A201 {
+        top: 103.7rem;
+        right: 6.4rem;
+    }
+
+    .BH-BN36-A203 {
+        top: 103.7rem;
+        right: 9.7rem;
+    }
+
+    .BH-BN36-A211 {
+        top: 101.2rem;
+        right: 19.8rem;
+    }
+
+    .BH-BN36-A213 {
+        top: 101.5rem;
+        right: 16.5rem;
+    }
+
+    .BH-BN36-A214 {
+        top: 101.5rem;
+        right: 14.7rem;
+    }
+
+    .BH-BN36-A215 {
+        top: 101.5rem;
+        right: 13rem;
+    }
+
+    .BH-BN36-A216 {
+        top: 101.5rem;
+        right: 11.3rem;
+    }
+
+    .BH-BN36-A217 {
+        top: 101.5rem;
+        right: 9.5rem;
+    }
+
+    .BH-BN36-A218 {
+        top: 101.5rem;
+        right: 7.9rem;
+    }
+
+    .BH-BN36-A219 {
+        top: 101.5rem;
+        right: 6.4rem;
+    }
+
+    .BH-BN36-A220 {
+        top: 101.5rem;
+        right: 4.6rem;
+    }
+
+    .BH-BN36-A222 {
+        top: 103rem;
+        right: 2.3rem;
+    }
+}
+
+
+
+
+/* iPhone 13 Pro, 12 Pro แนวตั้ง */
+@media (min-width: 390px) and (max-width: 844px){
+    .img-floorplan {
+        width: 115%;
+        object-fit: contain;
+        height: auto;
+    }
+
+    .justify-content-center-m {
+        justify-content: center !important;
+        display: flex;
+    }
+
+    .box-facility {
+        padding-left: 0;
+    }
+
+    .box-booking {
+        width: 15px;
+        height: 15px;
+    }
+
+    .BH-BN36-A201 {
+        top: 105rem;
+        right: 6.5rem;
+    }
+
+    .BH-BN36-A203 {
+        top: 105rem;
+        right: 10rem;
+    }
+
+    .BH-BN36-A211 {
+        top: 102.5rem;
+        right: 20.5rem;
+    }
+
+    .BH-BN36-A213 {
+        top: 102.5rem;
+        right: 17rem;
+    }
+
+    .BH-BN36-A214 {
+        top: 102.5rem;
+        right: 15.3rem;
+    }
+
+    .BH-BN36-A215 {
+        top: 102.5rem;
+        right: 13.6rem;
+    }
+
+    .BH-BN36-A216 {
+        top: 102.5rem;
+        right: 13.6rem;
+    }
+
+    .BH-BN36-A217 {
+        top: 102.5rem;
+        right: 11.8rem;
+    }
+
+    .BH-BN36-A218 {
+        top: 102.5rem;
+        right: 10rem;
+    }
+
+    .BH-BN36-A219 {
+        top: 102.5rem;
+        right: 8.3rem;
+    }
+
+    .BH-BN36-A220 {
+        top: 102.5rem;
+        right: 6.5rem;
+    }
+
+    .BH-BN36-A222 {
+        top: 104.2rem;
+        right: 2.5rem;
+    }
+}
+
+
+
+
+/* iPhone 11, XR, XS Max แนวตั้ง */
+@media (min-width: 414px) and (max-width: 896px) {
+    .img-floorplan {
+        width: 115%;
+        object-fit: contain;
+        height: auto;
+    }
+
+    .justify-content-center-m {
+        justify-content: center !important;
+        display: flex;
+    }
+
+    .box-facility {
+        padding-left: 0;
+    }
+
+    .box-booking {
+        width: 15px;
+        height: 15px;
+    }
+
+    .BH-BN36-A201 {
+        top: 107rem;
+        right: 7rem;
+    }
+
+    .BH-BN36-A203 {
+        top: 107rem;
+        right: 10.5rem;
+    }
+
+    .BH-BN36-A211 {
+        top: 104.4rem;
+        right: 21.8rem;
+    }
+
+    .BH-BN36-A213 {
+        top: 104.5rem;
+        right: 18rem;
+    }
+
+    .BH-BN36-A214 {
+        top: 104.5rem;
+        right: 16.4rem;
+    }
+
+    .BH-BN36-A215 {
+        top: 104.5rem;
+        right: 14.5rem;
+    }
+
+    .BH-BN36-A216 {
+        top: 104.5rem;
+        right: 12.5rem;
+    }
+
+    .BH-BN36-A217 {
+        top: 104.5rem;
+        right: 10.9rem;
+    }
+
+    .BH-BN36-A218 {
+        top: 104.5rem;
+        right: 9em;
+    }
+
+    .BH-BN36-A219 {
+        top: 104.5rem;
+        right: 7em;
+    }
+
+    .BH-BN36-A220 {
+        top: 104.5rem;
+        right: 5.1em;
+    }
+
+    .BH-BN36-A222 {
+        top: 106.5rem;
+        right: 2.7em;
+    }
+}
+
+
+
+/* iPhone 14 Pro Max, 13 Pro Max, 12 Pro Max  แนวตั้ง */
+@media (min-width: 430px) and (max-width: 932px) {
+    .img-floorplan {
+        width: 115%;
+        object-fit: contain;
+        height: auto;
+    }
+
+    .justify-content-center-m {
+        justify-content: center !important;
+        display: flex;
+    }
+
+    .box-facility {
+        padding-left: 0;
+    }
+
+    .BH-BN36-A201 {
+        top: 108.2rem;
+        right: 7rem;
+    }
+
+    .BH-BN36-A203 {
+        top: 108.2rem;
+        right: 11rem;
+    }
+
+    .BH-BN36-A211 {
+        top: 105.5rem;
+        right: 22.7rem;
+    }
+
+    .BH-BN36-A213 {
+        top: 105.5rem;
+        right: 18.8rem;
+    }
+
+    .BH-BN36-A214 {
+        top: 105.5rem;
+        right: 16.9rem;
+    }
+
+    .BH-BN36-A215 {
+        top: 105.5rem;
+        right: 14.8rem;
+    }
+
+    .BH-BN36-A216 {
+        top: 105.5rem;
+        right: 13rem;
+    }
+
+    .BH-BN36-A217 {
+        top: 105.5rem;
+        right: 11rem;
+    }
+
+    .BH-BN36-A218 {
+        top: 105.5rem;
+        right: 9rem;
+    }
+
+    .BH-BN36-A219 {
+        top: 105.5rem;
+        right: 7rem;
+    }
+
+    .BH-BN36-A220 {
+        top: 105.5rem;
+        right: 5.1rem;
+    }
+
+    .BH-BN36-A222 {
+        top: 107.5rem;
+        right: 2.7rem;
+    }
+}
+
+
+
+
+/* iPhone SE (2nd generation) แนวนอน */
+@media (min-width: 568px) and (max-width: 667px) {
+    .BH-BN36-A201 {
+        top: 113.2rem;
+        right: 10rem;
+    }
+
+    .BH-BN36-A203 {
+        top: 113.2rem;
+        right: 15rem;
+    }
+
+    .BH-BN36-A211 {
+        top: 110rem;
+        right: 29.3rem;
+    }
+
+    .BH-BN36-A213 {
+        top: 110rem;
+        right: 24.5rem;
+    }
+
+    .BH-BN36-A214 {
+        top: 110rem;
+        right: 22rem;
+    }
+
+    .BH-BN36-A215 {
+        top: 110rem;
+        right: 19.7rem;
+    }
+
+    .BH-BN36-A216 {
+        top: 110rem;
+        right: 17.5rem;
+    }
+
+    .BH-BN36-A217 {
+        top: 110rem;
+        right: 14.9rem;
+    }
+
+    .BH-BN36-A218 {
+        top: 110rem;
+        right: 12.6rem;
+    }
+
+    .BH-BN36-A219 {
+        top: 110rem;
+        right: 10.3rem;
+    }
+
+    .BH-BN36-A220 {
+        top: 110rem;
+        right: 8rem;
+    }
+
+    .BH-BN36-A222 {
+        top: 112.5rem;
+        right: 4.7rem;
+    }
+}
+
+
+
+/* iPhone 6/7/8 แนวนอน */
+@media (min-width: 667px) and (max-width: 736px) {
+    .BH-BN36-A201 {
+        top: 111.2rem;
+        right: 13rem;
+    }
+
+    .BH-BN36-A203 {
+        top: 111.2rem;
+        right: 18rem;
+    }
+
+    .BH-BN36-A211 {
+        top: 108rem;
+        right: 32.3rem;
+    }
+
+    .BH-BN36-A211 {
+        top: 108rem;
+        right: 32.3rem;
+    }
+
+    .BH-BN36-A213 {
+        top: 108.5rem;
+        right: 27.5rem;
+    }
+
+    .BH-BN36-A214 {
+        top: 108.5rem;
+        right: 25.5rem;
+    }
+
+    .BH-BN36-A215 {
+        top: 108.5rem;
+        right: 23rem;
+    }
+
+    .BH-BN36-A216 {
+        top: 108.5rem;
+        right: 20.5rem;
+    }
+
+    .BH-BN36-A217 {
+        top: 108.5rem;
+        right: 18rem;
+    }
+
+    .BH-BN36-A218 {
+        top: 108.5rem;
+        right: 15.8rem;
+    }
+
+    .BH-BN36-A219 {
+        top: 108.5rem;
+        right: 13.5rem;
+    }
+
+    .BH-BN36-A220 {
+        top: 108.5rem;
+        right: 11rem;
+    }
+
+    .BH-BN36-A222 {
+        top: 110.5rem;
+        right: 7.7rem;
+    }
+}
+
+
+
+
+/* iPad Mini แนวตั้ง */
+@media (min-width: 768px) and (max-width: 819.98px) {
+    .box-facility {
+        padding-left: 0;
+    }
+
+    .img-floorplan {
+        width: 100%;
+        height: auto;
+    }
+
+    .BH-BN36-A201 {
+        top: 126rem;
+        right: 14.5rem;
+    }
+
+    .BH-BN36-A203 {
+        top: 126rem;
+        right: 20.5rem;
+    }
+
+    .BH-BN36-A211 {
+        top: 121.5rem;
+        right: 39.5rem;
+    }
+
+    .BH-BN36-A213 {
+        top: 122rem;
+        right: 33rem;
+    }
+
+    .BH-BN36-A214 {
+        top: 122rem;
+        right: 30rem;
+    }
+
+    .BH-BN36-A215 {
+        top: 122rem;
+        right: 27rem;
+    }
+
+    .BH-BN36-A216 {
+        top: 122rem;
+        right: 23.5rem;
+    }
+
+    .BH-BN36-A217 {
+        top: 122rem;
+        right: 20.5rem;
+    }
+
+    .BH-BN36-A218 {
+        top: 122rem;
+        right: 17.5rem;
+    }
+
+    .BH-BN36-A219 {
+        top: 122rem;
+        right: 14rem;
+    }
+
+    .BH-BN36-A220 {
+        top: 122rem;
+        right: 11rem;
+    }
+
+    .BH-BN36-A222 {
+        top: 125rem;
+        right: 7rem;
+    }
+}
+
+
+
+/* iPad Air แนวตั้ง */
+@media (min-width: 820px) and (max-width: 991.98px) {
+    .box-facility {
+        padding-left: 0;
+    }
+
+    .img-floorplan {
+        width: 100%;
+        height: auto;
+    }
+
+    .BH-BN36-A201 {
+        top: 126rem;
+        right: 15.5rem;
+    }
+
+    .BH-BN36-A203 {
+        top: 126rem;
+        right: 22rem;
+    }
+
+    .BH-BN36-A211 {
+        top: 121.5rem;
+        right: 41rem;
+    }
+
+    .BH-BN36-A213 {
+        top: 122rem;
+        right: 34.5rem;
+    }
+
+    .BH-BN36-A214 {
+        top: 122rem;
+        right: 31.5rem;
+    }
+
+    .BH-BN36-A215 {
+        top: 122rem;
+        right: 28.5rem;
+    }
+
+    .BH-BN36-A216 {
+        top: 122rem;
+        right: 25.3rem;
+    }
+
+    .BH-BN36-A217 {
+        top: 122rem;
+        right: 22rem;
+    }
+
+    .BH-BN36-A218 {
+        top: 122rem;
+        right: 18.5rem;
+    }
+
+    .BH-BN36-A219 {
+        top: 122rem;
+        right: 15.5rem;
+    }
+
+    .BH-BN36-A220 {
+        top: 122rem;
+        right: 12.5rem;
+    }
+
+    .BH-BN36-A222 {
+        top: 125rem;
+        right: 8.5rem;
+    }
+}
+
+
+
+
+/* iPhone 13 Pro, 12 Pro แนวนอน */
+@media (min-width: 844px) and (max-width: 932px) {
+    .BH-BN36-A201 {
+        top: 126rem;
+        right: 17.5rem;
+    }
+
+    .BH-BN36-A203 {
+        top: 126rem;
+        right: 24rem;
+    }
+
+    .BH-BN36-A211 {
+        top: 121.5rem;
+        right: 43rem;
+    }
+
+    .BH-BN36-A213 {
+        top: 122rem;
+        right: 37rem;
+    }
+
+    .BH-BN36-A214 {
+        top: 122rem;
+        right: 33.4rem;
+    }
+
+    .BH-BN36-A215 {
+        top: 122rem;
+        right: 30.4rem;
+    }
+
+    .BH-BN36-A216 {
+        top: 122rem;
+        right: 27.5rem;
+    }
+
+    .BH-BN36-A217 {
+        top: 122rem;
+        right: 24rem;
+    }
+
+    .BH-BN36-A218 {
+        top: 122rem;
+        right: 21rem;
+    }
+
+    .BH-BN36-A219 {
+        top: 122rem;
+        right: 18rem;
+    }
+
+    .BH-BN36-A220 {
+        top: 122rem;
+        right: 14.5rem;
+    }
+
+    .BH-BN36-A222 {
+        top: 125rem;
+        right: 10.5rem;
+    }
+}
+
+
+
+
+/* iPhone 11, XR, XS Max แนวนอน */
+@media (min-width: 896px) and (max-width: 1024px) {
+    .BH-BN36-A201 {
+        top: 126rem;
+        right: 18.5rem;
+    }
+
+    .BH-BN36-A203 {
+        top: 126rem;
+        right: 24.5rem;
+    }
+
+    .BH-BN36-A211 {
+        top: 122rem;
+        right: 43.5rem;
+    }
+
+    .BH-BN36-A213 {
+        top: 122rem;
+        right: 37rem;
+    }
+
+    .BH-BN36-A214 {
+        top: 122rem;
+        right: 33.4rem;
+    }
+
+    .BH-BN36-A215 {
+        top: 122rem;
+        right: 30.8rem;
+    }
+
+    .BH-BN36-A216 {
+        top: 122rem;
+        right: 27.5rem;
+    }
+
+    .BH-BN36-A217 {
+        top: 122rem;
+        right: 24rem;
+    }
+
+    .BH-BN36-A218 {
+        top: 122rem;
+        right: 21.5rem;
+    }
+
+    .BH-BN36-A219 {
+        top: 122rem;
+        right: 18rem;
+    }
+
+    .BH-BN36-A220 {
+        top: 122rem;
+        right: 14rem;
+    }
+
+    .BH-BN36-A222 {
+        top: 125rem;
+        right: 11rem;
+    }
+}
+
+
+
+
+/* 14 Pro Max, 13 Pro Max, 12 Pro Max แนวนอน */
+@media (min-width: 932px) and (max-width: 1194px) {
+    .BH-BN36-A201 {
+        top: 126rem;
+        right: 19rem;
+    }
+
+    .BH-BN36-A203 {
+        top: 126rem;
+        right: 25.5rem;
+    }
+
+    .BH-BN36-A211 {
+        top: 121.5rem;
+        right: 44.5rem;
+    }
+
+    .BH-BN36-A213 {
+        top: 122rem;
+        right: 38rem;
+    }
+
+    .BH-BN36-A214 {
+        top: 122rem;
+        right: 35rem;
+    }
+
+    .BH-BN36-A215 {
+        top: 122rem;
+        right: 32rem;
+    }
+
+    .BH-BN36-A216 {
+        top: 122rem;
+        right: 28.5rem;
+    }
+
+    .BH-BN36-A217 {
+        top: 122rem;
+        right: 25.6rem;
+    }
+
+    .BH-BN36-A218 {
+        top: 122rem;
+        right: 22.5rem;
+    }
+
+    .BH-BN36-A219 {
+        top: 122rem;
+        right: 19rem;
+    }
+
+    .BH-BN36-A220 {
+        top: 122rem;
+        right: 16rem;
+    }
+
+    .BH-BN36-A222 {
+        top: 125rem;
+        right: 12rem;
+    }
+
+}
+
+
+
+
+/* iPad Pro แนวตั้ง */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .box-facility {
+        padding-left: 0;
+    }
+
+    .img-floorplan {
+        width: 100%;
+    }
+
+    .BH-BN36-A201 {
+        top: 147rem;
+        right: 19rem;
+    }
+
+    .BH-BN36-A203 {
+        top: 147rem;
+        right: 27.5rem;
+    }
+
+    .BH-BN36-A211 {
+        top: 141rem;
+        right: 53rem;
+    }
+
+    .BH-BN36-A213 {
+        top: 141rem;
+        right: 44.5rem;
+    }
+
+    .BH-BN36-A214 {
+        top: 141rem;
+        right: 40rem;
+    }
+
+    .BH-BN36-A215 {
+        top: 141rem;
+        right: 36rem;
+    }
+
+    .BH-BN36-A216 {
+        top: 141rem;
+        right: 32rem;
+    }
+
+    .BH-BN36-A217 {
+        top: 141rem;
+        right: 27.5rem;
+    }
+
+    .BH-BN36-A218 {
+        top: 141rem;
+        right: 23rem;
+    }
+
+    .BH-BN36-A219 {
+        top: 141rem;
+        right: 19rem;
+    }
+
+    .BH-BN36-A220 {
+        top: 141rem;
+        right: 15rem;
+    }
+
+    .BH-BN36-A222 {
+        top: 145rem;
+        right: 9rem;
+    }
+}
+
+
+
+/* iPad Mini แนวนอน */
+@media (min-width: 1024px) and (max-width: 1079.98px) {
+    .box-facility {
+        padding-left: 0;
+    }
+
+    .img-floorplan {
+        width: 100%;
+    }
+
+    .BH-BN36-A201 {
+        top: 146.5rem;
+        right: 19rem;
+    }
+
+    .BH-BN36-A203 {
+        top: 147rem;
+        right: 27.5rem;
+    }
+
+    .BH-BN36-A211 {
+        top: 141rem;
+        right: 53rem;
+    }
+
+    .BH-BN36-A213 {
+        top: 141rem;
+        right: 44.5rem;
+    }
+
+    .BH-BN36-A214 {
+        top: 141rem;
+        right: 40rem;
+    }
+
+    .BH-BN36-A215 {
+        top: 141rem;
+        right: 36rem;
+    }
+
+    .BH-BN36-A216 {
+        top: 141rem;
+        right: 31.5rem;
+    }
+
+    .BH-BN36-A217 {
+        top: 141rem;
+        right: 27.5rem;
+    }
+
+    .BH-BN36-A218 {
+        top: 141rem;
+        right: 23rem;
+    }
+
+    .BH-BN36-A219 {
+        top: 141rem;
+        right: 19rem;
+    }
+
+    .BH-BN36-A220 {
+        top: 141rem;
+        right: 15rem;
+    }
+
+    .BH-BN36-A222 {
+        top: 145.5rem;
+        right: 9rem;
+    }
+}
+
+
+/* iPad Air แนวนอน */
+@media (min-width: 1180px) and (max-width: 1199.98px) {
+    .box-facility {
+        padding-left: 0;
+    }
+
+    .img-floorplan {
+        width: 100%;
+    }
+
+    .BH-BN36-A201 {
+        top: 147rem;
+        right: 24rem;
+    }
+
+    .BH-BN36-A203 {
+        top: 146.5rem;
+        right: 32rem;
+    }
+
+    .BH-BN36-A211 {
+        top: 141rem;
+        right: 58rem;
+    }
+
+    .BH-BN36-A213 {
+        top: 141.5rem;
+        right: 49.5rem;
+    }
+
+    .BH-BN36-A214 {
+        top: 141.5rem;
+        right: 45rem;
+    }
+
+    .BH-BN36-A215 {
+        top: 141.5rem;
+        right: 40.5rem;
+    }
+
+    .BH-BN36-A216 {
+        top: 141.5rem;
+        right: 36.3rem;
+    }
+
+    .BH-BN36-A217 {
+        top: 141.5rem;
+        right: 32rem;
+    }
+
+    .BH-BN36-A218 {
+        top: 141.5rem;
+        right: 27.5rem;
+    }
+
+    .BH-BN36-A219 {
+        top: 141.5rem;
+        right: 23.5rem;
+    }
+
+    .BH-BN36-A220 {
+        top: 141.5rem;
+        right: 19.5rem;
+    }
+
+    .BH-BN36-A222 {
+        top: 145rem;
+        right: 14rem;
+    }
+}
+
+
+/* iPad Pro แนวนอน */
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+    .box-facility {
+        padding-left: 0;
+    }
+
+    .img-floorplan {
+        width: 100%;
+    }
+
+    .BH-BN36-A201 {
+        top: 159rem;
+        right: 24rem;
+    }
+
+    .BH-BN36-A201 {
+        top: 159rem;
+        right: 24rem;
+    }
+
+    .BH-BN36-A203 {
+        top: 159rem;
+        right: 33rem;
+    }
+
+    .BH-BN36-A211 {
+        top: 153rem;
+        right: 59.5rem;
+    }
+
+    .BH-BN36-A213 {
+        top: 153rem;
+        right: 50.5rem;
+    }
+
+    .BH-BN36-A214 {
+        top: 153rem;
+        right: 46rem;
+    }
+
+    .BH-BN36-A215 {
+        top: 153rem;
+        right: 41.5rem;
+    }
+
+    .BH-BN36-A216 {
+        top: 153rem;
+        right: 37.5rem;
+    }
+
+    .BH-BN36-A217 {
+        top: 153rem;
+        right: 33rem;
+    }
+
+    .BH-BN36-A218 {
+        top: 153rem;
+        right: 28.5rem;
+    }
+
+    .BH-BN36-A219 {
+        top: 153rem;
+        right: 24rem;
+    }
+
+    .BH-BN36-A220 {
+        top: 153rem;
+        right: 19.5rem;
+    }
+
+    .BH-BN36-A222 {
+        top: 157rem;
+        right: 14rem;
+    }
 }

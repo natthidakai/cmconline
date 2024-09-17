@@ -18,6 +18,7 @@ const callProject = async (req, res) => {
             AND ProjectID != 'BHLT'
             AND ProjectID != 'CPR8'
             AND ProjectID != 'CT-ST32'
+            AND ProjectID != 'BH-RAMC'
     `;
 
     console.log('Query result:', result);

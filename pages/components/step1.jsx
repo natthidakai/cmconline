@@ -7,6 +7,7 @@ import Image from "next/image";
 import Pin from "../assert/images/pin.png";
 import Map from "../assert/images/map.png";
 import Check from "../assert/images/check.png";
+import Link from "next/link";
 
 const Step1 = ({ projectID }) => {
   const [loading, setLoading] = useState(true);
@@ -169,7 +170,7 @@ const Step1 = ({ projectID }) => {
 
       <hr className="my-5" />
 
-      <Col xxl="12" xl="12" lg="12" md="10" sm="11" xs="11">
+      <Col xxl="12" xl="12" lg="12" md="12" sm="11" xs="11" className="margin-auto">
         <h3 className="th px-3 mb-4">แบบแปลน</h3>
         <Row className="plan-box p-4">
           <Col>
@@ -217,7 +218,7 @@ const Step1 = ({ projectID }) => {
               alt={`Floor plan for ${selectedFloor} of ${selectedTower}`}
               width={800}
               height={500}
-              className="img-75"
+              className="img-floorplan "
             />
           </Col>
         </Row>
@@ -229,7 +230,9 @@ const Step1 = ({ projectID }) => {
             <Row >
 
               {unitNumbers.map((unitNumber, index) => (
-                <Col xxl="1" key={index}>{unitNumber}</Col>
+                <Col xxl="1" key={index}>
+                  <Link href="/" className={`box-booking ${projectID}-${unitNumber}`}></Link>
+                </Col>
               ))}
             </Row>
           </Col>
