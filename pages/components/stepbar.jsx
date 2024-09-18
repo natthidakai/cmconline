@@ -13,7 +13,7 @@ const StepBar = ({ currentStep, handleStepClick }) => {
                 key={step}
                 className={`step-col ${currentStep >= step ? "active" : ""}`}
               >
-                <Button
+                {/* <Button
                   className={`box-step ${
                     currentStep >= step ? "step-active" : ""
                   } mb-2`}
@@ -22,6 +22,19 @@ const StepBar = ({ currentStep, handleStepClick }) => {
                 >
                   {step}
                 </Button>
+
+                <div className="th text-align-center font-14">
+                  ขั้นตอนที่ {step}
+                </div> */}
+
+                <span
+                  className={`box-step ${currentStep >= step ? "step-active" : ""
+                    } mb-2`}
+                  
+                >
+                  {step}
+                </span>
+
                 <div className="th text-align-center font-14">
                   ขั้นตอนที่ {step}
                 </div>

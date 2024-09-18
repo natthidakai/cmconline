@@ -9,7 +9,6 @@ import Default from "../assert/images/default.jpg";
 
 const ProjectDetails = ({ projectInfo, projectID }) => {
 
-
     return (
         <Row>
             <Col xxl="4" className="hoverImageProjectInfo border-radius-20">

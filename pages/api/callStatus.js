@@ -1,8 +1,9 @@
 import { sqlConfig } from '../../connect/db';
 import sql from 'mssql';
 
+
 const callStatus = async (req, res) => {
-    const { projectID } = req.query; // รับ projectID จาก request query
+    const { projectID, selectedTower, selectedFloor } = req.query; // รับ projectID จาก request query
 
     try {
         // เชื่อมต่อฐานข้อมูล SQL Server

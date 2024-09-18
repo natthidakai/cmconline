@@ -213,6 +213,7 @@ a:active {
     /* ให้มี animation ในการเปลี่ยนสี */
     z-index: 1;
     position: relative;
+    cursor: default;
 }
 
 .box-step.active {
@@ -221,12 +222,10 @@ a:active {
     border: none !important;
 }
 
-.box-step:hover {
+/* .box-step:hover {
     border: 3px solid #034078;
-    /* เส้นขอบสีฟ้าเข้มเมื่อ hover */
     background-color: #034078 !important;
-    cursor: pointer;
-}
+} */
 
 /* สำหรับเส้นเชื่อมระหว่างปุ่ม */
 .step-row {
@@ -298,6 +297,10 @@ fieldset:disabled .btn {
     font-size: 16px;
 }
 
+.font-18 {
+    font-size: 18px;
+}
+
 .font-20 {
     font-size: 20px;
 }
@@ -306,8 +309,23 @@ fieldset:disabled .btn {
     font-weight: 300;
 }
 
+.font-500 {
+    font-weight: 500;
+}
+
+.text-blue {
+    color: #034078;
+}
+
+
 .pl-1 {
     padding-left: 1rem;
+}
+
+.box-step-3 {
+    border: 1px solid #eee;
+    padding: 2rem;
+    border-radius: 35px;
 }
 
 .back-to-top {
@@ -359,10 +377,12 @@ a:hover {
     padding-left: 2rem;
 }
 
-select {
+select, .form-control {
     border-radius: 35px !important;
     padding: 10px 20px !important;
 }
+
+
 
 .img-floorplan {
     width: 75%;
@@ -389,7 +409,13 @@ select {
     margin: 0 auto;
 }
 
+.center {
+    text-align: center;
+}
 
+.align-content-center {
+    align-content: center;
+}
 
 .BH-BN36-A201 {
     top: 80rem;

@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import ProjectInfo from "../data/projectinfo";
-import { Container, Row, Col } from "react-bootstrap";
-import Image from 'next/image';
+import { Container } from "react-bootstrap";
 import Loading from './loading';
-import Pin from "../assert/images/pin.png";
+
+import UnitDetailsBooking from './UnitDetailsBooking';
+import UnitDetails from './UnitDetails';
 
 const Step2 = () => {
     const router = useRouter();
@@ -62,13 +63,11 @@ const Step2 = () => {
     };
 
     useEffect(() => {
-        if (projectID && unitNumber) {
+        if (router.isReady && projectID && unitNumber) {
             fetchModelID(unitNumber);
             fetchDetail(unitNumber);
         }
-    }, [projectID, unitNumber]);
-
-
+    }, [router.isReady, projectID, unitNumber]);
 
     const modelID = unitModelIDs[unitNumber];
     const unitPlanImagePath = modelID ? `/images/${projectID}/${towerName}/Unit/${modelID}.jpg` : '';
@@ -80,64 +79,23 @@ const Step2 = () => {
             {loading ? (
                 <Loading />
             ) : (
-                <div>
-                    {Object.entries(unitModelIDs).map(([unitNumber, modelID]) => (
-                        <Row key={unitNumber} className='mb-4'>
-                            <Col>
-                                {modelID && (
-                                    <Image
-                                        src={unitPlanImagePath}
-                                        alt={`Floor plan for ${floorName} of ${modelID}`}
-                                        width={800}
-                                        height={500}
-                                        className="img-floorplan"
-                                    />
-                                )}
-                            </Col>
-                            <Col>
-                                <Col className="th project-name name-info">{projectInfo.nameProject}</Col>
-                                <Col xxl="7" xl="7" lg="7" md="10" sm="12" xs="12" className='mb-3'>
-                                    <Row>
-                                        <Col className="align-items-baseline">
-                                            <Image src={Pin} alt="" width={18} height={18} />
-                                            <span className="th px-2 name-location">{projectInfo.location}</span>
-                                        </Col>
-                                        {unitDetails.length > 0 && (
-    <Col className="align-items-baseline">
-        <Image src={Pin} alt="" width={18} height={18} />
-        {unitDetails.map((detail, index) => (
-            <Col key={`${detail.topID}-${index}`} className="th px-2 name-location">{detail.ProjectTel}</Col>
-        ))}
-    </Col>
-)}
-
-
-
-                                    </Row>
-                                </Col>
-
-                                <Col className="th projectinfo-dec mb-3">
-                                    {projectInfo.description}
-                                </Col>
-
-                                {unitDetails.length > 0 && (
-                                    <Col xxl="8">
-                                        {unitDetails.map((detail, index) => (
-                                            <Row>
-                                                <Col key={index} className='th'>ห้องขนาด {detail.SellingArea} ตร.ม.</Col>
-                                                <Col key={index} className='th'>{detail.ProjectTel}</Col>
-                                            </Row>
-
-                                        ))}
-                                    </Col>
-                                )}
-                            </Col>
-                        </Row>
-                    ))}
-                </div>
+                <UnitDetailsBooking
+                    unitModelIDs={unitModelIDs}
+                    unitPlanImagePath={unitPlanImagePath}
+                    floorName={floorName}
+                    projectInfo={projectInfo}
+                    unitDetails={unitDetails}
+                />
             )}
 
             <hr className="my-5" />
+
+            {loading ? (
+                <Loading />
+            ) : (
+                <UnitDetails unitDetails = {unitDetails} projectInfo={projectInfo} />
+            )}
+
         </Container>
     );
 };

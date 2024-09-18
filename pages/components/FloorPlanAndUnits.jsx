@@ -76,7 +76,7 @@ const FloorPlanAndUnits = ({
                             return (
                                 <Col xxl="1" key={index}>
                                     <Link
-                                        href={`/step/2?projectID=${encodeURIComponent(projectID)}&floorName=${encodeURIComponent(selectedFloor)}&towerName=${encodeURIComponent(selectedTower)}&unitNumber=${encodeURIComponent(unitNumber)}`}
+                                        href={`/step/2?projectID=${projectID}&floorName=${selectedFloor}&towerName=${selectedTower}&unitNumber=${unitNumber}`}
                                         className={`box-booking ${projectID}-${unitNumber}`}
                                     >
                                     </Link>
