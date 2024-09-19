@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import ProjectInfo from "../data/projectinfo";
 import { Container } from "react-bootstrap";
 import Loading from './loading';
-
 import UnitDetailsBooking from './UnitDetailsBooking';
 import UnitDetails from './UnitDetails';
 
@@ -19,6 +18,7 @@ const Step2 = () => {
     const [error, setError] = useState(null);
 
     const fetchModelID = async (unitNumber) => {
+        setError(null); // Reset error before new request
         try {
             const res = await fetch(`/api/getModelIDs?projectID=${projectID}&unitNumber=${unitNumber}`);
             if (!res.ok) throw new Error("Network response was not ok");
@@ -41,8 +41,10 @@ const Step2 = () => {
 
     const fetchDetail = async (unitNumber) => {
         console.log('unitNumber', unitNumber);
+        setLoading(true);
+        setError(null);
         try {
-            const res = await fetch(`/api/getDetail?projectID=${projectID}&unitNumber=${unitNumber}`); // Adjust API endpoint if needed
+            const res = await fetch(`/api/getDetail?projectID=${projectID}&unitNumber=${unitNumber}`);
             if (!res.ok) {
                 const errorText = await res.text();
                 throw new Error(`Network response was not ok: ${res.statusText} - ${errorText}`);
@@ -79,23 +81,21 @@ const Step2 = () => {
             {loading ? (
                 <Loading />
             ) : (
-                <UnitDetailsBooking
-                    unitModelIDs={unitModelIDs}
-                    unitPlanImagePath={unitPlanImagePath}
-                    floorName={floorName}
-                    projectInfo={projectInfo}
-                    unitDetails={unitDetails}
-                />
+                <>
+                    <UnitDetailsBooking
+                        unitModelIDs={unitModelIDs}
+                        unitPlanImagePath={unitPlanImagePath}
+                        floorName={floorName}
+                        projectInfo={projectInfo}
+                        unitDetails={unitDetails}
+                        projectID={projectID} // Ensure correct routing
+                        selectedFloor={floorName}
+                        selectedTower={towerName}
+                    />
+                    <hr className="my-5" />
+                    <UnitDetails unitDetails={unitDetails} projectInfo={projectInfo} />
+                </>
             )}
-
-            <hr className="my-5" />
-
-            {loading ? (
-                <Loading />
-            ) : (
-                <UnitDetails unitDetails = {unitDetails} projectInfo={projectInfo} />
-            )}
-
         </Container>
     );
 };

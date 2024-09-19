@@ -11,7 +11,8 @@ const UnitDetailsBooking = ({
     unitPlanImagePath,
     floorName,
     projectInfo,
-    unitDetails }) => {
+    unitDetails 
+}) => {
     return (
         <Col>
             {Object.entries(unitModelIDs).map(([unitNumber, modelID]) => (
@@ -72,6 +73,7 @@ const UnitDetailsBooking = ({
                                             <Col className='th'> {detail.BookAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} บาท</Col>
                                         </Row>
 
+                                        {/* Corrected the Button and unitNumber reference */}
                                         <Button className="btn-xl th" href={`/step/3?projectID=${projectID}&floorName=${selectedFloor}&towerName=${selectedTower}&unitNumber=${unitNumber}`}>
                                             จองทันที
                                         </Button>
