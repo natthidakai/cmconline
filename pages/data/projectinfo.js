@@ -1,7 +1,6 @@
 
 import BHCPWS from "../assert/images/BH-CPWS.jpg";
 import BHTWN1 from "../assert/images/BH-TWN1.jpg";
-import BHRAMC from "../assert/images/BH-RAMC.jpg";
 import CTKSCP from "../assert/images/CT-KSCP.jpg";
 import BHBN36 from "../assert/images/BH-BN36.jpg";
 import BHRH from "../assert/images/BHRH.jpg";

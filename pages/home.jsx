@@ -47,7 +47,7 @@ const Homepage = () => {
       <Container className="py-5">
         <div className="align-items-baseline justify-content-center-m mt-3">
           <Image src={Condo} alt="Condo" width={42} />
-          <span className="text-title th px-3">All Projects</span>
+          <span className="text-title th px-3">โครงการทั้งหมด</span>
         </div>
 
         {/* Use ProjectCard component */}

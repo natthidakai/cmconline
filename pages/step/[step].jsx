@@ -12,7 +12,7 @@ const StepPage = () => {
     const [projectID, setProjectID] = useState(null); // เพิ่ม state สำหรับ projectID
     const [isReady, setIsReady] = useState(false);
 
-    const { step } = router.query;
+    const { step, stepId } = router.query;
 
     // รายการของขั้นตอนที่มี
     const totalSteps = 4;

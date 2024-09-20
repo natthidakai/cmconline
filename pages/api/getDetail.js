@@ -1,4 +1,4 @@
-import { sqlConfig } from '../../connect/db';
+import { sqlConfig } from '../../connect/sql';
 import sql from 'mssql';
 
 const getDetail = async (req, res) => {

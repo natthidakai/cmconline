@@ -1,6 +1,6 @@
 // Example in Next.js API route (pages/api/checkIdCard.js)
 
-import { sqlConfig } from '../../connect/db';
+import { sqlConfig } from '../../connect/sql';
 import sql from 'mssql';
 
 const checkIdCard = async (req, res) => {

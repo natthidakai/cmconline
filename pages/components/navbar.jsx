@@ -3,6 +3,7 @@ import {Container, Navbar} from 'react-bootstrap';
 
 import Image from 'next/image';
 import User from '../assert/images/profile-user.png';
+import Link from 'next/link';
 
 
 const Menubar = () => {
@@ -20,7 +21,7 @@ const Menubar = () => {
                     {/* <a href="#">Mark Otto</a> */}
                     <div className="th box-login-menu">
                         <Image src={User} alt=""/>
-                        <a href="#" style={{paddingLeft: '.5rem'}}>สมัครสมาชิก</a> / <a href="#">เข้าสู่ระบบ</a>
+                        <Link href={`/register`} style={{paddingLeft: '.5rem'}}>สมัครสมาชิก</Link> / <Link href="#">เข้าสู่ระบบ</Link>
                     </div>
                 </Navbar.Text>
                 </Navbar.Collapse>

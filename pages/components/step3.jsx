@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Container, Row, Col, Button } from "react-bootstrap";
-import 'react-datepicker/dist/react-datepicker.css';
 import { useFormValidation } from '../hooks/useFormValidation';
-const connection = require('../../connect/conn');
+
 
 const Step3 = () => {
     const router = useRouter();
-    const { projectID, selectedFloor, selectedTower, unitNumber } = router.query;
+    const { projectID, floorName, towerName, unitNumber } = router.query;
 
     // State for form fields
     const [formData, setFormData] = useState({
-        namesTitle: '',
-        fname: '',
-        lname: '',
+        title: '',
+        first_name: '',
+        last_name: '',
+        projectID: projectID,
+        unitNumber: unitNumber,
         phone: '',
         email: '',
         idCard: '',
@@ -32,36 +33,69 @@ const Step3 = () => {
         postalCode2: ''
     });
 
-    const { errors, validateForm } = useFormValidation();
+    const { errors, bookInputChange, validateForm } = useFormValidation();
     const [showAddressSection, setShowAddressSection] = useState(false);
     const [isSameAddress, setIsSameAddress] = useState(false);
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
+    const submitRegister = async (e) => {
 
-        let filteredValue = value;
-        if (name === 'idCard' || name === 'phone') {
-            filteredValue = value.replace(/\D/g, '');
-        } else if (name === 'email') {
-            // กรองตัวอักษรภาษาไทยออกจากอีเมล
-            filteredValue = value.replace(/[\u0E00-\u0E7F]/g, '');
-        }
-
-        setFormData(prevData => ({
-            ...prevData,
-            [name]: filteredValue
-        }));
-    };
-
-    const submitRegister = (e) => {
         e.preventDefault();
-        if (validateForm(formData)) {
-            console.log('Form is valid, submitting...', formData);
+
+        const isValid = validateForm(formData, showAddressSection);
+
+        if (isValid) {
+           
+            try {
+                const response = await fetch('/api/booking', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+
+                if (response.ok) {
+                    // ถ้าส่งสำเร็จ
+                    router.push(`/step/4?projectID=${projectID}&floorName=${floorName}&towerName=${towerName}&unitNumber=${unitNumber}`);
+
+                    // รีเซ็ตฟอร์ม
+                    setFormData({
+                        title: '',
+                        first_name: '',
+                        last_name: '',
+                        projectID: projectID,
+                        unitNumber: unitNumber,
+                        phone: '',
+                        email: '',
+                        idCard: '',
+                        birthday: '',
+                        nationality: '',
+                        status: '',
+                        address1: '',
+                        subdistrict1: '',
+                        districts1: '',
+                        provinces1: '',
+                        postalCode1: '',
+                        address2: '',
+                        subdistrict2: '',
+                        districts2: '',
+                        provinces2: '',
+                        postalCode2: ''
+                    });
+                } else {
+                    const errorData = await response.json();
+                    console.error('Failed to book', errorData);
+                }
+            } catch (error) {
+                console.error('Error submitting form', error);
+            }
+        } else {
+            console.error('Form validation failed');
         }
     };
 
     const checkFormPersonal = () => {
-        const requiredFields = ['namesTitle', 'fname', 'lname', 'phone', 'email', 'idCard', 'birthday', 'nationality', 'status'];
+        const requiredFields = ['title', 'first_name', 'last_name', 'phone', 'email', 'idCard', 'birthday', 'nationality', 'status'];
         const allRequiredFieldsFilled = requiredFields.every(field => formData[field]);
         setShowAddressSection(allRequiredFieldsFilled);
     };
@@ -72,7 +106,6 @@ const Step3 = () => {
         console.log('Checkbox checked:', checked);
     };
 
-
     useEffect(() => {
         checkFormPersonal();
     }, [formData]);
@@ -81,15 +114,14 @@ const Step3 = () => {
         if (isSameAddress) {
             setFormData(prevData => ({
                 ...prevData,
+                address2: prevData.address1,
+                subdistrict2: prevData.subdistrict1,
+                districts2: prevData.districts1,
+                provinces2: prevData.provinces1,
                 postalCode2: prevData.postalCode1
             }));
-        } else {
-            setFormData(prevData => ({
-                ...prevData,
-                postalCode2: prevData.postalCode2
-            }));
         }
-    }, [isSameAddress, formData.postalCode1]);
+    }, [isSameAddress, formData.address1, formData.subdistrict1, formData.districts1, formData.provinces1, formData.postalCode1]);
 
     return (
         <Container className='py-5'>
@@ -100,15 +132,15 @@ const Step3 = () => {
                     <h5 className='th'>ข้อมูลส่วนบุคคล</h5>
                     <Row className='box-step-3 mb-5'>
                         <Col xxl="4" xl="4" lg="4" md="4" sm="12" xs="12" className='mb-4'>
-                            <label htmlFor="namesTitle" className="form-label th">คำนำหน้าชื่อ</label>
+                            <label htmlFor="title" className="form-label th">คำนำหน้าชื่อ</label>
                             <Col>
                                 <select
                                     className="form-select th"
-                                    aria-label="namesTitle"
-                                    id="namesTitle"
-                                    name='namesTitle'
-                                    value={formData.namesTitle}
-                                    onChange={handleInputChange}
+                                    aria-label="title"
+                                    id="title"
+                                    name='title'
+                                    value={formData.title}
+                                    onChange={bookInputChange}
                                 >
                                     <option value="" defaultValue>-- กรุณาเลือก --</option>
                                     <option value="นาย">นาย</option>
@@ -116,34 +148,34 @@ const Step3 = () => {
                                     <option value="นางสาว">นางสาว</option>
                                 </select>
                             </Col>
-                            {errors.namesTitle && <div className="text-danger th mt-2">{errors.namesTitle}</div>}
+                            {errors.title && <div className="text-danger th mt-2">{errors.title}</div>}
                         </Col>
 
                         <Col xxl="4" xl="4" lg="4" md="4" sm="12" xs="12" className='mb-4'>
-                            <label htmlFor="fname" className="form-label th">ชื่อ</label>
+                            <label htmlFor="first_name" className="form-label th">ชื่อ</label>
                             <input
-                                name='fname'
+                                name='first_name'
                                 type="text"
-                                id="fname"
-                                className="form-control"
-                                aria-describedby="fname"
-                                value={formData.fname}
-                                onChange={handleInputChange}
+                                id="first_name"
+                                className="form-control th"
+                                aria-describedby="first_name"
+                                value={formData.first_name}
+                                onChange={bookInputChange}
                             />
-                            {errors.fname && <div className="text-danger th mt-2">{errors.fname}</div>}
+                            {errors.first_name && <div className="text-danger th mt-2">{errors.first_name}</div>}
                         </Col>
 
                         <Col xxl="4" xl="4" lg="4" md="4" sm="12" xs="12" className='mb-4'>
-                            <label htmlFor="lname" className="form-label th">นามสกุล</label>
+                            <label htmlFor="last_name" className="form-label th">นามสกุล</label>
                             <input
-                                name="lname"
-                                type="text" id="lname"
-                                className="form-control"
-                                aria-describedby="lname"
-                                value={formData.lname}
-                                onChange={handleInputChange}
+                                name="last_name"
+                                type="text" id="last_name"
+                                className="form-control th"
+                                aria-describedby="last_name"
+                                value={formData.last_name}
+                                onChange={bookInputChange}
                             />
-                            {errors.lname && <div className="text-danger th mt-2">{errors.lname}</div>}
+                            {errors.last_name && <div className="text-danger th mt-2">{errors.last_name}</div>}
                         </Col>
 
                         <Col xxl="4" xl="4" lg="4" md="4" sm="12" xs="12" className='mb-4'>
@@ -152,13 +184,12 @@ const Step3 = () => {
                                 name='phone'
                                 type="tel"
                                 id="phone"
-                                className="form-control"
+                                className="form-control th"
                                 aria-describedby="phone"
                                 minLength={10}
                                 maxLength={10}
-                                pattern="\d*"
                                 value={formData.phone}
-                                onChange={handleInputChange}
+                                onChange={bookInputChange}
                             />
                             {errors.phone && <div className="text-danger th mt-2">{errors.phone}</div>}
                         </Col>
@@ -169,10 +200,10 @@ const Step3 = () => {
                                 name='email'
                                 type="email"
                                 id="email"
-                                className="form-control"
+                                className="form-control th"
                                 aria-describedby="email"
                                 value={formData.email}
-                                onChange={handleInputChange}
+                                onChange={bookInputChange}
                             />
                             {errors.email && <div className="text-danger th mt-2">{errors.email}</div>}
                         </Col>
@@ -183,12 +214,12 @@ const Step3 = () => {
                                 name='idCard'
                                 type="text"
                                 id="idCard"
-                                className="form-control"
+                                className="form-control th"
                                 aria-describedby="idCard"
                                 minLength={13}
                                 maxLength={13}
                                 value={formData.idCard}
-                                onChange={handleInputChange}
+                                onChange={bookInputChange}
                             />
                             {errors.idCard && <div className="text-danger th mt-2">{errors.idCard}</div>}
                         </Col>
@@ -199,10 +230,10 @@ const Step3 = () => {
                                 name='birthday'
                                 type="date"
                                 id="birthday"
-                                className="form-control"
+                                className="form-control th"
                                 aria-describedby="birthday"
                                 value={formData.birthday}
-                                onChange={handleInputChange}
+                                onChange={bookInputChange}
                             />
                             {errors.birthday && <div className="text-danger th mt-2">{errors.birthday}</div>}
                         </Col>
@@ -213,10 +244,10 @@ const Step3 = () => {
                                 name='nationality'
                                 type="text"
                                 id="nationality"
-                                className="form-control"
+                                className="form-control th"
                                 aria-describedby="nationality"
                                 value={formData.nationality}
-                                onChange={handleInputChange}
+                                onChange={bookInputChange}
                             />
                             {errors.nationality && <div className="text-danger th mt-2">{errors.nationality}</div>}
                         </Col>
@@ -230,7 +261,7 @@ const Step3 = () => {
                                     id="status"
                                     name="status"  // เพิ่ม name attribute เพื่อให้ฟอร์มรู้ว่าค่าใน select นี้ควรถูกส่งเป็น status
                                     value={formData.status}
-                                    onChange={handleInputChange}
+                                    onChange={bookInputChange}
                                 >
                                     <option value="" defaultValue>-- กรุณาเลือก --</option>
                                     <option value="โสด">โสด</option>
@@ -258,11 +289,12 @@ const Step3 = () => {
                                             name="address1"
                                             type="text"
                                             id="address1"
-                                            className="form-control"
+                                            className="form-control th"
                                             aria-describedby="address1"
                                             value={formData.address1}
-                                            onChange={handleInputChange}
+                                            onChange={bookInputChange}
                                         />
+                                        {errors.address1 && <div className="text-danger th mt-2">{errors.address1}</div>}
                                     </Col>
 
                                     <Col xxl="6" xl="6" lg="6" md="6" sm="12" xs="12" className='mb-4'>
@@ -271,11 +303,12 @@ const Step3 = () => {
                                             name="subdistrict1"
                                             type="text"
                                             id="subdistrict1"
-                                            className="form-control"
+                                            className="form-control th"
                                             aria-describedby="subdistrict1"
                                             value={formData.subdistrict1}
-                                            onChange={handleInputChange}
+                                            onChange={bookInputChange}
                                         />
+                                        {errors.subdistrict1 && <div className="text-danger th mt-2">{errors.subdistrict1}</div>}
                                     </Col>
 
                                     <Col xxl="6" xl="6" lg="6" md="6" sm="12" xs="12" className='mb-4'>
@@ -284,11 +317,12 @@ const Step3 = () => {
                                             name="districts1"
                                             type="text"
                                             id="districts1"
-                                            className="form-control"
+                                            className="form-control th"
                                             aria-describedby="districts1"
                                             value={formData.districts1}
-                                            onChange={handleInputChange}
+                                            onChange={bookInputChange}
                                         />
+                                        {errors.districts1 && <div className="text-danger th mt-2">{errors.districts1}</div>}
                                     </Col>
 
                                     <Col xxl="6" xl="6" lg="6" md="6" sm="12" xs="12" className='mb-4'>
@@ -297,10 +331,10 @@ const Step3 = () => {
                                             name="provinces1"
                                             type="text"
                                             id="provinces1"
-                                            className="form-control"
+                                            className="form-control th"
                                             aria-describedby="provinces1"
                                             value={formData.provinces1}
-                                            onChange={handleInputChange}
+                                            onChange={bookInputChange}
                                         />
                                     </Col>
 
@@ -310,11 +344,14 @@ const Step3 = () => {
                                             name="postalCode1"
                                             type="text"
                                             id="postalCode1"
-                                            className="form-control"
+                                            className="form-control th"
                                             aria-describedby="postalCode1"
                                             value={formData.postalCode1}
-                                            onChange={handleInputChange}
+                                            onChange={bookInputChange}
+                                            minLength={5}
+                                            maxLength={5}
                                         />
+                                        {errors.postalCode1 && <div className="text-danger th mt-2">{errors.postalCode1}</div>}
                                     </Col>
                                 </Row>
                             </Col>
@@ -341,14 +378,12 @@ const Step3 = () => {
                                                 name="address2"
                                                 type="text"
                                                 id="address2"
-                                                className="form-control"
+                                                className="form-control th"
                                                 aria-describedby="address2"
                                                 value={formData.address2}
-                                                onChange={(e) => setFormData(prevData => ({
-                                                    ...prevData,
-                                                    address2: e.target.value
-                                                }))}
+                                                onChange={bookInputChange}
                                             />
+                                            {errors.address2 && <div className="text-danger th mt-2">{errors.address2}</div>}
                                         </Col>
 
                                         <Col xxl="6" xl="6" lg="6" md="6" sm="12" xs="12" className='mb-4'>
@@ -357,14 +392,12 @@ const Step3 = () => {
                                                 name="subdistrict2"
                                                 type="text"
                                                 id="subdistrict2"
-                                                className="form-control"
+                                                className="form-control th"
                                                 aria-describedby="subdistrict2"
                                                 value={formData.subdistrict2}
-                                                onChange={(e) => setFormData(prevData => ({
-                                                    ...prevData,
-                                                    subdistrict2: e.target.value
-                                                }))}
+                                                onChange={bookInputChange}
                                             />
+                                            {errors.subdistrict2 && <div className="text-danger th mt-2">{errors.subdistrict2}</div>}
                                         </Col>
 
                                         <Col xxl="6" xl="6" lg="6" md="6" sm="12" xs="12" className='mb-4'>
@@ -373,14 +406,12 @@ const Step3 = () => {
                                                 name="districts2"
                                                 type="text"
                                                 id="districts2"
-                                                className="form-control"
+                                                className="form-control th"
                                                 aria-describedby="districts2"
                                                 value={formData.districts2}
-                                                onChange={(e) => setFormData(prevData => ({
-                                                    ...prevData,
-                                                    districts2: e.target.value
-                                                }))}
+                                                onChange={bookInputChange}
                                             />
+                                            {errors.districts2 && <div className="text-danger th mt-2">{errors.districts2}</div>}
                                         </Col>
 
                                         <Col xxl="6" xl="6" lg="6" md="6" sm="12" xs="12" className='mb-4'>
@@ -389,27 +420,28 @@ const Step3 = () => {
                                                 name="provinces2"
                                                 type="text"
                                                 id="provinces2"
-                                                className="form-control"
+                                                className="form-control th"
                                                 aria-describedby="provinces2"
                                                 value={formData.provinces2}
-                                                onChange={(e) => setFormData(prevData => ({
-                                                    ...prevData,
-                                                    provinces2: e.target.value
-                                                }))}
+                                                onChange={bookInputChange}
                                             />
+                                            {errors.provinces2 && <div className="text-danger th mt-2">{errors.provinces2}</div>}
                                         </Col>
 
                                         <Col xxl="6" xl="6" lg="6" md="6" sm="12" xs="12" className='mb-4'>
-                                            <label htmlFor="postalCode1" className="form-label th">รหัสไปรษณีย์</label>
+                                            <label htmlFor="postalCode2" className="form-label th">รหัสไปรษณีย์</label>
                                             <input
                                                 name="postalCode2"
                                                 type="text"
                                                 id="postalCode2"
-                                                className="form-control"
+                                                className="form-control th"
                                                 aria-describedby="postalCode2"
-                                            // value={formData.postalCode1}
-                                            // onChange={handleInputChange}
+                                                value={formData.postalCode2}
+                                                onChange={bookInputChange}
+                                                minLength={5}
+                                                maxLength={5}
                                             />
+                                            {errors.postalCode2 && <div className="text-danger th mt-2">{errors.postalCode2}</div>}
                                         </Col>
                                     </Row>
                                 )}

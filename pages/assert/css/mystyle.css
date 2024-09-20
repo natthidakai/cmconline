@@ -382,7 +382,9 @@ select, .form-control {
     padding: 10px 20px !important;
 }
 
-
+.font-italic {
+    font-style: italic;
+}
 
 .img-floorplan {
     width: 75%;
