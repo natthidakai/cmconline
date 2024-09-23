@@ -21,7 +21,7 @@ const Menubar = () => {
                     {/* <a href="#">Mark Otto</a> */}
                     <div className="th box-login-menu">
                         <Image src={User} alt=""/>
-                        <Link href={`/register`} style={{paddingLeft: '.5rem'}}>สมัครสมาชิก</Link> / <Link href="#">เข้าสู่ระบบ</Link>
+                        <Link href={`/register`} style={{paddingLeft: '.5rem'}}>สมัครสมาชิก</Link> / <Link href={`/login`}>เข้าสู่ระบบ</Link>
                     </div>
                 </Navbar.Text>
                 </Navbar.Collapse>

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Image from "next/image";
 
-import Check from "../assert/images/check-4.png";
+import LOGO from "../assert/images/logo.jpg";
 
 const Step4 = () => {
     const router = useRouter();
@@ -11,7 +11,7 @@ const Step4 = () => {
 
     return (
         <Container className='py-5'>
-            <Col className='center mb-4'><Image src={Check} alt="" width={150}/></Col>
+            <Col className='center mb-4'><Image src={LOGO} alt="" width={100}/></Col>
             <h3 className="th px-3 center">ลงทะเบียนการจองเรียบร้อยแล้ว</h3>
             <Col className="th center font-18 text-blue font-500 mb-5 font-italic">รายการนี้จะเสร็จสมบูรณ์ เมื่อคุณชำระเงินการจองผ่านบัญชีด้านล่าง หากชำระเงินแล้ว<br />สามารถแจ้งชำระเงินได้ที่ปุ่มแจ้งชำระเงิน รายการจองนี้ถึงจะเสร็จสมบูรณ์</Col>
             <Row className='mb-5 justify-content-center'>

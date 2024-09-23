@@ -153,13 +153,16 @@ export const useFormValidation = () => {
         if (!regisData.phone) {
             newErrors.phone = 'กรุณาระบุเบอร์โทรศัพท์';
             isValid = false;
-        }
-
-        if (!regisData.phone) {
-            newErrors.phone = 'กรุณาระบุเบอร์โทรศัพท์';
-            isValid = false;
         } else if (!validatePhone(regisData.phone)) {
             newErrors.phone = 'เบอร์โทรศัพท์ต้องเป็นตัวเลขเท่านั้น';
+            isValid = false;
+        }
+
+        if (!regisData.email) {
+            newErrors.email = 'กรุณาระบุอีเมล';
+            isValid = false;
+        } else if (!validateEmail(regisData.email)) {
+            newErrors.email = 'รูปแบบอีเมลไม่ถูกต้อง';
             isValid = false;
         }
 

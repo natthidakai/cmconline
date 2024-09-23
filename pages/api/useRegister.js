@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs'; // นำเข้า bcrypt เพื่อใช้เข้ารหัสรหัสผ่าน
 import Mysql from '../../connect/mysql';
 
 export default async function handler(req, res) {
@@ -25,7 +26,7 @@ export default async function handler(req, res) {
 
         try {
             const result = await Mysql.query(
-                'INSERT INTO members (first_name, last_name, phone, email, password, created_at) VALUES (?, ?, ?, ?, ?, NOW())',
+                'INSERT INTO members (first_name, last_name, phone, email, password, create_date) VALUES (?, ?, ?, ?, ?, NOW())',
                 [first_name, last_name, phone, email, hashedPassword]
             );
             res.status(201).json({ message: 'สมัครสมาชิกสำเร็จ' });

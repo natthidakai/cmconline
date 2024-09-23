@@ -377,7 +377,8 @@ a:hover {
     padding-left: 2rem;
 }
 
-select, .form-control {
+select,
+.form-control {
     border-radius: 35px !important;
     padding: 10px 20px !important;
 }
@@ -417,6 +418,12 @@ select, .form-control {
 
 .align-content-center {
     align-content: center;
+}
+
+.box-shadow {
+    -webkit-box-shadow: 10px 7px 22px -1px rgba(191, 187, 191, 0.67);
+    -moz-box-shadow: 10px 7px 22px -1px rgba(191, 187, 191, 0.67);
+    box-shadow: 10px 7px 22px -1px rgba(191, 187, 191, 0.67);
 }
 
 .BH-BN36-A201 {
@@ -588,7 +595,7 @@ select, .form-control {
 
 
 /* iPhone 6/7/8 แนวตั้ง */
-@media (min-width: 375px) and (max-width: 667px)  {
+@media (min-width: 375px) and (max-width: 667px) {
     .img-floorplan {
         width: 115%;
         object-fit: contain;
@@ -675,7 +682,7 @@ select, .form-control {
 
 
 /* iPhone 13 Pro, 12 Pro แนวตั้ง */
-@media (min-width: 390px) and (max-width: 844px){
+@media (min-width: 390px) and (max-width: 844px) {
     .img-floorplan {
         width: 115%;
         object-fit: contain;
