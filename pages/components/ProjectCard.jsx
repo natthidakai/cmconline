@@ -5,7 +5,6 @@ import { Row, Col, Button } from "react-bootstrap";
 
 import Default from "../assert/images/default.jpg";
 import Pin from "../assert/images/pin.png";
-import Loading from "../components/loading";
 
 // Images for projects
 import BHCPWS from "../assert/images/BH-CPWS.jpg";
@@ -21,7 +20,7 @@ import BK52 from "../assert/images/BK52.jpg";
 import BHSUKS from "../assert/images/BH-SUKS.jpg";
 import BHNWSR from "../assert/images/BH-NWSR.jpg";
 
-const ProjectCard = ({ projects, visibleProjects, setVisibleProjects, loading, error }) => {
+const ProjectCard = ({ projects, visibleProjects, setVisibleProjects }) => {
   const projectImages = {
     "CT-KSCP": CTKSCP,
     "BH-TWN1": BHTWN1,
@@ -36,14 +35,6 @@ const ProjectCard = ({ projects, visibleProjects, setVisibleProjects, loading, e
     "BH-SUKS": BHSUKS,
     "BH-NWSR": BHNWSR,
   };
-  
-  if (loading) {
-    return <Loading />;
-  }
-
-  if (error) {
-    return <p style={{ color: "red" }}>{error}</p>;
-  }
 
   return (
     <>

@@ -1,58 +1,40 @@
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import Mysql from '../../connect/mysql';
+import jwt from 'jsonwebtoken';
 
-const Profile = () => {
-    const [user, setUser] = useState(null);
-    const [error, setError] = useState(null);
-    const router = useRouter();
+export default async function handler(req, res) {
+    const SECRET_KEY = process.env.SECRET_KEY;
 
-    useEffect(() => {
-        const fetchUser = async () => {
-            const token = localStorage.getItem('token'); // หรือวิธีการที่คุณใช้เพื่อเก็บ token
+    if (req.method === 'GET') {
+        const token = req.headers.authorization?.split(' ')[1];
 
-            if (!token) {
-                router.push('/login'); // ถ้าไม่มี token เปลี่ยนไปหน้า login
-                return;
+        if (!token) {
+            return res.status(401).json({ message: 'Unauthorized: Token not provided' });
+        }
+
+        try {
+            const decoded = jwt.verify(token, SECRET_KEY);
+
+            // ตรวจสอบว่ามีค่า email จาก token หรือไม่
+            if (!decoded.email) {
+                return res.status(400).json({ message: 'Invalid token: Email is missing' });
             }
 
-            try {
-                const response = await fetch('/api/getUser', {
-                    method: 'GET',
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
+            const userEmail = decoded.email;
 
-                if (!response.ok) {
-                    throw new Error('Failed to fetch user data');
-                }
+            // ดึงข้อมูลผู้ใช้จากฐานข้อมูลด้วย email ที่ได้รับ
+            const [user] = await Mysql.query('SELECT * FROM members WHERE email = ?', [userEmail]);
 
-                const userData = await response.json();
-                setUser(userData);
-            } catch (err) {
-                setError(err.message);
+            if (!user.length) {
+                return res.status(404).json({ message: 'User not found' });
             }
-        };
 
-        fetchUser();
-    }, [router]);
-
-    if (error) {
-        return <div>เกิดข้อผิดพลาด: {error}</div>;
+            res.status(200).json(user[0]); // ส่งข้อมูลผู้ใช้คนเดียว
+        } catch (error) {
+            console.error('Error fetching user:', error);
+            res.status(500).json({ message: 'Server error' });
+        }
+    } else {
+        res.setHeader('Allow', ['GET']);
+        res.status(405).end(`Method ${req.method} Not Allowed`);
     }
-
-    if (!user) {
-        return <div>กำลังโหลดข้อมูล...</div>;
-    }
-
-    return (
-        <div>
-            <h1>โปรไฟล์ของคุณ</h1>
-            <p>ชื่อ: {user.first_name} {user.last_name}</p>
-            <p>อีเมล: {user.email}</p>
-            <p>เบอร์โทรศัพท์: {user.phone}</p>
-        </div>
-    );
-};
-
-export default Profile;
+}

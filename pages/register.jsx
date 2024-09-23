@@ -7,13 +7,13 @@ import Image from "next/image";
 import LOGO from "./assert/images/logo.jpg";
 
 const Register = () => {
-    // เพิ่ม isLoading state
+
     const [isLoading, setIsLoading] = useState(false);
 
     const router = useRouter();
   
     const [formErrors, setFormErrors] = useState({});
-    const { errors, regisInputChange, validateRegister } = useFormValidation();
+    const { errors, validateRegister } = useFormValidation();
     const [regisData, setRegisData] = useState({
       first_name: "",
       last_name: "",
@@ -87,11 +87,11 @@ const Register = () => {
   return (
     <Container className="py-5">
       <Row className="justify-content-center">
-        <Col xxl="5" xl="6" lg="6" md="8" sm="10" xs="10">
+        <Col xxl="5" xl="6" lg="6" md="8" sm="11" xs="11">
           <Row className="box-step-3 p-5 box-shadow">
             <div>
               <Col className="center mb-3">
-                <Image src={LOGO} alt="" width={100} height={100} />
+                <Image src={LOGO} alt="" width={70} height={70} />
                 <br />
               </Col>
               <Col>

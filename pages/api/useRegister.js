@@ -1,4 +1,4 @@
-import bcrypt from 'bcryptjs'; // นำเข้า bcrypt เพื่อใช้เข้ารหัสรหัสผ่าน
+import bcrypt from 'bcryptjs';
 import Mysql from '../../connect/mysql';
 
 export default async function handler(req, res) {

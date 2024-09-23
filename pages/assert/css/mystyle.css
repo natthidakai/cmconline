@@ -158,6 +158,10 @@ a:active {
     border-color: #034078;
 }
 
+a.btn-xl.th.btn.btn-primary:hover {
+    color: #fff !important;
+}
+
 .justify-content-center {
     justify-content: center !important;
     display: flex;
@@ -289,6 +293,10 @@ fieldset:disabled .btn {
     background-color: #034078 !important;
 }
 
+.font-13 {
+    font-size: 13px;
+}
+
 .font-14 {
     font-size: 14px;
 }
@@ -343,10 +351,6 @@ fieldset:disabled .btn {
     transition: opacity 0.3s, transform 0.3s;
     background-color: #034078;
     border-color: #034078;
-}
-
-a:hover {
-    color: #fff !important;
 }
 
 .back-to-top:hover {
@@ -424,6 +428,12 @@ select,
     -webkit-box-shadow: 10px 7px 22px -1px rgba(191, 187, 191, 0.67);
     -moz-box-shadow: 10px 7px 22px -1px rgba(191, 187, 191, 0.67);
     box-shadow: 10px 7px 22px -1px rgba(191, 187, 191, 0.67);
+}
+
+.sameAddressCheckbox {
+    justify-content: end;
+    align-items: center;
+    display: flex;
 }
 
 .BH-BN36-A201 {

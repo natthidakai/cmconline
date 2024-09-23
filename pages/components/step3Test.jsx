@@ -3,15 +3,11 @@ import { useRouter } from 'next/router';
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { useFormValidation } from '../hooks/useFormValidation';
 
-import Loading from './loading';
-
 
 const Step3 = () => {
 
-    const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
-
-    const { errors, validateForm } = useFormValidation();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const { errors, bookInputChange, validateForm } = useFormValidation();
     const [showAddressSection, setShowAddressSection] = useState(false);
     const [isSameAddress, setIsSameAddress] = useState(false);
 
@@ -44,61 +40,37 @@ const Step3 = () => {
     });
 
     useEffect(() => {
-        const fetchUsers = async () => {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                router.push('/login');
-                return;
-            }
-
-            setLoading(true); // เริ่มการโหลด
-
-            try {
-                const response = await fetch('/api/getUser', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                    },
-                });
-
-                if (!response.ok) {
-                    const errorMessage = await response.text();
-                    throw new Error(`Failed to fetch user data: ${errorMessage}`);
-                }
-
-                const usersData = await response.json();
-                setUser(usersData);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false); // สิ้นสุดการโหลดไม่ว่าจะเกิดอะไรขึ้น
-            }
-        };
-
-        fetchUsers();
+        const token = localStorage.getItem('token');
+        if (token) {
+            setIsLoggedIn(true);
+            fetchUserData(token);
+        } else {
+            router.push('/register'); // เปลี่ยนเส้นทางไปที่หน้าสมัครสมาชิกถ้าไม่ได้ล็อกอิน
+        }
     }, [router]);
 
-    // const fetchUserData = async (token) => {
-    //     try {
-    //         const response = await fetch('/api/getUser', {
-    //             headers: {
-    //                 'Authorization': `Bearer ${token}`,
-    //             },
-    //         });
-    //         if (response.ok) {
-    //             const userData = await response.json();
-    //             setFormData({
-    //                 title: userData.title || '',
-    //                 first_name: userData.first_name || '',
-    //                 last_name: userData.last_name || '',
-    //                 // กรอกฟิลด์อื่น ๆ ...
-    //             });
-    //         } else {
-    //             console.error('ไม่สามารถดึงข้อมูลผู้ใช้ได้');
-    //         }
-    //     } catch (error) {
-    //         console.error('เกิดข้อผิดพลาดในการดึงข้อมูลผู้ใช้:', error);
-    //     }
-    // };
+    const fetchUserData = async (token) => {
+        try {
+            const response = await fetch('/api/getUser', {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+            if (response.ok) {
+                const userData = await response.json();
+                setFormData({
+                    title: userData.title || '',
+                    first_name: userData.first_name || '',
+                    last_name: userData.last_name || '',
+                    // กรอกฟิลด์อื่น ๆ ...
+                });
+            } else {
+                console.error('ไม่สามารถดึงข้อมูลผู้ใช้ได้');
+            }
+        } catch (error) {
+            console.error('เกิดข้อผิดพลาดในการดึงข้อมูลผู้ใช้:', error);
+        }
+    };
 
     const submitRegister = async (e) => {
         e.preventDefault();
@@ -155,14 +127,6 @@ const Step3 = () => {
             console.error('Form validation failed');
             // แสดงข้อความข้อผิดพลาดเกี่ยวกับการตรวจสอบฟอร์ม
         }
-
-
-    };
-
-    const handleCheckboxChange = (e) => {
-        const checked = e.target.checked;
-        setIsSameAddress(checked);
-        console.log('Checkbox checked:', checked);
     };
 
     const checkFormPersonal = () => {
@@ -172,6 +136,68 @@ const Step3 = () => {
     };
 
 
+    // useEffect(() => {
+    //     const fetchUserData = async () => {
+    //         const response = await fetch('/api/getUser');
+    //         if (response.ok) {
+    //             const userData = await response.json();
+    //             setFormData({
+    //                 ...formData,
+    //                 title: userData.title || '',
+    //                 first_name: userData.first_name || '',
+    //                 last_name: userData.last_name || '',
+    //                 phone: userData.phone|| '',
+    //                 email: userData.email || '',
+    //                 id_card: userData.id_card || '',
+    //                 birth_date: userData.birth_date || '',
+    //                 nationality: userData.nationality || '',
+    //                 marital_status: userData.marital_status|| '',
+    //                 current_address: userData.current_address || '',
+    //                 current_subdistrict: userData.current_subdistrict || '',
+    //                 current_district: userData.current_district || '',
+    //                 current_province: userData.current_province|| '',
+    //                 current_postal_code: userData.current_postal_code || '',
+    //                 address: userData.address|| '',
+    //                 subdistrict: userData.subdistrict || '',
+    //                 district: userData.district || '',
+    //                 province: userData.province || '',
+    //                 postal_code: userData.postal_code || ''
+
+    //             });
+    //         }
+    //     };
+
+    //     fetchUserData();
+    // }, []);
+
+    
+
+    
+
+
+    // const handleCheckboxChange = (e) => {
+    //     const checked = e.target.checked;
+    //     setIsSameAddress(checked);
+    //     console.log('Checkbox checked:', checked);
+    // };
+
+    // useEffect(() => {
+    //     checkFormPersonal();
+    // }, [formData]);
+
+    // useEffect(() => {
+    //     if (isSameAddress) {
+    //         setFormData(prevData => ({
+    //             ...prevData,
+    //             address: prevData.current_address,
+    //             subdistrict2: prevData.current_subdistrict,
+    //             districts2: prevData.current_district,
+    //             provinces2: prevData.current_province,
+    //             postalCode2: prevData.current_postal_code
+    //         }));
+    //     }
+    // }, [isSameAddress, formData.current_address, formData.current_subdistrict, formData.current_district, formData.current_province, formData.current_postal_code]);
+
     return (
         <Container className='py-5'>
             <h3 className="th px-3 center">ข้อมูลการจอง</h3>
@@ -179,167 +205,159 @@ const Step3 = () => {
             <Row className='justify-content-center'>
                 <Col xxl="10" xl="10" lg="10" md="11" sm="11" xs="11">
                     <h5 className='th'>ข้อมูลส่วนบุคคล</h5>
-
-                    {loading ? (
-                        <Loading />
-                    ) : (
-                        <Row className='box-step-3 mb-5'>
-                            <Col xxl="4" xl="4" lg="4" md="4" sm="12" xs="12" className='mb-4'>
-                                <label htmlFor="title" className="form-label th">คำนำหน้าชื่อ</label>
-                                <Col>
-                                    <select
-                                        className="form-select th"
-                                        aria-label="title"
-                                        id="title"
-                                        name='title'
-                                        value={user.title || ''}
-                                        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                        required
-                                    >
-                                        <option value="" defaultValue>-- กรุณาเลือก --</option>
-                                        <option value="นาย">นาย</option>
-                                        <option value="นาง">นาง</option>
-                                        <option value="นางสาว">นางสาว</option>
-                                    </select>
-
-
-
-                                </Col>
-                                {errors.title && <div className="text-danger th mt-2">{errors.title}</div>}
-                            </Col>
-
-                            <Col xxl="4" xl="4" lg="4" md="4" sm="12" xs="12" className='mb-4'>
-                                <label htmlFor="first_name" className="form-label th">ชื่อ</label>
-                                <input
-                                    name='first_name'
-                                    type="text"
-                                    id="first_name"
-                                    className="form-control th"
-                                    aria-describedby="first_name"
-                                    value={user.first_name || ''}
-                                    onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
-                                    required
-                                />
-                                {errors.first_name && <div className="text-danger th mt-2">{errors.first_name}</div>}
-                            </Col>
-
-                            <Col xxl="4" xl="4" lg="4" md="4" sm="12" xs="12" className='mb-4'>
-                                <label htmlFor="last_name" className="form-label th">นามสกุล</label>
-                                <input
-                                    name="last_name"
-                                    type="text" id="last_name"
-                                    className="form-control th"
-                                    aria-describedby="last_name"
-                                    value={user.last_name || ''}
-                                    onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
-                                    required
-                                />
-                                {errors.last_name && <div className="text-danger th mt-2">{errors.last_name}</div>}
-                            </Col>
-
-                            <Col xxl="4" xl="4" lg="4" md="4" sm="12" xs="12" className='mb-4'>
-                                <label htmlFor="phone" className="form-label th">เบอร์โทรศัพท์</label>
-                                <input
-                                    name='phone'
-                                    type="tel"
-                                    id="phone"
-                                    className="form-control th"
-                                    aria-describedby="phone"
-                                    minLength={10}
-                                    maxLength={10}
-                                    value={user.phone || ''}
-                                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                                    required
-                                />
-                                {errors.phone && <div className="text-danger th mt-2">{errors.phone}</div>}
-                            </Col>
-
-                            <Col xxl="4" xl="4" lg="4" md="4" sm="12" xs="12" className='mb-4'>
-                                <label htmlFor="email" className="form-label th">อีเมล</label>
-                                <input
-                                    name='email'
-                                    type="email"
-                                    id="email"
-                                    className="form-control th"
-                                    aria-describedby="email"
-                                    value={user.email || ''}
-                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                    required
-                                />
-                                {errors.email && <div className="text-danger th mt-2">{errors.email}</div>}
-                            </Col>
-
-                            <Col xxl="4" xl="4" lg="4" md="4" sm="12" xs="12" className='mb-4'>
-                                <label htmlFor="id_card" className="form-label th">หมายเลขบัตรประชาชน</label>
-                                <input
-                                    name=' id_card'
-                                    type="text"
-                                    id=" id_card"
-                                    className="form-control th"
-                                    aria-describedby="id_card"
-                                    minLength={13}
-                                    maxLength={13}
-                                    value={user.id_card || ''}
-                                    onChange={(e) => setFormData({ ...formData, id_card: e.target.value })}
-                                    required
-                                />
-                                {errors.id_card && <div className="text-danger th mt-2">{errors.id_card}</div>}
-                            </Col>
-
-                            <Col xxl="4" xl="4" lg="4" md="4" sm="12" xs="12" className='mb-4'>
-                                <label htmlFor="birth_date" className="form-label th">วันเกิด</label>
-                                <input
-                                    name='birth_date'
-                                    type="date"
-                                    id="birth_date"
-                                    className="form-control th"
-                                    aria-describedby="birth_date"
-                                    value={user.birth_date ? new Date(user.birth_date).toISOString().split('T')[0] : ''}
-                                    onChange={(e) => setFormData({ ...formData, birth_date: e.target.value })}
-                                    required
-                                />
-                                {errors.birth_date && <div className="text-danger th mt-2">{errors.birth_date}</div>}
-                            </Col>
-
-                            <Col xxl="4" xl="4" lg="4" md="4" sm="12" xs="12" className='mb-4'>
-                                <label htmlFor="nationality" className="form-label th">สัญชาติ</label>
-                                <input
-                                    name='nationality'
-                                    type="text"
-                                    id="nationality"
-                                    className="form-control th"
-                                    aria-describedby="nationality"
-                                    value={user.nationality || ''}
-                                    onChange={(e) => setFormData({ ...formData, nationality: e.target.value })}
-                                    required
-                                />
-                                {errors.nationality && <div className="text-danger th mt-2">{errors.nationality}</div>}
-                            </Col>
-
-                            <Col xxl="4" xl="4" lg="4" md="4" sm="12" xs="12" className='mb-4'>
-                                <label htmlFor="marital_status" className="form-label th">สถานะภาพ</label>
-                                <Col>
+                    <Row className='box-step-3 mb-5'>
+                        <Col xxl="4" xl="4" lg="4" md="4" sm="12" xs="12" className='mb-4'>
+                            <label htmlFor="title" className="form-label th">คำนำหน้าชื่อ</label>
+                            <Col>
                                 <select
-    className="status form-select th"
-    aria-label="marital_status"
-    id="marital_status"
-    name="marital_status"
-    value={user.marital_status || ''} // Use formData to bind the value
-    onChange={(e) => setFormData({ ...formData, marital_status: e.target.value })} // Update formData state
-    required
->
-    <option value="" defaultValue>-- กรุณาเลือก --</option>
-    <option value="โสด">โสด</option>
-    <option value="สมรส">สมรส</option>
-    <option value="หย่า">หย่า</option>
-    <option value="หม้าย">หม้าย</option>
-    <option value="ไม่ระบุ">ไม่ระบุ</option>
-</select>
-                                </Col>
-                                {errors.marital_status && <div className="text-danger th mt-2">{errors.marital_status}</div>}
+                                    className="form-select th"
+                                    aria-label="title"
+                                    id="title"
+                                    name='title'
+                                    value={formData.title}
+                                    onChange={bookInputChange}
+                                    required
+                                >
+                                    <option value="" defaultValue>-- กรุณาเลือก --</option>
+                                    <option value="นาย">นาย</option>
+                                    <option value="นาง">นาง</option>
+                                    <option value="นางสาว">นางสาว</option>
+                                </select>
                             </Col>
-                        </Row>
-                    )}
+                            {errors.title && <div className="text-danger th mt-2">{errors.title}</div>}
+                        </Col>
+
+                        <Col xxl="4" xl="4" lg="4" md="4" sm="12" xs="12" className='mb-4'>
+                            <label htmlFor="first_name" className="form-label th">ชื่อ</label>
+                            <input
+                                name='first_name'
+                                type="text"
+                                id="first_name"
+                                className="form-control th"
+                                aria-describedby="first_name"
+                                value={formData.first_name}
+                                onChange={bookInputChange}
+                                required
+                            />
+                            {errors.first_name && <div className="text-danger th mt-2">{errors.first_name}</div>}
+                        </Col>
+
+                        <Col xxl="4" xl="4" lg="4" md="4" sm="12" xs="12" className='mb-4'>
+                            <label htmlFor="last_name" className="form-label th">นามสกุล</label>
+                            <input
+                                name="last_name"
+                                type="text" id="last_name"
+                                className="form-control th"
+                                aria-describedby="last_name"
+                                value={formData.last_name}
+                                onChange={bookInputChange}
+                                required
+                            />
+                            {errors.last_name && <div className="text-danger th mt-2">{errors.last_name}</div>}
+                        </Col>
+
+                        <Col xxl="4" xl="4" lg="4" md="4" sm="12" xs="12" className='mb-4'>
+                            <label htmlFor="phone" className="form-label th">เบอร์โทรศัพท์</label>
+                            <input
+                                name='phone'
+                                type="tel"
+                                id="phone"
+                                className="form-control th"
+                                aria-describedby="phone"
+                                minLength={10}
+                                maxLength={10}
+                                value={formData.phone}
+                                onChange={bookInputChange}
+                                required
+                            />
+                            {errors.phone && <div className="text-danger th mt-2">{errors.phone}</div>}
+                        </Col>
+
+                        <Col xxl="4" xl="4" lg="4" md="4" sm="12" xs="12" className='mb-4'>
+                            <label htmlFor="email" className="form-label th">อีเมล</label>
+                            <input
+                                name='email'
+                                type="email"
+                                id="email"
+                                className="form-control th"
+                                aria-describedby="email"
+                                value={formData.email}
+                                onChange={(e) => bookInputChange(e, setFormData)}
+                                required
+                            />
+                            {errors.email && <div className="text-danger th mt-2">{errors.email}</div>}
+                        </Col>
+
+                        <Col xxl="4" xl="4" lg="4" md="4" sm="12" xs="12" className='mb-4'>
+                            <label htmlFor="id_card" className="form-label th">หมายเลขบัตรประชาชน</label>
+                            <input
+                                name=' id_card'
+                                type="text"
+                                id=" id_card"
+                                className="form-control th"
+                                aria-describedby="id_card"
+                                minLength={13}
+                                maxLength={13}
+                                value={formData.id_card}
+                                onChange={(e) => bookInputChange(e, setFormData)}
+                                required
+                            />
+                            {errors.id_card && <div className="text-danger th mt-2">{errors.id_card}</div>}
+                        </Col>
+
+                        <Col xxl="4" xl="4" lg="4" md="4" sm="12" xs="12" className='mb-4'>
+                            <label htmlFor="birth_date" className="form-label th">วันเกิด</label>
+                            <input
+                                name='birth_date'
+                                type="date"
+                                id="birth_date"
+                                className="form-control th"
+                                aria-describedby="birth_date"
+                                value={formData.birth_date}
+                                onChange={bookInputChange}
+                                required
+                            />
+                            {errors.birth_date && <div className="text-danger th mt-2">{errors.birth_date}</div>}
+                        </Col>
+
+                        <Col xxl="4" xl="4" lg="4" md="4" sm="12" xs="12" className='mb-4'>
+                            <label htmlFor="nationality" className="form-label th">สัญชาติ</label>
+                            <input
+                                name='nationality'
+                                type="text"
+                                id="nationality"
+                                className="form-control th"
+                                aria-describedby="nationality"
+                                value={formData.nationality}
+                                onChange={bookInputChange}
+                                required
+                            />
+                            {errors.nationality && <div className="text-danger th mt-2">{errors.nationality}</div>}
+                        </Col>
+
+                        <Col xxl="4" xl="4" lg="4" md="4" sm="12" xs="12" className='mb-4'>
+                            <label htmlFor="marital_status" className="form-label th">สถานะภาพ</label>
+                            <Col>
+                                <select
+                                    className="status form-select th"
+                                    aria-label="marital_status"
+                                    id="marital_status"
+                                    name="marital_status"  // เพิ่ม name attribute เพื่อให้ฟอร์มรู้ว่าค่าใน select นี้ควรถูกส่งเป็น status
+                                    value={formData.marital_status}
+                                    onChange={bookInputChange}
+                                    required
+                                >
+                                    <option value="" defaultValue>-- กรุณาเลือก --</option>
+                                    <option value="โสด">โสด</option>
+                                    <option value="สมรส">สมรส</option>
+                                    <option value="หย่า">หย่า</option>
+                                    <option value="หม้าย">หม้าย</option>
+                                    <option value="ไม่ระบุ">ไม่ระบุ</option>
+                                </select>
+                            </Col>
+                            {errors.marital_status && <div className="text-danger th mt-2">{errors.marital_status}</div>}
+                        </Col>
+                    </Row>
                 </Col>
 
                 {/* Address Section */}
@@ -357,8 +375,8 @@ const Step3 = () => {
                                             id="current_address"
                                             className="form-control th"
                                             aria-describedby="current_address"
-                                            value={user.current_address || ''}
-                                            onChange={(e) => setFormData({ ...formData, current_address: e.target.value })}
+                                            value={formData.current_address}
+                                            onChange={bookInputChange}
                                             required
                                         />
                                         {errors.current_address && <div className="text-danger th mt-2">{errors.current_address}</div>}
@@ -372,8 +390,8 @@ const Step3 = () => {
                                             id="current_subdistrict"
                                             className="form-control th"
                                             aria-describedby="current_subdistrict"
-                                            value={user.current_address || ''}
-                                            onChange={(e) => setFormData({ ...formData, current_subdistrict: e.target.value })}
+                                            value={formData.current_subdistrict}
+                                            onChange={bookInputChange}
                                             required
                                         />
                                         {errors.current_subdistrict && <div className="text-danger th mt-2">{errors.current_subdistrict}</div>}
@@ -387,8 +405,8 @@ const Step3 = () => {
                                             id="current_district"
                                             className="form-control th"
                                             aria-describedby="current_district"
-                                            value={user.current_address || ''}
-                                            onChange={(e) => setFormData({ ...formData, current_district: e.target.value })}
+                                            value={formData.current_district}
+                                            onChange={bookInputChange}
                                             required
                                         />
                                         {errors.current_district && <div className="text-danger th mt-2">{errors.current_district}</div>}
@@ -402,8 +420,8 @@ const Step3 = () => {
                                             id="current_province"
                                             className="form-control th"
                                             aria-describedby="current_province"
-                                            value={user.current_province || ''}
-                                            onChange={(e) => setFormData({ ...formData, current_province: e.target.value })}
+                                            value={formData.current_province}
+                                            onChange={bookInputChange}
                                             required
                                         />
                                     </Col>
@@ -416,8 +434,8 @@ const Step3 = () => {
                                             id="current_postal_code"
                                             className="form-control th"
                                             aria-describedby="current_postal_code"
-                                            value={user.current_postal_code || ''}
-                                            onChange={(e) => setFormData({ ...formData, current_postal_code: e.target.value })}
+                                            value={formData.current_postal_code}
+                                            onChange={bookInputChange}
                                             minLength={5}
                                             maxLength={5}
                                             required
@@ -452,8 +470,8 @@ const Step3 = () => {
                                                 id="address"
                                                 className="form-control th"
                                                 aria-describedby="address"
-                                                value={user.address || ''}
-                                                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                                                value={formData.address}
+                                                onChange={bookInputChange}
                                                 required
                                             />
                                             {errors.address && <div className="text-danger th mt-2">{errors.address}</div>}
@@ -467,8 +485,8 @@ const Step3 = () => {
                                                 id="subdistrict"
                                                 className="form-control th"
                                                 aria-describedby="subdistrict"
-                                                value={user.subdistrict || ''}
-                                                onChange={(e) => setFormData({ ...formData, subdistrict: e.target.value })}
+                                                value={formData.subdistrict}
+                                                onChange={bookInputChange}
                                                 required
                                             />
                                             {errors.subdistrict && <div className="text-danger th mt-2">{errors.subdistrict}</div>}
@@ -482,8 +500,8 @@ const Step3 = () => {
                                                 id="districts"
                                                 className="form-control th"
                                                 aria-describedby="districts"
-                                                value={user.districts || ''}
-                                                onChange={(e) => setFormData({ ...formData, districts: e.target.value })}
+                                                value={formData.districts}
+                                                onChange={bookInputChange}
                                                 required
                                             />
                                             {errors.districts && <div className="text-danger th mt-2">{errors.districts}</div>}
@@ -497,8 +515,8 @@ const Step3 = () => {
                                                 id="provinces"
                                                 className="form-control th"
                                                 aria-describedby="provinces"
-                                                value={user.provinces || ''}
-                                                onChange={(e) => setFormData({ ...formData, provinces: e.target.value })}
+                                                value={formData.provinces}
+                                                onChange={bookInputChange}
                                                 required
                                             />
                                             {errors.provinces && <div className="text-danger th mt-2">{errors.provinces}</div>}
@@ -512,8 +530,8 @@ const Step3 = () => {
                                                 id="postal_code"
                                                 className="form-control th"
                                                 aria-describedby="postal_code"
-                                                value={user.postal_code || ''}
-                                                onChange={(e) => setFormData({ ...formData, postal_code: e.target.value })}
+                                                value={formData.postal_code}
+                                                onChange={bookInputChange}
                                                 minLength={5}
                                                 maxLength={5}
                                                 required

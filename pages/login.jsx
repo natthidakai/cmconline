@@ -1,11 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from 'next/router';
+import { Container, Row, Col, Button } from "react-bootstrap";
+import Image from "next/image";
+import LOGO from "./assert/images/logo.jpg";
 
 const Login = () => {
     const [loginData, setLoginData] = useState({ email: "", password: "" });
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            router.push('/profile');
+        }
+    }, [router]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -15,6 +25,13 @@ const Login = () => {
     const loginUser = async (e) => {
         e.preventDefault();
         setIsLoading(true);
+    
+        // Validate input fields
+        if (!loginData.email || !loginData.password) {
+            setErrors({ message: 'กรุณากรอกอีเมลและรหัสผ่านให้ครบถ้วน' });
+            setIsLoading(false);
+            return;
+        }
     
         try {
             const response = await fetch("/api/useLogin", {
@@ -28,8 +45,10 @@ const Login = () => {
             const result = await response.json();
     
             if (response.ok) {
-                localStorage.setItem('token', result.token); // สมมุติว่า API ส่ง token กลับมา
-                router.push("/profile");
+                localStorage.setItem('token', result.token); // เก็บ token ใน localStorage
+                router.push("/profile").then(() => {
+                    router.reload(); // รีเฟรชหน้าหลังจากเปลี่ยนเส้นทางไปยัง profile
+                });
             } else {
                 setErrors({ message: result.message });
             }
@@ -43,35 +62,55 @@ const Login = () => {
     
 
     return (
-        <div className="login-container">
-            <h2>เข้าสู่ระบบ</h2>
-            {errors.message && <div className="text-danger">{errors.message}</div>}
-            <form onSubmit={loginUser}>
-                <div>
-                    <label htmlFor="email">อีเมล</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={loginData.email}
-                        onChange={handleInputChange}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="password">รหัสผ่าน</label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        value={loginData.password}
-                        onChange={handleInputChange}
-                    />
-                </div>
-                <button type="submit" disabled={isLoading}>
-                    {isLoading ? 'กำลังเข้าสู่ระบบ...' : 'เข้าสู่ระบบ'}
-                </button>
-            </form>
-        </div>
+        <Container className="py-5">
+            <Row className="justify-content-center">
+                <Col xxl="5" xl="6" lg="6" md="8" sm="10" xs="10">
+                    <Row className="box-step-3 p-5 box-shadow">
+                        <div>
+                            <Col className="center mb-3">
+                                <Image src={LOGO} alt="" width={70} height={70} />
+                                <br />
+                            </Col>
+                            <Col>
+                                <h3 className="th px-3 center mb-4">เข้าสู่ระบบ</h3>
+                            </Col>
+                        </div>
+
+                        <Col xxl="12" xl="12" lg="12" md="12" sm="12" xs="12" className="mb-4">
+                            <label htmlFor="email" className="form-label th">อีเมล</label>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                className="form-control th"
+                                value={loginData.email}
+                                onChange={handleInputChange}
+                            />
+                        </Col>
+
+                        <Col xxl="12" xl="12" lg="12" md="12" sm="12" xs="12" className="mb-4">
+                            <label htmlFor="password" className="form-label th">รหัสผ่าน</label>
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                className="form-control th"
+                                value={loginData.password}
+                                onChange={handleInputChange}
+                            />
+                        </Col>
+                        <Row>
+                        {errors.message && <div className="text-danger mb-3 th center">{errors.message}</div>}
+                            <Col className="justify-content-center">
+                                <Button className="btn-xl th" onClick={loginUser}>
+                                    {isLoading ? 'กำลังเข้าสู่ระบบ...' : 'เข้าสู่ระบบ'}
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Row>
+                </Col>
+            </Row>
+        </Container>
     );
 };
 

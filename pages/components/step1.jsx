@@ -9,7 +9,6 @@ const Step1 = ({ projectID }) => {
     const [loading, setLoading] = useState(true);
     const [projects, setProjects] = useState([]);
     const [status, setStatus] = useState([]);
-    const [error, setError] = useState(null);
     const [selectedTower, setSelectedTower] = useState("");
     const [selectedFloor, setSelectedFloor] = useState("");
     const [unitNumbers, setUnitNumbers] = useState([]);
@@ -61,9 +60,6 @@ const Step1 = ({ projectID }) => {
         }
     }, [selectedTower, selectedFloor, status]);
 
-    if (loading) return <Loading />;
-    if (error) return <p style={{ color: "red" }}>{error}</p>;
-
     const projectInfo = ProjectInfo.find((s) => s.id === projectID);
 
     const towerNames = [...new Set(status.map((unit) => unit.TowerName))];
@@ -79,12 +75,21 @@ const Step1 = ({ projectID }) => {
 
     return (
         <Container className="py-5">
-            <ProjectDetails 
-                projectInfo={projectInfo} 
-                projectID={projectID} 
-            />
+            {loading ? (
+                <Loading />
+            ) : (
+                <ProjectDetails
+                    projectInfo={projectInfo}
+                    projectID={projectID}
+                />
+            )}
+
             <hr className="my-5" />
-            <FloorPlanAndUnits
+
+            {loading ? (
+                <Loading />
+            ) : (
+                <FloorPlanAndUnits
                 selectedTower={selectedTower}
                 setSelectedTower={setSelectedTower}
                 selectedFloor={selectedFloor}
@@ -96,6 +101,7 @@ const Step1 = ({ projectID }) => {
                 unitModelIDs={unitModelIDs}
                 projectID={projectID}
             />
+            )}
         </Container>
     );
 };

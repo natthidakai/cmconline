@@ -58,13 +58,13 @@ export const useFormValidation = () => {
             isValid = false;
         }
 
-        if (!validateIdCard(formData.idCard)) {
-            newErrors.idCard = 'หมายเลขบัตรประชาชนไม่ถูกต้อง';
+        if (!validateIdCard(formData.id_card)) {
+            newErrors.id_card = 'หมายเลขบัตรประชาชนไม่ถูกต้อง';
             isValid = false;
         }
 
-        if (!formData.birthday) {
-            newErrors.birthday = 'กรุณาระบุวันเกิด';
+        if (!formData.birth_date) {
+            newErrors.birth_date = 'กรุณาระบุวันเกิด';
             isValid = false;
         }
 
@@ -75,58 +75,58 @@ export const useFormValidation = () => {
                 isValid = false;
             }
 
-            if (!formData.status) {
-                newErrors.status = 'กรุณาระบุสถานะภาพ';
+            if (!formData.marital_status) {
+                newErrors.marital_status = 'กรุณาระบุสถานะภาพ';
                 isValid = false;
             }
 
-            if (!formData.address1) {
-                newErrors.address1 = 'กรุณาระบุที่อยู่ปัจจุบัน';
+            if (!formData.current_address) {
+                newErrors.current_address = 'กรุณาระบุที่อยู่ปัจจุบัน';
                 isValid = false;
             }
 
-            if (!formData.subdistrict1) {
-                newErrors.subdistrict1 = 'กรุณาระบุ แขวง/ตำบล';
+            if (!formData.current_subdistrict) {
+                newErrors.current_subdistrict = 'กรุณาระบุ แขวง/ตำบล';
                 isValid = false;
             }
 
-            if (!formData.districts1) {
-                newErrors.districts1 = 'กรุณาระบุ เขต/อำเภอ';
+            if (!formData.current_district) {
+                newErrors.current_district = 'กรุณาระบุ เขต/อำเภอ';
                 isValid = false;
             }
 
-            if (!formData.provinces1) {
-                newErrors.provinces1 = 'กรุณาระบุจังหวัด';
+            if (!formData.current_province) {
+                newErrors.current_province = 'กรุณาระบุจังหวัด';
                 isValid = false;
             }
 
-            if (!formData.postalCode1) {
-                newErrors.postalCode1 = 'กรุณาระบุรหัสไปรษณีย์';
+            if (!formData.current_postal_code) {
+                newErrors.current_postal_code = 'กรุณาระบุรหัสไปรษณีย์';
                 isValid = false;
             }
 
-            if (!formData.address2) {
-                newErrors.address2 = 'กรุณาระบุที่อยู่ตามทะเบียนบ้าน';
+            if (!formData.address) {
+                newErrors.address = 'กรุณาระบุที่อยู่ตามทะเบียนบ้าน';
                 isValid = false;
             }
 
-            if (!formData.subdistrict2) {
-                newErrors.subdistrict2 = 'กรุณาระบุ แขวง/ตำบล';
+            if (!formData.subdistrict) {
+                newErrors.subdistrict = 'กรุณาระบุ แขวง/ตำบล';
                 isValid = false;
             }
 
-            if (!formData.districts2) {
-                newErrors.districts2 = 'กรุณาระบุ เขต/อำเภอ';
+            if (!formData.districts) {
+                newErrors.districts = 'กรุณาระบุ เขต/อำเภอ';
                 isValid = false;
             }
 
-            if (!formData.provinces2) {
-                newErrors.provinces2 = 'กรุณาระบุจังหวัด';
+            if (!formData.provinces) {
+                newErrors.provinces = 'กรุณาระบุจังหวัด';
                 isValid = false;
             }
 
-            if (!formData.postalCode2) {
-                newErrors.postalCode2 = 'กรุณาระบุรหัสไปรษณีย์';
+            if (!formData.postalCode) {
+                newErrors.postalCode = 'กรุณาระบุรหัสไปรษณีย์';
                 isValid = false;
             }
         }
@@ -183,41 +183,15 @@ export const useFormValidation = () => {
         return isValid && Object.keys(newErrors).length === 0;
     };
 
-    const bookInputChange = (e, setFormData) => {
-        const { name, value } = e.target;
 
-        let filteredValue = value;
-
-        // กรองข้อมูลตามชื่อฟิลด์ที่ต้องการ
-        if (name === 'idCard' || name === 'phone' || name === 'postalCode1' || name === 'postalCode2') {
-            filteredValue = value.replace(/\D/g, '');
-        } else if (name === 'email') {
-            filteredValue = value.replace(/[\u0E00-\u0E7F]/g, '');
-        }
-
-        setFormData(prevData => ({
-            ...prevData,
-            [name]: filteredValue
-        }));
+    const isDateWithinLast10Years = (dateString) => {
+        const date = new Date(dateString);
+        const today = new Date();
+        const tenYearsAgo = new Date(today.setFullYear(today.getFullYear() - 10));
+        return date >= tenYearsAgo;
     };
 
-    const regisInputChange = (e, setRegisData) => {
+    
 
-        const { name, value } = e.target;
-        
-        let filteredValue = value;
-
-        if (name === 'phone') {
-            filteredValue = value.replace(/\D/g, ''); // อนุญาตให้กรอกแค่ตัวเลข
-        } else if (name === 'email') {
-            filteredValue = value.replace(/[\u0E00-\u0E7F]/g, ''); // ลบตัวอักษรไทย
-        }
-
-        setRegisData(prevData => ({
-            ...prevData,
-            [name]: filteredValue
-        }));
-    };
-
-    return { errors, bookInputChange, regisInputChange, validateForm, validateRegister };
+    return { errors, validateForm, validateRegister, validateEmail, isDateWithinLast10Years };
 };

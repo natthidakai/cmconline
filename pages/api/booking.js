@@ -1,34 +1,34 @@
 import Mysql from '../../connect/mysql';
 
 export default async function handler(req, res) {
-    
+
     if (req.method === 'POST') {
-        const { 
-            title, 
-            first_name, 
-            last_name, 
+        const {
+            title,
+            first_name,
+            last_name,
             projectID,
             unitNumber,
-            phone, 
-            email, 
-            idCard, 
-            birthday, 
-            nationality, 
-            status, 
-            address1, 
-            subdistrict1, 
-            districts1,
-            provinces1,
-            postalCode1,
-            address2,
-            subdistrict2,
-            districts2,
-            provinces2,
-            postalCode2 
+            phone,
+            email,
+            idCard,
+            birth_date,
+            nationality,
+            marital_status,
+            current_address,
+            current_subdistrict,
+            current_district,
+            current_province,
+            current_postal_code,
+            address,
+            subdistrict,
+            district,
+            province,
+            postal_code
         } = req.body;
 
         // แสดงข้อมูลที่ได้รับ
-        console.log(req.body); 
+        console.log(req.body);
 
         try {
             // ตรวจสอบข้อมูลที่ได้รับ
@@ -40,7 +40,7 @@ export default async function handler(req, res) {
 
             const sql = 'INSERT INTO booking (title, first_name, last_name, projectID, unitNumber, phone, email, idCard, birthday, nationality, status, address1, subdistrict1, districts1, provinces1, postalCode1, address2, subdistrict2, districts2, provinces2, postalCode2, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())';
 
-            const [result] = await connection.execute(sql, [title, first_name, last_name, projectID, unitNumber, phone, email, idCard, birthday, nationality, status, address1,  subdistrict1, districts1, provinces1, postalCode1, address2, subdistrict2, districts2, provinces2, postalCode2]);
+            const [result] = await connection.execute(sql, [title, first_name, last_name, projectID, unitNumber, phone, email, idCard, birthday, nationality, status, address1, subdistrict1, districts1, provinces1, postalCode1, address2, subdistrict2, districts2, provinces2, postalCode2]);
 
             connection.release();
 

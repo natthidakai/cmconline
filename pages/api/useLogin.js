@@ -3,7 +3,6 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 export default async function handler(req, res) {
-
     const SECRET_KEY = process.env.SECRET_KEY;
 
     if (req.method === 'POST') {
@@ -15,7 +14,7 @@ export default async function handler(req, res) {
 
         try {
             // ค้นหาผู้ใช้ในฐานข้อมูลจากอีเมล
-            const [user] = await Mysql.query('SELECT email, password FROM members WHERE email = ?', [email]);
+            const [user] = await Mysql.query('SELECT * FROM members WHERE email = ?', [email]);
 
             if (user.length === 0) {
                 return res.status(401).json({ message: 'ไม่พบผู้ใช้หรือรหัสผ่านไม่ถูกต้อง' });
