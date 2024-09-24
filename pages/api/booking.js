@@ -1,17 +1,15 @@
 import Mysql from '../../connect/mysql';
 
 export default async function handler(req, res) {
-
     if (req.method === 'POST') {
         const {
+            member_id,
             title,
             first_name,
             last_name,
-            projectID,
-            unitNumber,
-            phone,
             email,
-            idCard,
+            phone,
+            id_card,
             birth_date,
             nationality,
             marital_status,
@@ -24,33 +22,76 @@ export default async function handler(req, res) {
             subdistrict,
             district,
             province,
-            postal_code
+            postal_code,
+            projectID,
+            unitNumber
         } = req.body;
 
-        // แสดงข้อมูลที่ได้รับ
-        console.log(req.body);
+        // ตรวจสอบว่า member_id, projectID และ unitNumber ไม่เป็น null
+        if (!member_id || !projectID || !unitNumber) {
+            return res.status(400).json({ error: 'member_id, projectID และ unitNumber ต้องไม่เป็น null' });
+        }
 
         try {
-            // ตรวจสอบข้อมูลที่ได้รับ
-            if (!title || !first_name || !last_name || !projectID || !unitNumber || !phone || !email || !idCard || !birthday || !nationality || !status || !address1 || !subdistrict1 || !districts1 || !provinces1 || !postalCode1 || !address2 || !subdistrict2 || !districts2 || !provinces2 || !postalCode2) {
-                return res.status(400).json({ error: 'Missing required fields' });
+            const connection = await Mysql.getConnection();
+            // บันทึกข้อมูลที่เข้ามาเพื่อดีบัก
+            console.log('Incoming data:', req.body);
+
+            // อัปเดตข้อมูลสมาชิก
+            const updateMemberSql = `
+                UPDATE members
+                SET 
+                    title = ?,
+                    first_name = ?,
+                    last_name = ?,
+                    email = ?,
+                    phone = ?,
+                    id_card = ?,
+                    birth_date = ?,
+                    nationality = ?,
+                    marital_status = ?,
+                    current_address = ?,
+                    current_subdistrict = ?,
+                    current_district = ?,
+                    current_province = ?,
+                    current_postal_code = ?,
+                    address = ?,
+                    subdistrict = ?,
+                    district = ?,
+                    province = ?,
+                    postal_code = ?
+                WHERE member_id = ?`;
+
+            const [updateResult] = await connection.execute(updateMemberSql, [
+                title, first_name, last_name, email, phone, id_card, birth_date, nationality, marital_status,
+                current_address, current_subdistrict, current_district, current_province, current_postal_code,
+                address, subdistrict, district, province, postal_code, member_id
+            ]);
+
+            if (updateResult.affectedRows === 0) {
+                return res.status(404).json({ error: 'ไม่พบสมาชิกหรือไม่มีการอัปเดต' });
             }
 
-            const connection = await Mysql.getConnection();
+            // เพิ่มข้อมูลการจองใหม่
+            const insertBookingSql = `
+                INSERT INTO bookings (member_id, projectID, unitNumber, booking_date)
+                VALUES (?, ?, ?, NOW())`;
 
-            const sql = 'INSERT INTO booking (title, first_name, last_name, projectID, unitNumber, phone, email, idCard, birthday, nationality, status, address1, subdistrict1, districts1, provinces1, postalCode1, address2, subdistrict2, districts2, provinces2, postalCode2, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())';
+            const [insertResult] = await connection.execute(insertBookingSql, [member_id, projectID, unitNumber]);
 
-            const [result] = await connection.execute(sql, [title, first_name, last_name, projectID, unitNumber, phone, email, idCard, birthday, nationality, status, address1, subdistrict1, districts1, provinces1, postalCode1, address2, subdistrict2, districts2, provinces2, postalCode2]);
+            /// ตรวจสอบว่าการจองถูกแทรกสำเร็จหรือไม่
+            if (insertResult.affectedRows === 0) {
+                return res.status(500).json({ error: 'ไม่สามารถเพิ่มการจองได้' });
+            }
 
             connection.release();
 
-            res.status(200).json({ message: 'Booking successful', result });
+            res.status(200).json({ message: 'อัปเดตข้อมูลสมาชิกและเพิ่มการจองใหม่สำเร็จ' });
         } catch (err) {
-            console.error('Error inserting data:', err);
-            console.error('Error details:', err); // แสดงรายละเอียดข้อผิดพลาด
-            res.status(500).json({ error: 'Internal Server Error', details: err.message });
+            console.error('Error updating data:', err);
+            res.status(500).json({ error: 'เกิดข้อผิดพลาดภายในเซิร์ฟเวอร์', details: err.message });
         }
     } else {
-        res.status(405).json({ message: 'Method Not Allowed' });
+        res.status(405).json({ message: 'ไม่อนุญาตวิธีการนี้' });
     }
 }

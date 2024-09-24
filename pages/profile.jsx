@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-
 import { Container, Row, Col, Button } from "react-bootstrap";
-
 import Loading from './components/loading';
-import { useFormValidation } from "./hooks/useFormValidation";
 
 const Profile = () => {
 
     const router = useRouter();
-
     const [user, setUser] = useState(null);
     const [error, setError] = useState(null);
-
     const [loading, setLoading] = useState(true);
     const [isSameAddress, setIsSameAddress] = useState(false);
-    const { isDateWithinLast10Years } = useFormValidation();
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -157,8 +151,6 @@ const Profile = () => {
                                     const value = e.target.value
                                         .replace(/[\u0E00-\u0E7F]/g, '') // ลบตัวอักษรภาษาไทย
                                         .replace(/[^a-zA-Z0-9@._-]/g, ''); // ยอมให้เฉพาะตัวเลข, ตัวอักษรภาษาอังกฤษ, @, ., - และ _
-
-                                    // อัปเดต user.email ไม่ต้องมีการตรวจสอบอีเมล
                                     setUser({ ...user, email: value });
                                 }}
                             />

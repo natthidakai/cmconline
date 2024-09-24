@@ -46,8 +46,8 @@ const Login = () => {
     
             if (response.ok) {
                 localStorage.setItem('token', result.token); // เก็บ token ใน localStorage
-                router.push("/profile").then(() => {
-                    router.reload(); // รีเฟรชหน้าหลังจากเปลี่ยนเส้นทางไปยัง profile
+                router.push("/").then(() => {
+                    router.reload();
                 });
             } else {
                 setErrors({ message: result.message });

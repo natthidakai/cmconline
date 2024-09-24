@@ -25,31 +25,32 @@ export const useFormValidation = () => {
         return phonePattern.test(phone);
     };
 
+    //user booking
     const validateForm = (formData, showAddressSection) => {
         let isValid = true;
         const newErrors = {};
-
+    
         // Validate personal info fields
         if (!formData.title) {
             newErrors.title = 'กรุณาเลือกคำนำหน้าชื่อ';
             isValid = false;
         }
-
+    
         if (!formData.first_name) {
             newErrors.first_name = 'กรุณาระบุชื่อ';
             isValid = false;
         }
-
+    
         if (!formData.last_name) {
             newErrors.last_name = 'กรุณาระบุนามสกุล';
             isValid = false;
         }
-
+    
         if (!formData.phone) {
             newErrors.phone = 'กรุณาระบุเบอร์โทรศัพท์';
             isValid = false;
         }
-
+    
         if (!formData.email) {
             newErrors.email = 'กรุณาระบุอีเมล';
             isValid = false;
@@ -57,85 +58,86 @@ export const useFormValidation = () => {
             newErrors.email = 'รูปแบบอีเมลไม่ถูกต้อง';
             isValid = false;
         }
-
+    
         if (!validateIdCard(formData.id_card)) {
             newErrors.id_card = 'หมายเลขบัตรประชาชนไม่ถูกต้อง';
             isValid = false;
         }
-
+    
         if (!formData.birth_date) {
             newErrors.birth_date = 'กรุณาระบุวันเกิด';
             isValid = false;
         }
-
+    
+        if (!formData.nationality) {
+            newErrors.nationality = 'กรุณาระบุสัญชาติ';
+            isValid = false;
+        }
+    
+        if (!formData.marital_status) {
+            newErrors.marital_status = 'กรุณาระบุสถานะภาพ';
+            isValid = false;
+        }
+    
         // Only validate address fields if the address section is visible
         if (showAddressSection) {
-            if (!formData.nationality) {
-                newErrors.nationality = 'กรุณาระบุสัญชาติ';
-                isValid = false;
-            }
-
-            if (!formData.marital_status) {
-                newErrors.marital_status = 'กรุณาระบุสถานะภาพ';
-                isValid = false;
-            }
-
             if (!formData.current_address) {
                 newErrors.current_address = 'กรุณาระบุที่อยู่ปัจจุบัน';
                 isValid = false;
             }
-
+    
             if (!formData.current_subdistrict) {
                 newErrors.current_subdistrict = 'กรุณาระบุ แขวง/ตำบล';
                 isValid = false;
             }
-
+    
             if (!formData.current_district) {
                 newErrors.current_district = 'กรุณาระบุ เขต/อำเภอ';
                 isValid = false;
             }
-
+    
             if (!formData.current_province) {
                 newErrors.current_province = 'กรุณาระบุจังหวัด';
                 isValid = false;
             }
-
+    
             if (!formData.current_postal_code) {
                 newErrors.current_postal_code = 'กรุณาระบุรหัสไปรษณีย์';
                 isValid = false;
             }
-
+    
             if (!formData.address) {
                 newErrors.address = 'กรุณาระบุที่อยู่ตามทะเบียนบ้าน';
                 isValid = false;
             }
-
+    
             if (!formData.subdistrict) {
                 newErrors.subdistrict = 'กรุณาระบุ แขวง/ตำบล';
                 isValid = false;
             }
-
-            if (!formData.districts) {
-                newErrors.districts = 'กรุณาระบุ เขต/อำเภอ';
+    
+            if (!formData.district) {
+                newErrors.district = 'กรุณาระบุ เขต/อำเภอ';
                 isValid = false;
             }
-
-            if (!formData.provinces) {
-                newErrors.provinces = 'กรุณาระบุจังหวัด';
+    
+            if (!formData.province) {
+                newErrors.province = 'กรุณาระบุจังหวัด';
                 isValid = false;
             }
-
-            if (!formData.postalCode) {
-                newErrors.postalCode = 'กรุณาระบุรหัสไปรษณีย์';
+    
+            if (!formData.postal_code) { // แก้ชื่อให้ตรงกัน
+                newErrors.postal_code = 'กรุณาระบุรหัสไปรษณีย์';
                 isValid = false;
             }
         }
-
+    
+        // Set errors state
         setErrors(newErrors);
         return isValid;
     };
-
-
+    
+    
     const validateRegister = (regisData) => {
         let isValid = true;
         const newErrors = {};
@@ -183,15 +185,7 @@ export const useFormValidation = () => {
         return isValid && Object.keys(newErrors).length === 0;
     };
 
-
-    const isDateWithinLast10Years = (dateString) => {
-        const date = new Date(dateString);
-        const today = new Date();
-        const tenYearsAgo = new Date(today.setFullYear(today.getFullYear() - 10));
-        return date >= tenYearsAgo;
-    };
-
     
 
-    return { errors, validateForm, validateRegister, validateEmail, isDateWithinLast10Years };
+    return { errors, validateForm, validateRegister, validateEmail };
 };
