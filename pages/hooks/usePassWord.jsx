@@ -53,6 +53,20 @@ const usePassword = (user) => {
         }
     };
 
+    const sendResetPassword = async (email) => {
+        const response = await fetch('/api/reset-password', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email }),
+        });
+    
+        if (!response.ok) {
+            throw new Error('Failed to send reset password email');
+        }
+    };
+
     return {
         currentPassword,
         newPassword,
@@ -62,6 +76,7 @@ const usePassword = (user) => {
         setNewPassword,
         setConfirmPassword,
         changePassword,
+        sendResetPassword
     };
 };
 export default usePassword;

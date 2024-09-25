@@ -61,6 +61,12 @@ body {
     padding: .3rem .8rem;
 }
 
+.box-profile-menu {
+    border: 2px solid #eee;
+    border-radius: 35px;
+    padding: 0 .8rem;
+}
+
 a {
     text-decoration: none;
 }
@@ -327,7 +333,6 @@ fieldset:disabled .btn {
     color: #034078;
 }
 
-
 .pl-1 {
     padding-left: 1rem;
 }
@@ -454,7 +459,11 @@ select,
 
 .nav-link {
     line-height: 2rem;
+    padding: .5rem;
+    color: #000;
 }
+
+
 
 .navbar-toggler {
     padding: .5rem !important;
@@ -490,8 +499,15 @@ select,
     background-color: #f8f9fa;
 }
 
+.offcanvas-body {
+    justify-content: flex-end;
+}
 
 
+.dropdown, .dropdown-center, .dropend, .dropstart, .dropup, .dropup-center {
+    align-items: center;
+    display: flex;
+}
 
 
 

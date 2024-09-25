@@ -1,9 +1,12 @@
 const ProjectPayment = [
     {
         id: 'BH-BN36',
-        accNameBank: 'xxxxxxxxxxxxxxxxxxxxxxxxx',
-        accNo: 'xxxxxxxxxxxxxxxxxx',
-        accName: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-        line: '#'
+        bankName: 'xxxxxxxxxxxxxxxxxxxxxxxxx',
+        accountNumber: 'xxxxxxxxxxxxxxxxxx',
+        accountName: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+        branchName: 'xxxxxxxxxxxxxxxxx',
+        line: '/'
     },
 ]
+
+export default ProjectPayment;
