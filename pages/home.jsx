@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Col } from "react-bootstrap";
 import ProjectCard from "./components/ProjectCard";
 import Image from "next/image";
 
@@ -56,13 +56,13 @@ const Homepage = () => {
         {loading ? (
           <Loading />
         ) : (
-          <ProjectCard
-            projects={projects}
-            visibleProjects={visibleProjects}
-            setVisibleProjects={setVisibleProjects}
-            loading={loading}
-            error={error}
-          />
+            <ProjectCard
+              projects={projects}
+              visibleProjects={visibleProjects}
+              setVisibleProjects={setVisibleProjects}
+              loading={loading}
+              error={error}
+            />
         )}
 
       </Container>

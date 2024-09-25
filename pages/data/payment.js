@@ -1,17 +1,9 @@
 const ProjectPayment = [
     {
         id: 'BH-BN36',
-        nameProject: 'ซีรอคโค',
-        location: 'บางนา 36',
-        description: 'คอนโดตรงข้ามเซ็นทรัลบางนา คอนโดมิเนียม 8 ชั้น 4 อาคาร 752 ยูนิต Facilities มากมาย เดินทางสะดวกใกล้ BTS สถานีบางนา เพียงไม่กี่นาที',
-        pic: BHBN36,
-        facilities: [
-            "สระว่ายน้ำ",
-            "สวนส่วนกลาง",
-            "ฟิตเนส",
-            "พื้นที่โถงต้อนรับ",
-            "ที่จอดรถ"
-        ],
+        accNameBank: 'xxxxxxxxxxxxxxxxxxxxxxxxx',
+        accNo: 'xxxxxxxxxxxxxxxxxx',
+        accName: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
         line: '#'
     },
 ]

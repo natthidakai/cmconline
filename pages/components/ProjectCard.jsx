@@ -38,7 +38,7 @@ const ProjectCard = ({ projects, visibleProjects, setVisibleProjects }) => {
 
   return (
     <>
-      <Row className="pt-2 mb-3">
+      <Row className="pt-2 mb-3 justify-content-center-m">
         {projects.slice(0, visibleProjects).map((project) => {
           const status = parseInt(project.ProjectStatus, 10);
           
@@ -46,7 +46,7 @@ const ProjectCard = ({ projects, visibleProjects, setVisibleProjects }) => {
           // console.log("Project Status:", status);
 
           return (
-            <Col key={project.ProjectID} xl="3" sm="10" xs="10">
+            <Col key={project.ProjectID} xxl="3" xl="3" lg="3" md="6" sm="10" xs="10">
               {/* แสดงสถานะของโปรเจกต์ */}
               {status === 0 || status === 1 ? (
                 <div className="th newproject">โครงการใหม่</div>

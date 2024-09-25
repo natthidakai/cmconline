@@ -34,7 +34,6 @@ export default async function handler(req, res) {
 
         try {
             const connection = await Mysql.getConnection();
-            // บันทึกข้อมูลที่เข้ามาเพื่อดีบัก
             console.log('Incoming data:', req.body);
 
             // อัปเดตข้อมูลสมาชิก
@@ -74,15 +73,27 @@ export default async function handler(req, res) {
 
             // เพิ่มข้อมูลการจองใหม่
             const insertBookingSql = `
-                INSERT INTO bookings (member_id, projectID, unitNumber, booking_date)
-                VALUES (?, ?, ?, NOW())`;
+            INSERT INTO bookings (member_id, projectID, unitNumber, booking_date)
+            SELECT ?, ?, ?, NOW()
+            WHERE NOT EXISTS (
+                SELECT 1 FROM bookings 
+                WHERE member_id = ? 
+                AND unitNumber = ? 
+                AND DATE(booking_date) = CURDATE()
+            )
+            `;
 
-            const [insertResult] = await connection.execute(insertBookingSql, [member_id, projectID, unitNumber]);
+            const [insertResult] = await connection.execute(insertBookingSql, [member_id, projectID, unitNumber, member_id, unitNumber]);
 
-            /// ตรวจสอบว่าการจองถูกแทรกสำเร็จหรือไม่
+            // ตรวจสอบว่าการจองถูกแทรกสำเร็จหรือไม่
             if (insertResult.affectedRows === 0) {
-                return res.status(500).json({ error: 'ไม่สามารถเพิ่มการจองได้' });
+                // ส่งการแจ้งเตือนและ redirect ไปยังหน้าที่ต้องการ
+                return res.status(400).json({
+                    alert: 'ไม่สามารถจองห้องซ้ำได้ภายในวันเดียวกัน',
+                    redirect: `/step/1?projectID=${projectID}`
+                });
             }
+
 
             connection.release();
 

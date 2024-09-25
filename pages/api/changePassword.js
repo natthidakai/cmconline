@@ -17,7 +17,7 @@ export default async function handler(req, res) {
             // ตรวจสอบรหัสผ่านปัจจุบัน
             const isMatch = await bcrypt.compare(currentPassword, user[0].password);
             if (!isMatch) {
-                return res.status(401).json({ message: 'รหัสผ่านไม่ถูกต้อง' });
+                return res.status(401).json({ message: 'รหัสผ่านปัจจุบันไม่ถูกต้อง' });
             }
 
             // ถ้ารหัสผ่านถูกต้อง ให้ทำการ hash รหัสผ่านใหม่

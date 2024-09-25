@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import ProjectInfo from "../data/projectinfo";
 import Loading from "../components/loading";
 import ProjectDetails from "../components/ProjectDetails";

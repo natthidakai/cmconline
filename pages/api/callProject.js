@@ -23,15 +23,15 @@ const callProject = async (req, res) => {
 
         const result = await sql.query`
         SELECT 
-        [ProjectID]
-      ,[BrandName]
-      ,[Location]
-      ,[ProjectType]
-      ,[ProjectStatus]
-      ,[MINPrice] 
-        FROM [CRMRE_Production].[dbo].[vw_ITF_ProjectInfo] 
-        WHERE ProjectID = 'BH-BN36'
-    `;
+            [ProjectID]
+            ,[BrandName]
+            ,[Location]
+            ,[ProjectType]
+            ,[ProjectStatus]
+            ,[MINPrice] 
+                FROM [CRMRE_Production].[dbo].[vw_ITF_ProjectInfo] 
+                WHERE ProjectID = 'BH-BN36'
+        `;
 
         console.log('Query result:', result);
 

@@ -16,19 +16,19 @@ const UnitDetailsBooking = ({
     return (
         <Col>
             {Object.entries(unitModelIDs).map(([unitNumber, modelID]) => (
-                <Row key={unitNumber} className='mb-4'>
-                    <Col className='center'>
+                <Row key={unitNumber} className='mb-4 justify-content-center-m'>
+                    <Col className='center mb-4' xxl="4" xl="4" lg="6" md="6" sm="10" xs="10">
                         {modelID && (
                             <Image
                                 src={unitPlanImagePath}
                                 alt={`Floor plan for ${floorName} of ${modelID}`}
                                 width={800}
                                 height={500}
-                                className="img-floorplan"
+                                className="img-full"
                             />
                         )}
                     </Col>
-                    <Col className='align-content-center'>
+                    <Col className='align-content-center pl-2' xxl="8" xl="8" lg="6" md="6" sm="10" xs="10">
                         <Col className="th project-name name-info">{projectInfo.nameProject}</Col>
                         <Col xxl="7" xl="7" lg="7" md="10" sm="12" xs="12" className='mb-3'>
                             <Row>

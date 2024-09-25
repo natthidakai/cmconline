@@ -10,8 +10,8 @@ import Default from "../assert/images/default.jpg";
 const ProjectDetails = ({ projectInfo, projectID }) => {
 
     return (
-        <Row>
-            <Col xxl="4" className="hoverImageProjectInfo border-radius-20">
+        <Row className="justify-content-center-m">
+            <Col xxl="4" xl="4" lg="6" md="6" sm="12" xs="10" className="hoverImageProjectInfo border-radius-20">
                 {projectInfo.pic ? (
                     <Image
                         src={projectInfo.pic}
@@ -30,7 +30,7 @@ const ProjectDetails = ({ projectInfo, projectID }) => {
                     />
                 )}
             </Col>
-            <Col xl="8" className="pl-2 py-4">
+            <Col xxl="8" xl="8" lg="6" md="6" sm="12" xs="11" className="pl-2 py-4">
                 <Col className="mb-5">
                     <Col className="th project-name name-info">{projectInfo.nameProject}</Col>
                     <Col className="align-items-baseline">

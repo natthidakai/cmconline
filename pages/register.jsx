@@ -8,81 +8,79 @@ import LOGO from "./assert/images/logo.jpg";
 
 const Register = () => {
 
-    const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-    const router = useRouter();
-  
-    const [formErrors, setFormErrors] = useState({});
-    const { errors, validateRegister } = useFormValidation();
-    const [regisData, setRegisData] = useState({
-      first_name: "",
-      last_name: "",
-      phone: "",
-      email: "",
-      password: "",
-      CFpassword: "",
-    });
-  
-    const registerUser = async (e) => {
-        e.preventDefault();
-        
-        // ตรวจสอบค่า regisData ล่าสุด
-        console.log("Current regisData:", regisData);
-      
-        const isValid = validateRegister(regisData);
-      
-        if (!isValid) {
-          console.error("Form validation failed");
-          return;
-        }
-      
-        setIsLoading(true); // เริ่มการโหลด
-      
-        try {
-          const response = await fetch("/api/useRegister", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(regisData), // ใช้ค่า regisData ล่าสุด
-          });
-      
-          if (response.ok) {
-            router.push("/"); // เปลี่ยนไปที่หน้าแรกหลังจากสมัครสมาชิกสำเร็จ
-            setRegisData({
-              first_name: "",
-              last_name: "",
-              phone: "",
-              email: "",
-              password: "",
-              CFpassword: "",
-            });
-          } else {
-            const errorData = await response.json();
-            setFormErrors({
-              email: errorData.message.includes("อีเมล") ? errorData.message : "",
-              phone: errorData.message.includes("เบอร์โทรศัพท์")
-                ? errorData.message
-                : "",
-            });
-          }
-        } catch (error) {
-          console.error("เกิดข้อผิดพลาด:", error);
-        } finally {
-          setIsLoading(false); // หยุดการโหลด
-        }
-      };
-      
-  
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setRegisData((prevData) => ({
-          ...prevData,
-          [name]: value, // อัปเดตค่าฟิลด์ที่เปลี่ยนแปลง
-        }));
-      };
-      
-  
+  const router = useRouter();
+
+  const [formErrors, setFormErrors] = useState({});
+  const { errors, validateRegister } = useFormValidation();
+  const [regisData, setRegisData] = useState({
+    first_name: "",
+    last_name: "",
+    phone: "",
+    email: "",
+    password: "",
+    CFpassword: "",
+  });
+
+  const registerUser = async (e) => {
+    e.preventDefault();
+
+    // ตรวจสอบค่า regisData ล่าสุด
+    console.log("Current regisData:", regisData);
+
+    const isValid = validateRegister(regisData);
+
+    if (!isValid) {
+      console.error("Form validation failed");
+      return;
+    }
+
+    setIsLoading(true); // เริ่มการโหลด
+
+    try {
+      const response = await fetch("/api/useRegister", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(regisData), // ใช้ค่า regisData ล่าสุด
+      });
+
+      if (response.ok) {
+        router.push("/login"); // เปลี่ยนไปที่หน้า login หลังจากสมัครสมาชิกสำเร็จ
+        setRegisData({
+          first_name: "",
+          last_name: "",
+          phone: "",
+          email: "",
+          password: "",
+          CFpassword: "",
+        });
+      } else {
+        const errorData = await response.json();
+        setFormErrors({
+          email: errorData.message.includes("อีเมล") ? errorData.message : "",
+          phone: errorData.message.includes("เบอร์โทรศัพท์")
+            ? errorData.message
+            : "",
+        });
+      }
+    } catch (error) {
+      console.error("เกิดข้อผิดพลาด:", error);
+    } finally {
+      setIsLoading(false); // หยุดการโหลด
+    }
+  };
+
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setRegisData((prevData) => ({
+      ...prevData,
+      [name]: value, // อัปเดตค่าฟิลด์ที่เปลี่ยนแปลง
+    }));
+  };
 
   return (
     <Container className="py-5">

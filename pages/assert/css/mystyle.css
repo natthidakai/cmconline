@@ -14,6 +14,7 @@ body {
     font-size: 35px;
     font-weight: 800;
     margin-bottom: -5px;
+    color: #000;
 }
 
 .text-title {
@@ -28,6 +29,7 @@ body {
 .textmenu {
     font-size: 14px;
     font-weight: 500;
+    color: #000;
 }
 
 .project-name {
@@ -170,7 +172,7 @@ a.btn-xl.th.btn.btn-primary:hover {
 .ready2move {
     background-color: #e56b36;
     padding: .4rem 1rem;
-    width: 50%;
+    width: 60%;
     color: #fff;
     top: 5rem;
     position: relative;
@@ -436,6 +438,65 @@ select,
     display: flex;
 }
 
+/* ลบกรอบและพื้นหลังของ dropdown-menu */
+.dropdown-menu {
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    transition: max-height 0.4s ease-in-out;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.nav-link {
+    line-height: 2rem;
+}
+
+.navbar-toggler {
+    padding: .5rem !important;
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0px 0px 2px 5px #0340788c;
+}
+
+.bg-body-tertiary {
+    background-color: #fff !important;
+}
+
+/* เมื่อ dropdown เปิด ให้ทำการสไลด์ */
+.dropdown-menu.show {
+    max-height: 500px; /* ปรับขนาดตามเนื้อหาของ dropdown */
+    opacity: 1;
+    visibility: visible;
+    width: 100%;
+    font-size: 18px;
+}
+
+/* แก้ไข padding ในแต่ละรายการ */
+.dropdown-item {
+    padding: 0.5rem 1rem;
+    background-color: white; /* สามารถปรับได้ตามดีไซน์ */
+    transition: background-color 0.2s;
+    line-height: 1.8rem;
+}
+
+/* เพิ่มเอฟเฟกต์เมื่อ hover */
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
+
+
+
+
+
+
+
 .BH-BN36-A201 {
     top: 80rem;
     right: 36rem;
@@ -507,10 +568,6 @@ select,
     right: 25.9rem;
     position: absolute;
 }
-
-
-
-
 
 
 
@@ -1081,6 +1138,11 @@ select,
 
 /* iPad Mini แนวตั้ง */
 @media (min-width: 768px) and (max-width: 819.98px) {
+
+    .ready2move, .newproject {
+        width: 50%;
+    }
+
     .box-facility {
         padding-left: 0;
     }
@@ -1153,8 +1215,14 @@ select,
 
 
 
+
 /* iPad Air แนวตั้ง */
 @media (min-width: 820px) and (max-width: 991.98px) {
+
+    .ready2move, .newproject {
+        width: 50%;
+    }
+
     .box-facility {
         padding-left: 0;
     }
@@ -1429,6 +1497,11 @@ select,
 
 /* iPad Pro แนวตั้ง */
 @media (min-width: 992px) and (max-width: 1199.98px) {
+
+    .ready2move, .newproject {
+        width: 70%;
+    }
+
     .box-facility {
         padding-left: 0;
     }
@@ -1502,6 +1575,11 @@ select,
 
 /* iPad Mini แนวนอน */
 @media (min-width: 1024px) and (max-width: 1079.98px) {
+
+    .ready2move, .newproject {
+        width: 70%;
+    }
+
     .box-facility {
         padding-left: 0;
     }
@@ -1572,8 +1650,14 @@ select,
 }
 
 
+
 /* iPad Air แนวนอน */
 @media (min-width: 1180px) and (max-width: 1199.98px) {
+
+    .ready2move, .newproject {
+        width: 50%;
+    }
+
     .box-facility {
         padding-left: 0;
     }
@@ -1644,8 +1728,14 @@ select,
 }
 
 
+
 /* iPad Pro แนวนอน */
 @media (min-width: 1200px) and (max-width: 1399.98px) {
+
+    .ready2move, .newproject {
+        width: 70%;
+    }
+
     .box-facility {
         padding-left: 0;
     }

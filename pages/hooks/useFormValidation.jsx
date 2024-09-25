@@ -1,8 +1,14 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 export const useFormValidation = () => {
 
     const [errors, setErrors] = useState({});
+    const [isSameAddress, setIsSameAddress] = useState(false);
+    const [currentPassword, setCurrentPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const router = useRouter();
 
     const validateIdCard = (id) => {
         if (!/^\d{13}$/.test(id)) return false;
@@ -185,7 +191,74 @@ export const useFormValidation = () => {
         return isValid && Object.keys(newErrors).length === 0;
     };
 
-    
+    const handleCheckboxChange = (setUser) => (event) => {
+        const { checked } = event.target;
+        setIsSameAddress(checked);
 
-    return { errors, validateForm, validateRegister, validateEmail };
+        if (checked) {
+            setUser((prevUser) => ({
+                ...prevUser,
+                address: prevUser.current_address,
+                subdistrict: prevUser.current_subdistrict,
+                district: prevUser.current_district,
+                province: prevUser.current_province,
+                postal_code: prevUser.current_postal_code,
+            }));
+        } else {
+            setUser((prevUser) => ({
+                ...prevUser,
+                address: '',
+                subdistrict: '',
+                district: '',
+                province: '',
+                postal_code: '',
+            }));
+        }
+    };
+
+    const changePassword = async (e) => {
+        e.preventDefault();
+        setErrors('');
+
+        if (currentPassword === '') {
+            setErrors('กรุณาระบุรหัสผ่านปัจจุบัน');
+            return;
+        } else if (newPassword === '') {
+            setErrors('กรุณากำหนดรหัสผ่านใหม่');
+            return;
+        } else if (confirmPassword === '') {
+            setErrors('กรุณายืนยันรหัสผ่านใหม่');
+            return;
+        } else if (newPassword !== confirmPassword) {
+            setErrors('รหัสผ่านใหม่ไม่ตรงกัน');
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/changepass', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ currentPassword, newPassword, member_id: user.member_id }),
+            });
+
+            if (!response.ok) {
+                const data = await response.json();
+                throw new Error(data.message);
+            }
+
+            // Reset form fields
+            setCurrentPassword('');
+            setNewPassword('');
+            setConfirmPassword('');
+
+            alert('เปลี่ยนรหัสผ่านเรียบร้อย');
+            router.push('/profile');
+        } catch (error) {
+            setError(error.message);
+        }
+    };
+
+    return { errors, validateForm, validateRegister, validateEmail, isSameAddress, handleCheckboxChange,currentPassword, newPassword, confirmPassword, setCurrentPassword, setNewPassword, setConfirmPassword, changePassword };
 };

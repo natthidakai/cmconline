@@ -4,10 +4,11 @@ import Check from "../assert/images/check.png";
 
 const UnitDetails = ({ unitDetails, projectInfo }) => {
     return (
-        <Col>
+        <Row className='justify-content-center-m'>
+            <Col xxl="12" xl="12" lg="12" md="12" sm="10" xs="10">
             <h5 className='th mb-3'>รายละเอียดเพิ่มเติม</h5>
             <Row className='pl-2'>
-                <Col>
+                <Col xxl="6" xl="6" lg="6" md="6" sm="12" xs="12" className='mb-4'>
                     <h6 className='th font-18'>รายละเอียดยูนิต</h6>
                     {unitDetails.map((detail, index) => (
                         <Col key={index}>
@@ -33,7 +34,7 @@ const UnitDetails = ({ unitDetails, projectInfo }) => {
                         </Col>
                     ))}
                 </Col>
-                <Col>
+                <Col xxl="6" xl="6" lg="6" md="6" sm="12" xs="12" className='mb-4'>
                     <h6 className='th'>สิ่งอำนวยความสะดวก</h6>
                     <Row>
                         {projectInfo.facilities.map((facility, index) => (
@@ -54,6 +55,7 @@ const UnitDetails = ({ unitDetails, projectInfo }) => {
                 </Col>
             </Row>
         </Col>
+        </Row>
     );
 };
 
