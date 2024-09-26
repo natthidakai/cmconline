@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
-const usePassword = (user) => {
+export const usePassword = (user) => {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -79,4 +79,3 @@ const usePassword = (user) => {
         sendResetPassword
     };
 };
-export default usePassword;

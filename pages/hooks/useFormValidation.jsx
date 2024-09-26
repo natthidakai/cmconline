@@ -245,7 +245,7 @@ export const useFormValidation = () => {
 
             if (!response.ok) {
                 const data = await response.json();
-                throw new Error(data.message);
+                throw new Error(data.message || 'เกิดข้อผิดพลาดในการเปลี่ยนรหัสผ่าน');
             }
 
             // Reset form fields
@@ -256,7 +256,7 @@ export const useFormValidation = () => {
             alert('เปลี่ยนรหัสผ่านเรียบร้อย');
             router.push('/profile');
         } catch (error) {
-            setError(error.message);
+            setErrors(error.message);
         }
     };
 

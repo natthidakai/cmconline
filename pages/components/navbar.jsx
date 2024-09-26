@@ -85,11 +85,11 @@ const Menubar = () => {
                         ) : (
                             <div className="th box-login-menu d-flex align-items-center">
                                 <Image src={User} alt="User Icon" width={30} height={30} />
-                                <Link href={`/register`} onClick={handleLinkClick} className="ms-2 text-blue">
+                                <Link href={`/signup`} onClick={handleLinkClick} className="ms-2 text-blue">
                                     สมัครสมาชิก
                                 </Link>
                                 <span className="ms-2">|</span>
-                                <Link href={`/login`} onClick={handleLinkClick} className="ms-2 text-blue">
+                                <Link href={`/signin`} onClick={handleLinkClick} className="ms-2 text-blue">
                                     เข้าสู่ระบบ
                                 </Link>
                             </div>

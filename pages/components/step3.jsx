@@ -1,48 +1,65 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Container, Row, Col, Button } from "react-bootstrap";
-import { useFormValidation } from '../hooks/useFormValidation';
+import { useSession } from 'next-auth/react';
+
+import { useFetchUser } from '../hooks/useFetchUser'
+import { useSignUp } from '../hooks/useSignUp';
+
 import Loading from './loading'
 
-const Step3 = () => {
+const Step3 = ({ initialUserData }) => {
 
     const router = useRouter();
     const { projectID, floorName, towerName, unitNumber } = router.query;
-
     const [loading, setLoading] = useState(true);
-    const { errors, validateForm, isSameAddress, handleCheckboxChange } = useFormValidation();
-    const [error, setError] = useState(null);
+    const { errors, isSameAddress, handleCheckboxChange, submitBooking, user, setUser } = useSignUp();
 
-
-    // สมมติว่าคุณมีสถานะดังต่อไปนี้
-    const [user, setUser] = useState({
-        member_id: '',
-        title: '',
-        first_name: '',
-        last_name: '',
-        email: '',
-        phone: '',
-        id_card: '',
-        birth_date: '',
-        nationality: '',
-        marital_status: '',
-        current_address: '',
-        current_subdistrict: '',
-        current_district: '',
-        current_province: '',
-        current_postal_code: '',
-        address: '',
-        subdistrict: '',
-        district: '',
-        province: '',
-        postal_code: '',
-        projectID: projectID,
-        unitNumber: unitNumber
-    });
-
+    const fetchedData = useFetchUser();
+    const { user: fetchedUser = {}, error } = fetchedData || {};
+    const { data: session, status } = useSession();
+    const [userData, setUserData] = useState(null);
+    const [roomDetails, setRoomDetails] = useState(null);
     const [showAddressSection, setShowAddressSection] = useState(false);
 
-    // ฟังก์ชันเพื่อตรวจสอบฟิลด์ที่จำเป็น
+    useEffect(() => {
+        if (status === 'authenticated') {
+            setUserData(session.user);
+            // กำหนด roomDetails ให้เป็นห้องที่เลือกไว้ก่อนหน้านี้
+            setRoomDetails({
+                projectID,
+                floorName,
+                towerName,
+                unitNumber
+            });
+        }
+    }, [status, session, projectID, floorName, towerName, unitNumber]);
+
+    useEffect(() => {
+        if (projectID && unitNumber) {
+            setUser(prevUser => ({
+                ...prevUser,
+                projectID,
+                unitNumber
+            }));
+        }
+    }, [projectID, unitNumber]);
+
+    useEffect(() => {
+        if (fetchedUser && Object.keys(fetchedUser).length > 0) {
+            setUser(fetchedUser);
+        }
+        setLoading(false);
+
+        if (error) {
+            console.error('Error fetching user:', error);
+        }
+    }, [fetchedUser, error, setUser]);
+
+    const handleSubmit = (e) => {
+        submitBooking(e, projectID, unitNumber, showAddressSection, floorName, towerName);
+    };
+
     const checkFormPersonal = (userData) => {
         const requiredFields = [
             "title",
@@ -81,140 +98,23 @@ const Step3 = () => {
         });
     };
 
-    useEffect(() => {
-        // Update user state when router.query values are available
-        if (projectID && unitNumber) {
-            setUser(prevUser => ({
-                ...prevUser,
-                projectID: projectID,
-                unitNumber: unitNumber
-            }));
-        }
-    }, [projectID, unitNumber]);
+    if (loading) {
+        return <p>Loading...</p>;
+    }
 
-    useEffect(() => {
-        // Check form validation when user data changes
-        checkFormPersonal(user);
-    }, [user]);
-
-    useEffect(() => {
-        const fetchUsers = async () => {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                router.push('/login');
-                return;
-            }
-
-            try {
-                const response = await fetch('/api/getUser', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                    },
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to fetch user data');
-                }
-
-                const usersData = await response.json();
-                setUser(usersData);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchUsers();
-    }, [router]);
+    if (status === 'unauthenticated') {
+        return (
+            <div>
+                <p>Please log in to access this page.</p>
+                {/* Link to login page */}
+            </div>
+        );
+    }
 
     if (error) {
         return <div>เกิดข้อผิดพลาด: {error}</div>;
     }
-
-    if (!user) {
-        return <Loading />;
-    }
-
-    const submitRegister = async (e) => {
-        e.preventDefault();
-
-        if (!user.member_id) {
-            console.error('Member ID is missing');
-            return;
-        }
-
-        console.log("Form Data Being Sent (user):", { ...user, projectID, unitNumber });
-
-        const isValid = validateForm(user, showAddressSection);
-
-        if (isValid) {
-            try {
-                const updatedUser = {
-                    ...user,
-                    projectID: projectID,
-                    unitNumber: unitNumber
-                };
-
-                const response = await fetch('/api/booking', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(updatedUser),
-                });
-
-                if (response.ok) {
-                    // เมื่อการจองสำเร็จ
-                    router.push(`/step/4?projectID=${projectID}&floorName=${floorName}&towerName=${towerName}&unitNumber=${unitNumber}`);
-                    // ล้างข้อมูลผู้ใช้
-                    setUser({
-                        title: '',
-                        first_name: '',
-                        last_name: '',
-                        projectID: projectID,
-                        unitNumber: unitNumber,
-                        phone: '',
-                        email: '',
-                        id_card: '',
-                        birth_date: '',
-                        nationality: '',
-                        marital_status: '',
-                        current_address: '',
-                        current_subdistrict: '',
-                        current_district: '',
-                        current_province: '',
-                        current_postal_code: '',
-                        address: '',
-                        subdistrict: '',
-                        district: '',
-                        province: '',
-                        postal_code: ''
-                    });
-                } else {
-                    // จัดการกับข้อผิดพลาดเมื่อการจองไม่สำเร็จ
-                    const errorData = await response.json();
-                    console.error('Failed to book', errorData);
-
-                    // ตรวจสอบว่ามีข้อมูล redirect ใน response หรือไม่
-                    if (errorData.redirect) {
-                        alert(errorData.alert);
-                        router.push(errorData.redirect);
-                    } else {
-                        alert(errorData.alert); // แสดงข้อความแจ้งเตือน
-                    }
-                }
-            } catch (error) {
-                console.error('Error submitting form', error);
-            }
-        } else {
-            console.error('Form validation failed');
-        }
-    };
-
-
-
-
+    
     return (
         <Container className='py-5'>
             <h3 className="th px-3 center">ข้อมูลการจอง</h3>
@@ -227,41 +127,36 @@ const Step3 = () => {
                         <h5 className='th'>ข้อมูลส่วนบุคคล</h5>
 
                         <Row className='box-step-3 mb-5'>
-                            <Col xxl="4" xl="4" lg="4" md="4" sm="12" xs="12" className='mb-4'>
-                                <label htmlFor="title" className="form-label th">คำนำหน้าชื่อ</label>
-                                <Col>
+                        {/* Map through fields to generate input elements */}
+                        {[
+                            { label: 'คำนำหน้าชื่อ', id: 'title', type: 'select', options: ['-- กรุณาเลือก --', 'นาย', 'นาง', 'นางสาว'], value: user.title },
+                            { label: 'ชื่อ', id: 'first_name', type: 'text', value: user.first_name },
+                            { label: 'นามสกุล', id: 'last_name', type: 'text', value: user.last_name },
+                            { label: 'อีเมล', id: 'email', type: 'text', value: user.email },
+                            { label: 'เบอร์โทรศัพท์', id: 'phone', type: 'text', value: user.phone },
+                            { label: 'เลขบัตรประชาชน', id: 'id_card', type: 'text', value: user.id_card },
+                            { label: 'วันเกิด', id: 'birth_date', type: 'date', value: user.birth_date ? new Date(user.birth_date).toISOString().split('T')[0] : '' },
+                            { label: 'สัญชาติ', id: 'nationality', type: 'text', value: user.nationality },
+                            { label: 'สถานะภาพ', id: 'marital_status', type: 'select', options: ['-- กรุณาเลือก --', 'โสด', 'สมรส', 'หย่า', 'หม้าย', 'ไม่ระบุ'], value: user.marital_status },
+                        ].map(({ label, id, type, options, value }) => (
+                            <Col xxl="4" xl="4" lg="4" md="4" sm="12" xs="12" className='mb-4' key={id}>
+                                <label htmlFor={id} className="form-label th">{label}</label>
+                                {type === 'select' ? (
                                     <select
                                         className="form-select th"
-                                        aria-label="title"
-                                        id="title"
-                                        name='title'
-                                        value={user.title || ''}
-                                        onChange={(e) => handleInputChange('title', e.target.value)}
+                                        id={id}
+                                        value={value || ''}
+                                        onChange={(e) => handleInputChange(id, e.target.value)}
                                         required
                                     >
-                                        <option value="" defaultValue>-- กรุณาเลือก --</option>
-                                        <option value="นาย">นาย</option>
-                                        <option value="นาง">นาง</option>
-                                        <option value="นางสาว">นางสาว</option>
+                                        {options.map((option, index) => (
+                                            <option key={index} value={option}>{option}</option>
+                                        ))}
                                     </select>
-                                </Col>
-                                {errors.title && <div className="text-danger th mt-2">{errors.title}</div>}
-                            </Col>
-                            {[
-                                { label: 'ชื่อ', id: 'first_name', type: 'text', value: user.first_name || '' },
-                                { label: 'นามสกุล', id: 'last_name', type: 'text', value: user.last_name || '' },
-                                { label: 'อีเมล', id: 'email', type: 'text', value: user.email || '' },
-                                { label: 'เบอร์โทรศัพท์', id: 'phone', type: 'text', value: user.phone || '' },
-                                { label: 'เลขบัตรประชาชน', id: 'id_card', type: 'text', value: user.id_card || '' },
-                                { label: 'วันเกิด', id: 'birth_date', type: 'date', value: user.birth_date ? new Date(user.birth_date).toISOString().split('T')[0] : '' },
-                                { label: 'สัญชาติ', id: 'nationality', type: 'text', value: user.nationality || '' },
-                            ].map(({ label, id, type, value }) => (
-                                <Col xxl="4" xl="4" lg="4" md="4" sm="12" xs="12" className='mb-4' key={id}>
-                                    <label htmlFor={id} className="form-label th">{label}</label>
+                                ) : (
                                     <input
                                         type={type}
                                         id={id}
-                                        name={id}
                                         className="form-control th"
                                         value={value || ''}
                                         onChange={(e) => {
@@ -280,32 +175,11 @@ const Step3 = () => {
                                             handleInputChange(id, newValue); // อัปเดตเรียกใช้ที่นี่
                                         }}
                                     />
-                                </Col>
-                            ))}
-
-                            <Col xxl="4" xl="4" lg="4" md="4" sm="12" xs="12" className='mb-4'>
-                                <label htmlFor="marital_status" className="form-label th">สถานะภาพ</label>
-                                <Col>
-                                    <select
-                                        className="status form-select th"
-                                        aria-label="marital_status"
-                                        id="marital_status"
-                                        name="marital_status"
-                                        value={user.marital_status || ''} // ตรวจสอบให้แน่ใจว่า user.marital_status ไม่เป็น undefined
-                                        onChange={(e) => handleInputChange('marital_status', e.target.value)}
-                                        required
-                                    >
-                                        <option value="" >-- กรุณาเลือก --</option> {/* ใช้ disabled เพื่อไม่ให้เลือก */}
-                                        <option value="โสด">โสด</option>
-                                        <option value="สมรส">สมรส</option>
-                                        <option value="หย่า">หย่า</option>
-                                        <option value="หม้าย">หม้าย</option>
-                                        <option value="ไม่ระบุ">ไม่ระบุ</option>
-                                    </select>
-                                </Col>
-                                {errors.marital_status && <div className="text-danger th mt-2">{errors.marital_status}</div>}
+                                )}
+                                {errors[id] && <div className="text-danger th mt-2">{errors[id]}</div>}
                             </Col>
-                        </Row>
+                        ))}
+                    </Row>
                     </Col>
 
                     {showAddressSection && (
@@ -402,7 +276,7 @@ const Step3 = () => {
                     {/* Submit Button */}
                     <Row>
                         <Col className='justify-content-center'>
-                            <Button className="btn-xl th" onClick={submitRegister}>ลงทะเบียนจอง</Button>
+                            <Button className="btn-xl th" onClick={handleSubmit}>ลงทะเบียนจอง</Button>
                         </Col>
                     </Row>
                 </Row>

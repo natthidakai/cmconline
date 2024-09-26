@@ -2,55 +2,70 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Loading from './components/loading';
-import { useFormValidation } from './hooks/useFormValidation';
-import { useFetchUser } from './hooks/useFetchUser';
+import { useSignUp } from './hooks/useSignUp';
+import { useSession } from 'next-auth/react';
 
 const Profile = () => {
+
+    const { data: session, status } = useSession();
+
+    // Loading state while session is being checked
+    if (status === 'loading') {
+        return <p>Loading...</p>;
+    }
+
+    // Redirect if user is not authenticated
+    if (status === 'unauthenticated') {
+        return <p>Please log in to access this page.</p>;
+    }
+    
     const router = useRouter();
     const [loading, setLoading] = useState(true);
-    const [user, setUser] = useState({});
-    const { isSameAddress, handleCheckboxChange } = useFormValidation();
+    const { isSameAddress, handleCheckboxChange, user, setUser, updateUserData } = useSignUp();
+    const [errors, setErrors] = useState('');
 
-    const fetchedData = useFetchUser();
-    const { user: fetchedUser = {}, error } = fetchedData || {};
-
+    // Set user data from session when the component mounts
     useEffect(() => {
-        if (fetchedUser) {
-            setUser(fetchedUser);
-            setLoading(false);
+        if (session) {
+            setUser(session.user);
         }
-        if (error) {
-            console.error('Error fetching user:', error);
-            setLoading(false);
-        }
-    }, [fetchedUser, error]);
+        setLoading(false);
+    }, [session, setUser]);
 
+
+    const validateForm = () => {
+        setErrors('');
+
+        if (!user.first_name) {
+            setErrors('กรุณาระบุชื่อ');
+            return false; 
+        } else if (!user.last_name) {
+            setErrors('กรุณาระบุนามสกุล');
+            return false; 
+        } else if (!user.email) {
+            setErrors('กรุณาระบุอีเมล'); 
+            return false; 
+        } else if (!user.phone) {
+            setErrors('กรุณาระบุหมายเลขโทรศัพท์'); 
+            return false; 
+        } else if (!user.id_card) {
+            setErrors('กรุณาระบุหมายเลขบัตรประชาชน'); 
+            return false; 
+        }
+
+        return true; 
+    };
+    
+    const handleSubmit = () => {
+        if (validateForm()) {
+            updateUserData(user); // ส่ง user ที่ถูกต้อง
+        }
+    };
+
+    // Show loading state until data is fetched and set
     if (loading) {
         return <Loading />;
     }
-
-    const saveUserData = async () => {
-        const token = localStorage.getItem('token');
-        try {
-            const response = await fetch('/api/updateUser', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
-                body: JSON.stringify(user),
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to save user data');
-            }
-
-            alert('ข้อมูลถูกบันทึกเรียบร้อย');
-            router.push('/profile');
-        } catch (error) {
-            console.error('Error saving user data:', error);
-        }
-    };
 
     return (
         <Container className="py-5">
@@ -63,6 +78,7 @@ const Profile = () => {
                     ) : (
                         <Row className="box-step-3 px-3 py-5 box-shadow">
                             <h5 className='th mb-4'>ข้อมูลส่วนบุคคล</h5>
+                            {/* Personal information fields */}
                             {[
                                 { label: 'ชื่อ', id: 'first_name', type: 'text', value: user.first_name || '' },
                                 { label: 'นามสกุล', id: 'last_name', type: 'text', value: user.last_name || '' },
@@ -74,22 +90,22 @@ const Profile = () => {
                             ].map(({ label, id, type, value }) => (
                                 <Col xxl="6" xl="6" lg="6" md="6" sm="12" xs="12" className="mb-4" key={id}>
                                     <label htmlFor={id} className="form-label th">{label}</label>
-                                    <input 
+                                    <input
                                         type={type}
                                         id={id}
                                         name={id}
                                         className="form-control th"
                                         value={value}
                                         onChange={(e) => {
-                                            let newValue = e.target.value; // เริ่มต้นด้วยค่าปกติ
+                                            let newValue = e.target.value;
 
-                                            // การกรองค่า
+                                            // Filtering logic for email, phone, id_card
                                             if (id === 'email') {
                                                 newValue = newValue.replace(/[\u0E00-\u0E7F]/g, '').replace(/[^a-zA-Z0-9@._-]/g, '');
                                             } else if (id === 'phone') {
-                                                newValue = newValue.replace(/\D/g, '').slice(0, 10); // จำกัดจำนวนตัวอักษรเป็น 5 ตัว
+                                                newValue = newValue.replace(/\D/g, '').slice(0, 10); // Phone number limited to 10 digits
                                             } else if (id === 'id_card') {
-                                                newValue = newValue.replace(/\D/g, '').slice(0, 13); // จำกัดจำนวนตัวอักษรเป็น 13 ตัว
+                                                newValue = newValue.replace(/\D/g, '').slice(0, 13); // ID card limited to 13 digits
                                             }
 
                                             setUser({ ...user, [id]: newValue });
@@ -137,14 +153,13 @@ const Profile = () => {
                                         value={user[id] || ''}
                                         onChange={(e) => {
                                             const newValue = (id === 'current_postal_code')
-                                                ? e.target.value.replace(/\D/g, '').slice(0, 5)// Filter for numbers for postal code only
-                                                : e.target.value; // Allow normal input for other fields
+                                                ? e.target.value.replace(/\D/g, '').slice(0, 5) // Limit postal code to 5 digits
+                                                : e.target.value;
                                             setUser({ ...user, [id]: newValue });
                                         }}
                                     />
                                 </Col>
                             ))}
-
 
                             <hr className='my-5' />
                             <Row>
@@ -171,7 +186,7 @@ const Profile = () => {
                             ].map(({ label, id, isFullWidth }) => (
                                 <Col key={id} xxl={isFullWidth ? "12" : "6"} xl={isFullWidth ? "12" : "6"} lg={isFullWidth ? "12" : "6"} md={isFullWidth ? "12" : "6"} sm="12" xs="12" className="mb-4">
                                     <label htmlFor={id} className="form-label th">{label}</label>
-                                    <input key={user.member_id}
+                                    <input
                                         type="text"
                                         id={id}
                                         name={id}
@@ -179,16 +194,19 @@ const Profile = () => {
                                         value={user[id] || ''}
                                         onChange={(e) => {
                                             const newValue = (id === 'postal_code')
-                                                ? e.target.value.replace(/\D/g, '').slice(0, 5)// Filter for numbers for postal code only
-                                                : e.target.value; // Allow normal input for other fields
+                                                ? e.target.value.replace(/\D/g, '').slice(0, 5) // Limit postal code to 5 digits
+                                                : e.target.value;
                                             setUser({ ...user, [id]: newValue });
                                         }}
                                     />
                                 </Col>
                             ))}
+                            <div className="text-danger th mb-4 center">{errors}</div>
                             <Row>
                                 <Col className="justify-content-center">
-                                    <Button className="btn-xl th" onClick={saveUserData}>บันทึกข้อมูล</Button>
+                                    <Button className="btn-xl th" onClick={handleSubmit} disabled={loading}>
+                                        {loading ? 'กำลังบันทึกข้อมูล...' : 'บันทึกข้อมูล'}
+                                    </Button>
                                 </Col>
                             </Row>
                         </Row>
@@ -197,6 +215,6 @@ const Profile = () => {
             </Row>
         </Container>
     );
-};
+}
 
 export default Profile;

@@ -1,67 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { useRouter } from 'next/router';
+
 import { Container, Row, Col, Button } from "react-bootstrap";
+import { useAuth } from "./api/auth/useAuth";
+
 import Image from "next/image";
 import LOGO from "./assert/images/logo.jpg";
-
 import Link from "next/link";
 
-const Login = () => {
-    const [loginData, setLoginData] = useState({ email: "", password: "" });
-    const [errors, setErrors] = useState({});
-    const [isLoading, setIsLoading] = useState(false);
-    const router = useRouter();
+const SignIn = () => {
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            router.push('/profile');
-        }
-    }, [router]);
+    const { loginData, errors, isLoading, handleInputChange, loginUser } = useAuth();
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setLoginData({ ...loginData, [name]: value });
-    };
-
-    const loginUser = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        setIsLoading(true);
-
-        // Validate input fields
-        if (!loginData.email || !loginData.password) {
-            setErrors({ message: 'กรุณากรอกอีเมลและรหัสผ่านให้ครบถ้วน' });
-            setIsLoading(false);
-            return;
-        }
-
-        try {
-            const response = await fetch("/api/useLogin", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(loginData),
-            });
-
-            const result = await response.json();
-
-            if (response.ok) {
-                localStorage.setItem('token', result.token); // เก็บ token ใน localStorage
-                router.push("/").then(() => {
-                    router.reload();
-                });
-            } else {
-                setErrors({ message: result.message });
-            }
-        } catch (error) {
-            console.error("เกิดข้อผิดพลาดในการเข้าสู่ระบบ:", error);
-            setErrors({ message: 'เกิดข้อผิดพลาดในการเข้าสู่ระบบ' });
-        } finally {
-            setIsLoading(false);
-        }
+        loginUser(e); // Pass the event to loginUser
     };
-
 
     return (
         <Container className="py-5">
@@ -87,6 +40,8 @@ const Login = () => {
                                 className="form-control th"
                                 value={loginData.email}
                                 onChange={handleInputChange}
+                                required
+                                aria-label="Email"
                             />
                         </Col>
 
@@ -99,20 +54,29 @@ const Login = () => {
                                 className="form-control th"
                                 value={loginData.password}
                                 onChange={handleInputChange}
+                                required
+                                aria-label="Password"
                             />
                         </Col>
                         <Col className="th mb-4 right">
                             <Link href={`/resetpass`} className="text-blue">ลืมรหัสผ่าน</Link>
                             |
-                            <Link href={`/register`} className="text-blue">ยังไม่มีบัญชี ?</Link></Col>
+                            <Link href={`/signup`} className="text-blue">ยังไม่มีบัญชี ?</Link>
+                        </Col>
+
                         <Row>
-                            {errors.message && <div className="text-danger mb-3 th center">{errors.message}</div>}
+                            {errors.message && (
+                                <div className="text-danger mb-3 th center" role="alert">
+                                    {errors.message}
+                                </div>
+                            )}
                             <Col className="justify-content-center">
-                                <Button className="btn-xl th" onClick={loginUser}>
+                                <Button className="btn-xl th" onClick={handleSubmit} disabled={isLoading}>
                                     {isLoading ? 'กำลังเข้าสู่ระบบ...' : 'เข้าสู่ระบบ'}
                                 </Button>
                             </Col>
                         </Row>
+
                     </Row>
                 </Col>
             </Row>
@@ -120,4 +84,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default SignIn;

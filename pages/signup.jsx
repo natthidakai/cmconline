@@ -1,85 +1,17 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import { useFormValidation } from "./hooks/useFormValidation";
-import { useRouter } from "next/router";
+import { useSignUp } from "./hooks/useSignUp";
 
 import Image from "next/image";
 import LOGO from "./assert/images/logo.jpg";
 
-const Register = () => {
+const SignUp = () => {
 
-  const [isLoading, setIsLoading] = useState(false);
+  const { regisData, handleInputChange, errors, formErrors, registerUser, isLoading, handleNumberKeyPress, handleEmailKeyPress  } = useSignUp();
 
-  const router = useRouter();
-
-  const [formErrors, setFormErrors] = useState({});
-  const { errors, validateRegister } = useFormValidation();
-  const [regisData, setRegisData] = useState({
-    first_name: "",
-    last_name: "",
-    phone: "",
-    email: "",
-    password: "",
-    CFpassword: "",
-  });
-
-  const registerUser = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    // ตรวจสอบค่า regisData ล่าสุด
-    console.log("Current regisData:", regisData);
-
-    const isValid = validateRegister(regisData);
-
-    if (!isValid) {
-      console.error("Form validation failed");
-      return;
-    }
-
-    setIsLoading(true); // เริ่มการโหลด
-
-    try {
-      const response = await fetch("/api/useRegister", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(regisData), // ใช้ค่า regisData ล่าสุด
-      });
-
-      if (response.ok) {
-        router.push("/login"); // เปลี่ยนไปที่หน้า login หลังจากสมัครสมาชิกสำเร็จ
-        setRegisData({
-          first_name: "",
-          last_name: "",
-          phone: "",
-          email: "",
-          password: "",
-          CFpassword: "",
-        });
-      } else {
-        const errorData = await response.json();
-        setFormErrors({
-          email: errorData.message.includes("อีเมล") ? errorData.message : "",
-          phone: errorData.message.includes("เบอร์โทรศัพท์")
-            ? errorData.message
-            : "",
-        });
-      }
-    } catch (error) {
-      console.error("เกิดข้อผิดพลาด:", error);
-    } finally {
-      setIsLoading(false); // หยุดการโหลด
-    }
-  };
-
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setRegisData((prevData) => ({
-      ...prevData,
-      [name]: value, // อัปเดตค่าฟิลด์ที่เปลี่ยนแปลง
-    }));
+    registerUser();
   };
 
   return (
@@ -98,9 +30,7 @@ const Register = () => {
             </div>
 
             <Col xxl="6" xl="6" lg="6" md="6" sm="12" xs="12" className="mb-4">
-              <label htmlFor="first_name" className="form-label th">
-                ชื่อ
-              </label>
+              <label htmlFor="first_name" className="form-label th">ชื่อ</label>
               <input
                 name="first_name"
                 type="text"
@@ -115,9 +45,7 @@ const Register = () => {
             </Col>
 
             <Col xxl="6" xl="6" lg="6" md="6" sm="12" xs="12" className="mb-4">
-              <label htmlFor="last_name" className="form-label th">
-                นามสกุล
-              </label>
+              <label htmlFor="last_name" className="form-label th">นามสกุล</label>
               <input
                 name="last_name"
                 type="text"
@@ -131,18 +59,8 @@ const Register = () => {
               )}
             </Col>
 
-            <Col
-              xxl="12"
-              xl="12"
-              lg="12"
-              md="12"
-              sm="12"
-              xs="12"
-              className="mb-4"
-            >
-              <label htmlFor="phone" className="form-label th">
-                เบอร์โทรศัพท์
-              </label>
+            <Col xxl="12" xl="12" lg="12" md="12" sm="12" xs="12" className="mb-4">
+              <label htmlFor="phone" className="form-label th">เบอร์โทรศัพท์</label>
               <input
                 name="phone"
                 type="tel"
@@ -151,6 +69,7 @@ const Register = () => {
                 value={regisData.phone}
                 minLength={10}
                 maxLength={10}
+                onKeyPress={handleNumberKeyPress} 
                 onChange={handleInputChange}
               />
               {errors.phone && (
@@ -162,18 +81,8 @@ const Register = () => {
               )}
             </Col>
 
-            <Col
-              xxl="12"
-              xl="12"
-              lg="12"
-              md="12"
-              sm="12"
-              xs="12"
-              className="mb-4"
-            >
-              <label htmlFor="email" className="form-label th">
-                อีเมล
-              </label>
+            <Col xxl="12" xl="12" lg="12" md="12" sm="12" xs="12" className="mb-4">
+              <label htmlFor="email" className="form-label th">อีเมล</label>
               <input
                 name="email"
                 type="email"
@@ -181,6 +90,7 @@ const Register = () => {
                 className="form-control th"
                 value={regisData.email}
                 onChange={handleInputChange}
+                onKeyPress={handleEmailKeyPress}
               />
               {errors.email && (
                 <div className="text-danger mt-2 th">{errors.email}</div>
@@ -191,10 +101,30 @@ const Register = () => {
               )}
             </Col>
 
+            <Col xxl="12" xl="12" lg="12" md="12" sm="12" xs="12" className="mb-4">
+              <label htmlFor="id_card" className="form-label th">เลขบัตรประชาชน</label>
+              <input
+                name="id_card"
+                type="id_card"
+                id="id_card"
+                minLength={13}
+                maxLength={13}
+                className="form-control th"
+                value={regisData.id_card}
+                onChange={handleInputChange}
+                onKeyPress={handleNumberKeyPress}
+              />
+              {errors.id_card && (
+                <div className="text-danger mt-2 th">{errors.id_card}</div>
+              )}
+
+              {formErrors.id_card && (
+                <div className="text-danger mt-2 th">{formErrors.id_card}</div>
+              )}
+            </Col>
+
             <Col xxl="6" xl="6" lg="6" md="6" sm="12" xs="12" className="mb-4">
-              <label htmlFor="password" className="form-label th">
-                รหัสผ่าน
-              </label>
+              <label htmlFor="password" className="form-label th">รหัสผ่าน</label>
               <input
                 name="password"
                 type="password"
@@ -209,9 +139,7 @@ const Register = () => {
             </Col>
 
             <Col xxl="6" xl="6" lg="6" md="6" sm="12" xs="12" className="mb-5">
-              <label htmlFor="CFpassword" className="form-label th">
-                ยืนยันรหัสผ่าน
-              </label>
+              <label htmlFor="CFpassword" className="form-label th">ยืนยันรหัสผ่าน</label>
               <input
                 name="CFpassword"
                 type="password"
@@ -228,8 +156,8 @@ const Register = () => {
             {/* Submit Button */}
             <Row>
               <Col className="justify-content-center">
-                <Button className="btn-xl th" onClick={registerUser}>
-                  สมัครสมาชิก
+                <Button className="btn-xl th" onClick={handleSubmit} disabled={isLoading}>
+                  {isLoading ? 'กำลังสมัครสมาชิก...' : 'สมัครสมาชิก'}
                 </Button>
               </Col>
             </Row>
@@ -240,4 +168,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default SignUp;
