@@ -63,21 +63,9 @@ export const useSignUp = () => {
         return emailPattern.test(email);
     };
 
-    const handleEmailKeyPress = (event) => {
-        if (/[\u0E00-\u0E7F]/.test(event.key)) {
-            event.preventDefault();
-        }
-    };
-
     const validatePhone = (phone) => {
         const phonePattern = /^\d{10}$/;
         return phonePattern.test(phone);
-    };
-
-    const handleNumberKeyPress = (event) => {
-        if (!/[0-9]/.test(event.key)) {
-            event.preventDefault();
-        }
     };
 
     const validateSignUp = (regisData) => {
@@ -203,7 +191,6 @@ export const useSignUp = () => {
             setIsLoading(false);
         }
     };
-
 
     const updateUserData = async (user) => {
         const token = localStorage.getItem('token');
@@ -349,19 +336,43 @@ export const useSignUp = () => {
         return isValid;
     };
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setRegisData((prevData) => ({...prevData, [name]: value,}));
+    const [formData, setFormData] = useState({
+        title: '',
+        first_name: '',
+        last_name: '',
+        email: '',
+        phone: '',
+        id_card: '',
+        birth_date: '',
+        nationality: '',
+        current_address: '',
+        current_subdistrict: '',
+        current_district: '',
+        current_province: '',
+        current_postal_code: '',
+        address: '',
+        subdistrict: '',
+        district: '',
+        province: '',
+        postal_code: ''
+    });
+    
 
-        if (name === 'email') {setFormErrors((prevErrors) => ({ ...prevErrors, email: '' }));}
-        if (name === 'phone') {setFormErrors((prevErrors) => ({ ...prevErrors, phone: '' }));}
-        if (name === 'id_card') {setFormErrors((prevErrors) => ({ ...prevErrors, id_card: '' }));}
+    const handleInputChange = (id, value) => {
+        setFormData((prevData) => ({
+            ...prevData,
+            [id]: value,
+        }));
+
+        if (id === 'email') {setFormErrors((prevErrors) => ({ ...prevErrors, email: '' }));}
+        if (id === 'phone') {setFormErrors((prevErrors) => ({ ...prevErrors, phone: '' }));}
+        if (id === 'id_card') {setFormErrors((prevErrors) => ({ ...prevErrors, id_card: '' }));}
     };
 
-    const handleCheckboxChange = (setUser) => (event) => {
+    const handleCheckboxChange = (setUser, setIsSameAddress) => (event) => {
         const { checked } = event.target;
         setIsSameAddress(checked);
-
+    
         if (checked) {
             setUser((prevUser) => ({
                 ...prevUser,
@@ -445,11 +456,10 @@ export const useSignUp = () => {
         formErrors,
         registerUser,
         isLoading,
-        handleNumberKeyPress,
-        handleEmailKeyPress,
         updateUserData,
         setUser,
         user,
-        submitBooking
+        submitBooking,
+        formData,
     };
 };

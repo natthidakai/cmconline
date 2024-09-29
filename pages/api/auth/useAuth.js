@@ -1,99 +1,91 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from 'next/router';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
-export const useAuth = (user) => {
-
-    const [loginData, setLoginData] = useState({ email: "", password: "" });
+export const useAuth = () => {
+    const { data: session } = useSession();
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+    });
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
 
-    const [currentPassword, setCurrentPassword] = useState('');
-    const [newPassword, setNewPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        const isChangePassPage = router.pathname === '/changepass';
-
-        if (token && !isChangePassPage) {
-            router.push('/profile');
-        }
-    }, [router]);
-
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setLoginData({ ...loginData, [name]: value });
+        setFormData({ ...formData, [name]: value });
+        if (errors.message) {
+            setErrors({}); // Clear previous errors
+        }
     };
 
-    const loginUser = async (e) => {
+    const handleSignIn = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-
-        if (!loginData.email || !loginData.password) {
-            setErrors({ message: 'กรุณากรอกอีเมลและรหัสผ่านให้ครบถ้วน' }); // Set error as an object
+        setErrors({});
+    
+        // ตรวจสอบว่าอีเมลและรหัสผ่านไม่เป็นค่าว่าง
+        if (!formData.email || !formData.password) {
+            setErrors({ message: "กรุณาระบุอีเมลและรหัสผ่าน" });
             setIsLoading(false);
-            return;
+            return; // หยุดการทำงานถ้าข้อมูลไม่ครบ
         }
-
-        try {
-            const response = await fetch("/api/useLogin", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(loginData),
-            });
-
-            const result = await response.json();
-
-            if (response.ok) {
-                localStorage.setItem('token', result.token);
-                router.push("/").then(() => {
-                    router.reload();
-                });
-            } else {
-                setErrors({ message: result.message || 'เกิดข้อผิดพลาดในการเข้าสู่ระบบ' }); // Set error as an object
-            }
-        } catch (error) {
-            // console.error("เกิดข้อผิดพลาดในการเข้าสู่ระบบ:", error);
-            setErrors({ message: 'เกิดข้อผิดพลาดในการเข้าสู่ระบบ' });
-        } finally {
-            setIsLoading(false);
+    
+        // ลองเข้าสู่ระบบ
+        const result = await signIn("credentials", {
+            redirect: false,
+            email: formData.email,
+            password: formData.password,
+        });
+    
+        // ตรวจสอบผลการเข้าสู่ระบบ
+        if (result.error) {
+            setErrors({ message: result.error });
+        } else {
+            router.push("/");  // เปลี่ยนเส้นทางเมื่อเข้าสู่ระบบสำเร็จ
         }
+        setIsLoading(false);
+    };
+
+    const handleSignOut = () => {
+        signOut({ callbackUrl: '/' });
     };
 
     const changePassword = async (e) => {
         e.preventDefault();
-        setErrors({}); // Clear previous errors
-        setIsLoading(true); // Start loading state
+        setErrors({});
+        setIsLoading(true);
+
+        const { currentPassword, newPassword, confirmPassword } = formData;
 
         // Validate inputs
-        if (currentPassword === '') {
+        if (!currentPassword) {
             setErrors({ message: 'กรุณาระบุรหัสผ่านปัจจุบัน' });
-            setIsLoading(false); // Stop loading state
+            setIsLoading(false);
             return;
-        } else if (newPassword === '') {
+        } else if (!newPassword) {
             setErrors({ message: 'กรุณากำหนดรหัสผ่านใหม่' });
-            setIsLoading(false); // Stop loading state
+            setIsLoading(false);
             return;
-        } else if (confirmPassword === '') {
+        } else if (!confirmPassword) {
             setErrors({ message: 'กรุณายืนยันรหัสผ่านใหม่' });
-            setIsLoading(false); // Stop loading state
+            setIsLoading(false);
             return;
         } else if (newPassword !== confirmPassword) {
             setErrors({ message: 'รหัสผ่านใหม่ไม่ตรงกัน' });
-            setIsLoading(false); // Stop loading state
+            setIsLoading(false);
             return;
         }
 
         try {
             const response = await fetch('/api/changePassword', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ currentPassword, newPassword, member_id: user.member_id }),
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ currentPassword, newPassword, member_id: session.user.member_id }),
             });
 
             if (!response.ok) {
@@ -101,33 +93,24 @@ export const useAuth = (user) => {
                 throw new Error(data.message || 'เกิดข้อผิดพลาดในการเปลี่ยนรหัสผ่าน');
             }
 
-            // Reset form fields
-            setCurrentPassword('');
-            setNewPassword('');
-            setConfirmPassword('');
-
+            setFormData({ ...formData, currentPassword: '', newPassword: '', confirmPassword: '' });
             alert('เปลี่ยนรหัสผ่านเรียบร้อย');
             router.push('/profile');
         } catch (error) {
-            setErrors({ message: error.message }); // Set error message as an object
+            setErrors({ message: error.message });
         } finally {
-            setIsLoading(false); // Ensure loading state is stopped
+            setIsLoading(false);
         }
     };
 
-
     return {
-        loginData,
+        formData,
         errors,
         isLoading,
         handleInputChange,
-        loginUser,
-        currentPassword,
-        newPassword,
-        confirmPassword,
-        setCurrentPassword,
-        setNewPassword,
-        setConfirmPassword,
-        changePassword
+        handleSignIn,   // Use this directly in your sign-in form
+        changePassword,
+        handleSignOut,  // For logout
+        isLoggedIn: !!session,
     };
 };

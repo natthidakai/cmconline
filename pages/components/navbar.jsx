@@ -1,31 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { Container, Navbar, Offcanvas, NavDropdown, Nav } from 'react-bootstrap';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
+import { useAuth } from '../api/auth/useAuth'; 
+
 import Image from 'next/image';
 import User from '../assert/images/profile-user.png';
 import Link from 'next/link';
 
 const Menubar = () => {
     const router = useRouter();
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const { data: session } = useSession();
     const [showOffcanvas, setShowOffcanvas] = useState(false);
+    const { handleSignOut, isLoggedIn } = useAuth();
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            setIsLoggedIn(true);
-        }
+    const handleLinkClick = useCallback(() => {
+        setShowOffcanvas(false);
     }, []);
 
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        setIsLoggedIn(false);
-        router.reload(`/`);
-    };
-
-    const handleLinkClick = () => {
-        setShowOffcanvas(false);
-    };
 
     return (
         <Navbar expand="lg" className="bg-body-tertiary menu-shadows">
@@ -37,7 +29,6 @@ const Menubar = () => {
 
                 <Navbar.Toggle onClick={() => setShowOffcanvas(true)} aria-controls="offcanvasNavbar" />
 
-                {/* Offcanvas menu */}
                 <Navbar.Offcanvas
                     id="offcanvasNavbar"
                     aria-labelledby="offcanvasNavbarLabel"
@@ -61,12 +52,11 @@ const Menubar = () => {
                             </Nav.Link>
                         </Nav>
 
-                        {isLoggedIn ? (
+                        {session ? (
                             <NavDropdown title={
                                 <div className="d-flex align-items-center">
                                     <Image src={User} alt="User Icon" width={30} height={30} />
-                                    {/* Display name differently if in Offcanvas mode */}
-                                    <span className="ms-2">{showOffcanvas ? "ข้อมูลของฉัน" : "ข้อมูลของฉัน"}</span>
+                                    <span className="ms-2">ข้อมูลของฉัน</span>
                                 </div>
                             } id="basic-nav-dropdown" className="th font-18 mb-0 box-profile-menu ms-3">
                                 <NavDropdown.Item as={Link} href={`/profile`} onClick={handleLinkClick}>
@@ -78,7 +68,7 @@ const Menubar = () => {
                                 <NavDropdown.Item as={Link} href={`/changepass`} onClick={handleLinkClick}>
                                     เปลี่ยนรหัสผ่าน
                                 </NavDropdown.Item>
-                                <NavDropdown.Item href="#" onClick={() => { handleLogout(); handleLinkClick(); }}>
+                                <NavDropdown.Item href="#" onClick={handleSignOut}>
                                     ออกจากระบบ
                                 </NavDropdown.Item>
                             </NavDropdown>

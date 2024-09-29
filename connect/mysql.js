@@ -1,10 +1,10 @@
 import mysql from 'mysql2/promise';
 
 const Mysql = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '', // ใส่ password ของคุณ
-    database: 'onlinebooking', // ใส่ชื่อฐานข้อมูลของคุณ
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
 });
 
 export default Mysql;
