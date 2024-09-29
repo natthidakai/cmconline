@@ -75,7 +75,6 @@ const Profile = () => {
 
     return (
         <Container className="py-5">
-            <h1>Welcome, {session.user?.name}</h1>
             <Row className="justify-content-center">
                 <Col xxl="7" xl="6" lg="8" md="10" sm="10" xs="10">
                     <h3 className="th px-3 center mb-4">ข้อมูลของฉัน</h3>
