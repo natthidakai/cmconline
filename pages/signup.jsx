@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
+import { useRouter } from 'next/router';
+import { useSession } from "next-auth/react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { useSignUp } from "./hooks/useSignUp";
 
@@ -7,12 +9,23 @@ import LOGO from "./assert/images/logo.jpg";
 
 const SignUp = () => {
 
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
   const { regisData, handleInputChange, errors, formErrors, registerUser, isLoading, handleNumberKeyPress, handleEmailKeyPress  } = useSignUp();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     registerUser();
   };
+
+  useEffect(() => {
+    // ตรวจสอบสถานะการเข้าสู่ระบบ
+    if (status === "authenticated" && session) {
+      // รีไดเร็กไปยังหน้าโปรไฟล์เมื่อเข้าสู่ระบบสำเร็จ
+      router.push("/profile");
+    }
+  }, [session, status, router]);
 
   return (
     <Container className="py-5">

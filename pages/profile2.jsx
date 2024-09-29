@@ -39,33 +39,18 @@ const Profile = () => {
         setLoading(false);
     }, [session, initialUserData, setUser]);
 
-    const validateForm = () => {
-        setErrors('');
-
-        if (!user.first_name) {
-            setErrors('กรุณาระบุชื่อ');
-            return false;
-        } else if (!user.last_name) {
-            setErrors('กรุณาระบุนามสกุล');
-            return false;
-        } else if (!user.email) {
-            setErrors('กรุณาระบุอีเมล');
-            return false;
-        } else if (!user.phone) {
-            setErrors('กรุณาระบุหมายเลขโทรศัพท์');
-            return false;
-        } else if (!user.id_card) {
-            setErrors('กรุณาระบุหมายเลขบัตรประชาชน');
-            return false;
-        }
-
-        return true;
-    };
+    
 
     const handleSubmit = () => {
-        if (validateForm()) {
-            updateUserData(user);
-        }
+        e.preventDefault();
+        // if (validateForm()) {
+        //     updateUserData(user);
+        // }
+        // if (!user.first_name) {
+        //     setErrors('กรุณาระบุชื่อ');
+        // }
+
+        console.log('user.first_name', user.first_name)
     };
 
     if (loading) {
@@ -210,8 +195,8 @@ const Profile = () => {
                             <div className="text-danger th mb-4 center">{errors}</div>
                             <Row>
                                 <Col className="justify-content-center">
-                                    <Button className="btn-xl th" onClick={handleSubmit} disabled={loading}>
-                                        {loading ? 'กำลังบันทึกข้อมูล...' : 'บันทึกข้อมูล'}
+                                    <Button className="btn-xl th" onClick={handleSubmit}>
+                                        บันทึกข้อมูล
                                     </Button>
                                 </Col>
                             </Row>

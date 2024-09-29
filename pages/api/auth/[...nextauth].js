@@ -95,25 +95,27 @@ export default NextAuth({
         async session({ session, token }) {
             if (token) {
                 // เพิ่มข้อมูลจาก token ไปยัง session
-                session.id = token.id;
-                session.first_name = token.first_name;
-                session.last_name = token.last_name;
-                session.email = token.email;
-                session.phone = token.phone;
-                session.id_card = token.id_card;
-                session.birth_date = token.birth_date;
-                session.nationality = token.nationality;
-                session.marital_status = token.marital_status;
-                session.current_address = token.current_address;
-                session.current_subdistrict = token.current_subdistrict;
-                session.current_district = token.current_district;
-                session.current_province = token.current_province;
-                session.current_postal_code = token.current_postal_code;
-                session.address = token.address;
-                session.subdistrict = token.subdistrict;
-                session.district = token.district;
-                session.province = token.province;
-                session.postal_code = token.postal_code;
+                session.user = { // ใช้ session.user แทนการใช้ session ตรงๆ
+                    id: token.id,
+                    first_name: token.first_name,
+                    last_name: token.last_name,
+                    email: token.email,
+                    phone: token.phone,
+                    id_card: token.id_card,
+                    birth_date: token.birth_date,
+                    nationality: token.nationality,
+                    marital_status: token.marital_status,
+                    current_address: token.current_address,
+                    current_subdistrict: token.current_subdistrict,
+                    current_district: token.current_district,
+                    current_province: token.current_province,
+                    current_postal_code: token.current_postal_code,
+                    address: token.address,
+                    subdistrict: token.subdistrict,
+                    district: token.district,
+                    province: token.province,
+                    postal_code: token.postal_code,
+                };
             }
             return session;
         }
