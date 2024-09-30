@@ -20,8 +20,7 @@ export const useSignUp = () => {
   const [isSameAddress, setIsSameAddress] = useState(false);
 
   const initialUserState = {
-    member_id: "",
-    title: "",
+    title_name: "",
     first_name: "",
     last_name: "",
     email: "",
@@ -192,45 +191,85 @@ export const useSignUp = () => {
     }
   };
 
-
-
   const updateUserData = async (user) => {
-    const token = localStorage.getItem("token");
-
-    // ตรวจสอบว่ามีค่า user หรือไม่
-    if (!user) {
-        console.error("User data is missing.");
-        alert("ไม่พบข้อมูลผู้ใช้");
-        return;
-    }
-
+    setIsLoading(true);
     try {
-        const response = await fetch("/api/updateUser", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(user), // ส่งข้อมูล user
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json(); // รับข้อมูลข้อผิดพลาดจากเซิร์ฟเวอร์
-            const errorMessage = errorData.message || "Failed to save user data";
-            console.error(errorMessage); // บันทึกข้อผิดพลาดในคอนโซล
-            alert(`เกิดข้อผิดพลาด: ${errorMessage}`); // แสดงข้อความข้อผิดพลาด
-            return; // ออกจากฟังก์ชันหากมีข้อผิดพลาด
-        }
-
-        alert("ข้อมูลถูกบันทึกเรียบร้อย");
-        router.push("/profile");
+      const isValid = await validateProfile(user);
+  
+      if (!isValid) {
+        console.error("การตรวจสอบความถูกต้องของฟอร์มล้มเหลว");
+        return; // หยุดถ้าการตรวจสอบล้มเหลว
+      }
+  
+      const response = await fetch("/api/updateUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        const errorMessage = errorData.message || "Failed to save user data";
+        console.error(errorMessage);
+        alert(`เกิดข้อผิดพลาด: ${errorMessage}`);
+        return;
+      }
+  
+      alert("ข้อมูลถูกบันทึกเรียบร้อย");
+      router.push("/profile");
     } catch (error) {
-        console.error("Error saving user data:", error);
-        alert(`เกิดข้อผิดพลาด: ${error.message}`); // แสดงข้อผิดพลาดให้ผู้ใช้ทราบ
+      console.error("Error saving user data:", error);
+      alert(`เกิดข้อผิดพลาด: ${error.message}`);
+    } finally {
+      setIsLoading(false);
     }
-};
+  };
+  
+  
+  const validateProfile = (user) => {
+    let isValid = true;
+    const newErrors = {};
 
+    if (!user.first_name) {
+      newErrors.first_name = "กรุณาระบุชื่อ";
+      isValid = false;
+    }
 
+    if (!user.last_name) {
+      newErrors.last_name = "กรุณาระบุนามสกุล";
+      isValid = false;
+    }
+
+    if (!user.phone) {
+      newErrors.phone = "กรุณาระบุเบอร์โทรศัพท์";
+      isValid = false;
+    } else if (!validatePhone(user.phone)) {
+      newErrors.phone = "เบอร์โทรศัพท์ต้องเป็นตัวเลขเท่านั้น";
+      isValid = false;
+    }
+
+    if (!user.email) {
+      newErrors.email = "กรุณาระบุอีเมล";
+      isValid = false;
+    } else if (!validateEmail(user.email)) {
+      newErrors.email = "รูปแบบอีเมลไม่ถูกต้อง";
+      isValid = false;
+    }
+
+    if (!user.id_card) {
+      newErrors.id_card = "กรุณาระบุเลขบัตรประชาชน";
+      isValid = false;
+    } else if (!validateIdCard(user.id_card)) {
+      newErrors.id_card = "หมายเลขบัตรประชาชนไม่ถูกต้อง";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+ 
   const validateBooking = (formData, showAddressSection) => {
     let isValid = true;
     const newErrors = {};
@@ -365,128 +404,65 @@ export const useSignUp = () => {
   });
 
   const formFieldsPersonal = [
-    {
-      label: "คำนำหน้าชื่อ",
-      id: "title",
-      type: "select",
-      options: ["-- กรุณาเลือก --", "นาย", "นาง", "นางสาว"],
-      value: user.title,
-    },
+    { label: "คำนำหน้าชื่อ", id: "title_name", type: "select", options: ["-- กรุณาเลือก --", "นาย", "นาง", "นางสาว"], value: user.title_name, name: 'title_name' },
     { label: "ชื่อ", id: "first_name", type: "text", value: user.first_name },
     { label: "นามสกุล", id: "last_name", type: "text", value: user.last_name },
     { label: "อีเมล", id: "email", type: "text", value: user.email },
     { label: "เบอร์โทรศัพท์", id: "phone", type: "text", value: user.phone },
-    {
-      label: "เลขบัตรประชาชน",
-      id: "id_card",
-      type: "text",
-      value: user.id_card,
-    },
-    {
-      label: "วันเกิด",
-      id: "birth_date",
-      type: "date",
-      value: user.birth_date,
-    },
-    {
-      label: "สัญชาติ",
-      id: "nationality",
-      type: "text",
-      value: user.nationality,
-    },
+    { label: "เลขบัตรประชาชน", id: "id_card", type: "text", value: user.id_card, name: 'id_card' },
+    { label: "วันเกิด", id: "birth_date", type: "date", value: user.birth_date ? new Date(user.birth_date).toISOString().split('T')[0] : '', nacme: 'birth_date' },
+    { label: "สัญชาติ", id: "nationality", type: "text", value: user.nationality, name: 'nationality' },
+    { label: "สถานะภาพ", id: "marital_status", type: "select", options: ["-- กรุณาเลือก --", "โสด", "สมรส", "หย่า", "หม้าย", "ไม่ระบุ"], value: user.marital_status, name: 'marital_status' },
   ];
 
   const formFieldsCurrentAddress = [
-    {
-      label: "ที่อยู่",
-      id: "current_address",
-      type: "text",
-      value: user.current_address,
-    },
-    {
-      label: "แขวง/ตำบล",
-      id: "current_subdistrict",
-      type: "text",
-      value: user.current_subdistrict,
-    },
-    {
-      label: "เขต/อำเภอ",
-      id: "current_district",
-      type: "text",
-      value: user.current_district,
-    },
-    {
-      label: "จังหวัด",
-      id: "current_province",
-      type: "text",
-      value: user.current_province,
-    },
-    {
-      label: "รหัสไปรษณีย์",
-      id: "current_postal_code",
-      type: "text",
-      value: user.current_postal_code,
-    },
+    { label: "ที่อยู่", id: "current_address", type: "text", name: 'current_address', value: user.current_address, },
+    { label: "แขวง/ตำบล", id: "current_subdistrict", type: "text", name: 'current_subdistrict', value: user.current_subdistrict, },
+    { label: "เขต/อำเภอ", id: "current_district", type: "text", name: 'current_district', value: user.current_district, },
+    { label: "จังหวัด", id: "current_province", type: "text", name: 'current_province', value: user.current_province, },
+    { label: "รหัสไปรษณีย์", id: "current_postal_code", type: "text", name: 'current_postal_code', value: user.current_postal_code, },
   ];
 
   const formFieldsAddress = [
-    { label: "ที่อยู่", id: "address", type: "text", value: user.address },
-    {
-      label: "แขวง/ตำบล",
-      id: "subdistrict",
-      type: "text",
-      value: user.subdistrict,
-    },
-    { label: "เขต/อำเภอ", id: "district", type: "text", value: user.district },
-    { label: "จังหวัด", id: "province", type: "text", value: user.province },
-    {
-      label: "รหัสไปรษณีย์",
-      id: "postal_code",
-      type: "text",
-      value: user.postal_code,
-    },
+    { label: "ที่อยู่", id: "address", type: "text", name: "address", value: user.address },
+    { label: "แขวง/ตำบล", id: "subdistrict", type: "text", name: "subdistrict", value: user.subdistrict, },
+    { label: "เขต/อำเภอ", id: "district", type: "text", name: "district", value: user.district },
+    { label: "จังหวัด", id: "province", type: "text", name: "province", value: user.province },
+    { label: "รหัสไปรษณีย์", id: "postal_code", type: "text", name: "postal_code", value: user.postal_code, },
   ];
-
-  //   const handleInputChange = (id, value) => {
-  //     setFormData((prevData) => ({
-  //       ...prevData,
-  //       [id]: value,
-  //     }));
-
-  //     if (id === "email") {
-  //       setFormErrors((prevErrors) => ({ ...prevErrors, email: "" }));
-  //     }
-  //     if (id === "phone") {
-  //       setFormErrors((prevErrors) => ({ ...prevErrors, phone: "" }));
-  //     }
-  //     if (id === "id_card") {
-  //       setFormErrors((prevErrors) => ({ ...prevErrors, id_card: "" }));
-  //     }
-  //   };
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    let newValue = value;
-
-    if (id === "email") {
-      newValue = newValue
-        .replace(/[\u0E00-\u0E7F]/g, "")
-        .replace(/[^a-zA-Z0-9@._-]/g, "");
-    } else if (id === "phone") {
-      newValue = newValue.replace(/\D/g, "").slice(0, 10);
-    } else if (id === "id_card") {
-      newValue = newValue.replace(/\D/g, "").slice(0, 13);
-    } else if (id === "current_postal_code") {
-      newValue = newValue.replace(/\D/g, "").slice(0, 5);
-    } else if (id === "postal_code") {
-      newValue = newValue.replace(/\D/g, "").slice(0, 5);
+  
+    // ตรวจสอบว่ามี id หรือไม่
+    if (!id) {
+      console.error("ID is missing in the event target.");
+      return; // ออกจากฟังก์ชันถ้าไม่มี id
     }
-
+  
+    let newValue = value;
+  
+    // กำหนดเงื่อนไขการอัปเดตค่าใหม่
+    const formatters = {
+      email: (val) => val.replace(/[\u0E00-\u0E7F]/g, "").replace(/[^a-zA-Z0-9@._-]/g, ""),
+      phone: (val) => val.replace(/\D/g, "").slice(0, 10),
+      id_card: (val) => val.replace(/\D/g, "").slice(0, 13),
+      current_postal_code: (val) => val.replace(/\D/g, "").slice(0, 5),
+      postal_code: (val) => val.replace(/\D/g, "").slice(0, 5),
+    };
+  
+    // ใช้ formatters เพื่ออัปเดต newValue
+    if (formatters[id]) {
+      newValue = formatters[id](newValue);
+    }
+  
+    // อัปเดต state ของ user
     setUser((prevUser) => ({
       ...prevUser,
       [id]: newValue,
     }));
   };
+  
 
   const handleCheckboxChange = (setUser, setIsSameAddress) => (event) => {
     const { checked } = event.target;

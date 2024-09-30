@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useFetchUser } from './hooks/useFetchUser';
+import { useRouter } from 'next/router';
+import { useSession } from "next-auth/react";
 import ProjectInfo from "./data/projectinfo";
 import { Container, Row, Col } from "react-bootstrap";
 import Image from 'next/image';
@@ -7,22 +9,22 @@ import Image from 'next/image';
 import Default from "./assert/images/default.jpg";
 
 const BookingList = () => {
+
+    const { data: session, status } = useSession();
+    const router = useRouter();
+
     const [bookings, setBookings] = useState([]);
     const fetchedData = useFetchUser();
     const { user: fetchedUser = {}, error } = fetchedData || {};
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState({}); // Define user state
 
+
     useEffect(() => {
-        if (fetchedUser) {
-            setUser(fetchedUser);
-            setLoading(false);
+        if (status === "unauthenticated" && session) {
+            router.push("/signin");
         }
-        if (error) {
-            console.error('Error fetching user:', error);
-            setLoading(false);
-        }
-    }, [fetchedUser, error]);
+    }, [session, status, router]);
 
     useEffect(() => {
         const fetchBookings = async () => {

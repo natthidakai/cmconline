@@ -1,11 +1,12 @@
-import { useSession } from "next-auth/react";
+import { useSession, getSession, signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import { useSignUp } from "./hooks/useSignUp";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import { mutate  } from "swr";
 
 const Profile = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
   const {
     isSameAddress,
@@ -19,16 +20,14 @@ const Profile = () => {
     formFieldsAddress,
     updateUserData,
     errors,
-    setErrors,
+    setErrors
   } = useSignUp();
 
-  // ตรวจสอบว่าผู้ใช้เข้าสู่ระบบหรือไม่
   useEffect(() => {
     if (session) {
-      // กำหนดค่าผู้ใช้ที่ดึงจากเซสชัน
       setUser({
-        member_id: session.user.member_id || "",
-        title: session.user.title || "",
+        member_id: session.user.id || "",
+        title_name: session.user.title_name || "",
         first_name: session.user.first_name || "",
         last_name: session.user.last_name || "",
         email: session.user.email || "",
@@ -37,12 +36,12 @@ const Profile = () => {
         birth_date: session.user.birth_date || "",
         nationality: session.user.nationality || "",
         marital_status: session.user.marital_status || "",
-        current_address: session.current_address || "",
+        current_address: session.user.current_address || "",
         current_subdistrict: session.user.current_subdistrict || "",
         current_district: session.user.current_district || "",
         current_province: session.user.current_province || "",
         current_postal_code: session.user.current_postal_code || "",
-        address: session.address || "",
+        address: session.user.address || "",
         subdistrict: session.user.subdistrict || "",
         district: session.user.district || "",
         province: session.user.province || "",
@@ -53,116 +52,94 @@ const Profile = () => {
     }
   }, [session]);
 
-  const validateForm = (e) => {
-    setErrors("");
-
-    if (!user.first_name) {
-      setErrors({message: "กรุณาระบุชื่อ"});
-      return false;
-    }
-
-    if (!user.last_name) {
-      setErrors({message: "กรุณาระบุนามสกุล"});
-      return false;
-    }
-
-    if (!user.email) {
-      setErrors({message: "กรุณาระบุอีเมล"});
-      return false;
-    }
-
-    if (!user.phone) {
-      setErrors({message: "กรุณาระบุหมายเลขโทรศัพท์"});
-      return false;
-    }
-
-    if (!user.id_card) {
-      setErrors({message: "กรุณาระบุหมายเลขบัตรประชาชน"});
-      return false;
-    }
-
-    return true;
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      updateUserData(user);
-    }
+    
+    // อัปเดตข้อมูลผู้ใช้
+    await updateUserData(user);
+  
+    // รีเฟรชข้อมูลเซสชัน
+    await mutate('/api/auth/session');
+    const updatedSession = await getSession();
+    setUser({
+      member_id: updatedSession.user.id || "",
+      title_name: updatedSession.user.title_name || "",
+      first_name: updatedSession.user.first_name || "",
+      last_name: updatedSession.user.last_name || "",
+      email: updatedSession.user.email || "",
+      phone: updatedSession.user.phone || "",
+      id_card: updatedSession.user.id_card || "",
+      birth_date: updatedSession.user.birth_date || "",
+      nationality: updatedSession.user.nationality || "",
+      marital_status: updatedSession.user.marital_status || "",
+      current_address: updatedSession.user.current_address || "",
+      current_subdistrict: updatedSession.user.current_subdistrict || "",
+      current_district: updatedSession.user.current_district || "",
+      current_province: updatedSession.user.current_province || "",
+      current_postal_code: updatedSession.user.current_postal_code || "",
+      address: updatedSession.user.address || "",
+      subdistrict: updatedSession.user.subdistrict || "",
+      district: updatedSession.user.district || "",
+      province: updatedSession.user.province || "",
+      postal_code: updatedSession.user.postal_code || "",
+    });
   };
-
+  
+  
+  
   return (
     <Container className="py-5">
+      {user.password}
       <Row className="justify-content-center">
         <Col xxl="7" xl="6" lg="8" md="10" sm="10" xs="10">
           <h3 className="th px-3 center mb-4">ข้อมูลของฉัน</h3>
           <Row className="box-step-3 px-3 py-5 box-shadow">
             <h5 className="th mb-4">ข้อมูลส่วนบุคคล</h5>
-            {formFieldsPersonal.map((field) => {
-              return (
-                <Col
-                  key={field.id}
-                  xxl={4}
-                  xl={4}
-                  lg={4}
-                  md={4}
-                  sm={12}
-                  xs={12}
-                  className="mb-4"
-                >
-                  <label htmlFor={field.id} className="form-label th">
-                    {field.label}
-                  </label>
-                  {field.type === "select" ? (
-                    <select
-                      id={field.id}
-                      className="form-select th"
-                      value={field.value}
-                      onChange={handleChange}
-                    >
-                      {field.options.map((option, index) => (
-                        <option key={index} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                  ) : (
-                    <input
-                      type={field.type}
-                      id={field.id}
-                      className="form-control th"
-                      value={field.value}
-                      onChange={handleChange}
-                    />
-                  )}
-                </Col>
-              );
-            })}
+            {formFieldsPersonal.map((field) => (
+              <Col key={field.id} xxl={4} xl={4} lg={4} md={4} sm={12} xs={12} className="mb-4">
+                <label htmlFor={field.id} className="form-label th">
+                  {field.label}
+                </label>
+                {field.type === "select" ? (
+                  <select
+                    id={field.id}
+                    className="form-select th"
+                    value={field.value}
+                    onChange={handleChange}
+                  >
+                    {field.options.map((option, index) => (
+                      <option key={index} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  <input
+                    type={field.type}
+                    name={field.id}
+                    id={field.id}
+                    className="form-control th"
+                    value={field.value}
+                    onChange={handleChange}
+                  />
+                )}
+              </Col>
+            ))}
 
             <hr className="my-5" />
 
             <h5 className="th mb-4">ที่อยู่ปัจจุบัน</h5>
             {formFieldsCurrentAddress.map((field) => {
-              const colSize = ["current_address"].includes(field.id)
-                ? "12"
-                : "6";
+              const colSize = ["current_address"].includes(field.id) ? "12" : "6";
               return (
-                <Col
-                  key={field.id}
-                  xxl={colSize}
-                  xl={colSize}
-                  lg={colSize}
-                  md={colSize}
-                  sm={12}
-                  xs={12}
-                  className="mb-4"
-                >
+                <Col key={field.id} xxl={colSize} xl={colSize} lg={colSize} md={colSize} sm={12} xs={12} className="mb-4">
                   <label htmlFor={field.id} className="form-label th">
                     {field.label}
                   </label>
                   <input
                     type={field.type}
                     id={field.id}
+                    name={field.id}
                     className="form-control th"
                     value={field.value}
                     onChange={handleChange}
@@ -196,21 +173,13 @@ const Profile = () => {
             {formFieldsAddress.map((field) => {
               const colSize = ["address"].includes(field.id) ? "12" : "6";
               return (
-                <Col
-                  key={field.id}
-                  xxl={colSize}
-                  xl={colSize}
-                  lg={colSize}
-                  md={colSize}
-                  sm={12}
-                  xs={12}
-                  className="mb-4"
-                >
+                <Col key={field.id} xxl={colSize} xl={colSize} lg={colSize} md={colSize} sm={12} xs={12} className="mb-4">
                   <label htmlFor={field.id} className="form-label th">
                     {field.label}
                   </label>
                   <input
                     type={field.type}
+                    name={field.id}
                     id={field.id}
                     className="form-control th"
                     value={field.value}
@@ -220,9 +189,12 @@ const Profile = () => {
               );
             })}
 
-            {errors.message && (
-              <div className="text-danger mb-3 th center">{errors.message}</div>
+            {Object.keys(errors).length > 0 && (
+              <div className="text-danger mb-3 th center">
+                {errors.first_name || errors.last_name || errors.phone || errors.email || errors.id_card}
+              </div>
             )}
+
             <Row>
               <Col className="justify-content-center">
                 <Button

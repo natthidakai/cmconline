@@ -18,6 +18,7 @@ export default NextAuth({
                     if (rows.length === 0) throw new Error("ไม่พบผู้ใช้ที่มีอีเมลนี้");
 
                     const user = rows[0];
+                    // console.log("User from DB:", user);
                     
                     // ตรวจสอบรหัสผ่าน
                     if (!await bcrypt.compare(credentials.password, user.password)) {
@@ -27,6 +28,7 @@ export default NextAuth({
                     // คืนค่าข้อมูลผู้ใช้
                     return {
                         id: user.member_id,
+                        title_name: user.title_name,
                         first_name: user.first_name,
                         last_name: user.last_name,
                         email: user.email,
@@ -71,6 +73,7 @@ export default NextAuth({
             if (user) {
                 // ใช้ข้อมูลจาก authorize โดยตรง
                 token.id = user.id;
+                token.title_name = user.title_name;
                 token.first_name = user.first_name;
                 token.last_name = user.last_name;
                 token.email = user.email;
@@ -89,6 +92,7 @@ export default NextAuth({
                 token.district = user.district;
                 token.province = user.province;
                 token.postal_code = user.postal_code;
+                // console.log("Token after user login:", token);
             }
             return token;
         },
@@ -97,6 +101,7 @@ export default NextAuth({
                 // เพิ่มข้อมูลจาก token ไปยัง session
                 session.user = { // ใช้ session.user แทนการใช้ session ตรงๆ
                     id: token.id,
+                    title_name: token.title_name,
                     first_name: token.first_name,
                     last_name: token.last_name,
                     email: token.email,
@@ -116,6 +121,7 @@ export default NextAuth({
                     province: token.province,
                     postal_code: token.postal_code,
                 };
+                // console.log("Session after adding token:", session);
             }
             return session;
         }

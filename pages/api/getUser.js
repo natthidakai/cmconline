@@ -24,11 +24,12 @@ export default async function handler(req, res) {
             // ดึงข้อมูลผู้ใช้จากฐานข้อมูลด้วย email ที่ได้รับ
             const [user] = await Mysql.query('SELECT * FROM members WHERE email = ?', [userEmail]);
 
-            if (!user.length) {
+            // ตรวจสอบว่าผู้ใช้ถูกดึงข้อมูลมาหรือไม่
+            if (!user) {
                 return res.status(404).json({ message: 'User not found' });
             }
 
-            res.status(200).json(user[0]); // ส่งข้อมูลผู้ใช้คนเดียว
+            res.status(200).json(user); // ส่งข้อมูลผู้ใช้คนเดียว
         } catch (error) {
             console.error('Error fetching user:', error);
             res.status(500).json({ message: 'Server error' });

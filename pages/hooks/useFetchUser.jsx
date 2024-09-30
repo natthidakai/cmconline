@@ -11,28 +11,23 @@ export const useFetchUser = () => {
 
     useEffect(() => {
         const fetchUserData = async () => {
-            // Check if the session is authenticated
-            if (status === 'loading') {
-                return; // Wait for session to load
-            }
-
-            if (status === 'unauthenticated') {
-                router.push('/signin'); // Redirect to sign-in if unauthenticated
-                return;
+            if (status === "loading" || !session) {
+                return; // Avoid fetching while loading or if there's no session
             }
 
             try {
                 const response = await fetch('/api/getUser', {
                     headers: {
-                        'Authorization': `Bearer ${session.accessToken}`, // Use the access token from session
+                        'Authorization': `Bearer ${session.accessToken || ''}`, // Ensure accessToken is defined
                     },
                 });
 
-                if (!response.ok) {
-                    throw new Error('Failed to fetch user data');
-                }
-
+                console.log('Response Status:', response.status); // Log the response status
                 const usersData = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`); // Log HTTP error
+                }
 
                 if (!usersData || !usersData.member_id) {
                     throw new Error('Invalid user data');
@@ -41,8 +36,10 @@ export const useFetchUser = () => {
                 setUser(usersData);
             } catch (err) {
                 setError(err.message);
-                // Optionally redirect to sign-in on error
-                router.push('/signin');
+                console.error('Error fetching user data:', err); // Log the actual error
+                if (err.message === 'Invalid user data' || response.status === 401) {
+                    router.push('/signin'); // Redirect to signin on specific errors
+                }
             } finally {
                 setLoading(false);
             }
