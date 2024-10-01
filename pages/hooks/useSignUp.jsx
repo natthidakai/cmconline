@@ -198,7 +198,7 @@ export const useSignUp = () => {
   
       if (!isValid) {
         console.error("การตรวจสอบความถูกต้องของฟอร์มล้มเหลว");
-        return; // หยุดถ้าการตรวจสอบล้มเหลว
+        return { success: false }; // เพิ่มการคืนค่าเพื่อแสดงความล้มเหลว
       }
   
       const response = await fetch("/api/updateUser", {
@@ -214,20 +214,23 @@ export const useSignUp = () => {
         const errorMessage = errorData.message || "Failed to save user data";
         console.error(errorMessage);
         alert(`เกิดข้อผิดพลาด: ${errorMessage}`);
-        return;
+        return { success: false }; // เพิ่มการคืนค่าเพื่อแสดงความล้มเหลว
       }
   
       alert("ข้อมูลถูกบันทึกเรียบร้อย");
       router.push("/profile");
+      return { success: true }; // คืนค่าสำเร็จ
     } catch (error) {
       console.error("Error saving user data:", error);
       alert(`เกิดข้อผิดพลาด: ${error.message}`);
+      return { success: false }; // เพิ่มการคืนค่าเพื่อแสดงความล้มเหลว
     } finally {
       setIsLoading(false);
     }
   };
   
-  
+
+
   const validateProfile = (user) => {
     let isValid = true;
     const newErrors = {};
@@ -269,7 +272,7 @@ export const useSignUp = () => {
     setErrors(newErrors);
     return isValid;
   };
- 
+
   const validateBooking = (formData, showAddressSection) => {
     let isValid = true;
     const newErrors = {};
@@ -433,15 +436,15 @@ export const useSignUp = () => {
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-  
+
     // ตรวจสอบว่ามี id หรือไม่
     if (!id) {
       console.error("ID is missing in the event target.");
       return; // ออกจากฟังก์ชันถ้าไม่มี id
     }
-  
+
     let newValue = value;
-  
+
     // กำหนดเงื่อนไขการอัปเดตค่าใหม่
     const formatters = {
       email: (val) => val.replace(/[\u0E00-\u0E7F]/g, "").replace(/[^a-zA-Z0-9@._-]/g, ""),
@@ -450,19 +453,19 @@ export const useSignUp = () => {
       current_postal_code: (val) => val.replace(/\D/g, "").slice(0, 5),
       postal_code: (val) => val.replace(/\D/g, "").slice(0, 5),
     };
-  
+
     // ใช้ formatters เพื่ออัปเดต newValue
     if (formatters[id]) {
       newValue = formatters[id](newValue);
     }
-  
+
     // อัปเดต state ของ user
     setUser((prevUser) => ({
       ...prevUser,
       [id]: newValue,
     }));
   };
-  
+
 
   const handleCheckboxChange = (setUser, setIsSameAddress) => (event) => {
     const { checked } = event.target;

@@ -1,31 +1,54 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import Image from "next/image";
 import LOGO from "./assert/images/logo.jpg";
-import Loading from './components/loading';
-import { useFetchUser } from './hooks/useFetchUser';
 import { useAuth } from "./api/auth/useAuth";
+import { useSession } from "next-auth/react";
 
 const ChangePassword = () => {
-
     const router = useRouter();
-    const { user, loading: userLoading, error: userError } = useFetchUser();
+    const { data: session } = useSession();
 
-    const { currentPassword, newPassword, confirmPassword, errors, isLoading, setCurrentPassword, setNewPassword, setConfirmPassword, changePassword } = useAuth(user);
+    const {
+        changPsw,
+        setChangPsw,
+        errors,
+        isLoading,
+        changePassword,
+        setErrors
+    } = useAuth();
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!session && !token) {
+            router.push("/signin");
+        }
+    }, [session, router]);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!session && !token) {
+            router.push("/signin");
+        }
+    }, [session, router]);
+
+    const handleInputChange = (e) => {
+        const { id, value } = e.target;
+        setChangPsw((prevData) => {
+            const updatedData = { ...prevData, [id]: value };
+            // console.log('Updated Form Data:', updatedData); // แสดงค่าที่อัปเดต
+            return updatedData;
+        });
+        if (errors.message) {
+            setErrors({});
+        }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        changePassword(e);
+        changePassword(e, session); // ส่ง session ไปยังฟังก์ชัน changePassword
     };
-
-    if (userLoading) {
-        return <Loading />;
-    }
-
-    if (userError) {
-        return <div>Error loading user data.</div>;
-    }
 
     return (
         <Container className="py-5">
@@ -47,9 +70,8 @@ const ChangePassword = () => {
                                 type="password"
                                 id="currentPassword"
                                 className="form-control th"
-                                value={currentPassword}
-                                onChange={(e) => setCurrentPassword(e.target.value)}
-                                required
+                                value={changPsw.currentPassword}
+                                onChange={handleInputChange}
                             />
                         </Col>
                         <Col xxl="12" className="mb-4">
@@ -58,9 +80,8 @@ const ChangePassword = () => {
                                 type="password"
                                 id="newPassword"
                                 className="form-control th"
-                                value={newPassword}
-                                onChange={(e) => setNewPassword(e.target.value)}
-                                required
+                                value={changPsw.newPassword}
+                                onChange={handleInputChange}
                             />
                         </Col>
                         <Col xxl="12" className="mb-4">
@@ -69,20 +90,25 @@ const ChangePassword = () => {
                                 type="password"
                                 id="confirmPassword"
                                 className="form-control th"
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                required
+                                value={changPsw.confirmPassword}
+                                onChange={handleInputChange}
                             />
                         </Col>
 
                         <Row>
-                            {errors.message && (
+                            {errors && errors.message && (
                                 <div style={{ color: 'red' }} className="mb-3 th center">
                                     {errors.message}
                                 </div>
                             )}
                             <Col className="justify-content-center">
-                                <Button onClick={handleSubmit}className="btn-xl th">เปลี่ยนรหัสผ่าน</Button>
+                                <Button
+                                    onClick={handleSubmit} // Use handleSubmit here
+                                    className="btn-xl th"
+                                    disabled={isLoading} // Disable button when loading
+                                >
+                                    {isLoading ? 'กำลังดำเนินการ...' : 'เปลี่ยนรหัสผ่าน'}
+                                </Button>
                             </Col>
                         </Row>
                     </Row>

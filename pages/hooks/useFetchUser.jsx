@@ -12,6 +12,7 @@ export const useFetchUser = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             if (status === "loading" || !session) {
+                setLoading(false); // Update loading state
                 return; // Avoid fetching while loading or if there's no session
             }
 
@@ -23,11 +24,12 @@ export const useFetchUser = () => {
                 });
 
                 console.log('Response Status:', response.status); // Log the response status
-                const usersData = await response.json();
 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`); // Log HTTP error
                 }
+
+                const usersData = await response.json();
 
                 if (!usersData || !usersData.member_id) {
                     throw new Error('Invalid user data');
@@ -37,7 +39,7 @@ export const useFetchUser = () => {
             } catch (err) {
                 setError(err.message);
                 console.error('Error fetching user data:', err); // Log the actual error
-                if (err.message === 'Invalid user data' || response.status === 401) {
+                if (err.message === 'Invalid user data' || err.message.includes('401')) {
                     router.push('/signin'); // Redirect to signin on specific errors
                 }
             } finally {

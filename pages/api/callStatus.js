@@ -20,7 +20,7 @@ const callStatus = async (req, res) => {
             AND FloorName != '1'
             ORDER BY UnitNumber ASC`;
 
-        console.log('Query result:', result);
+        // console.log('Query result:', result);
 
         if (result.recordset.length > 0) {
             const status = result.recordset; 

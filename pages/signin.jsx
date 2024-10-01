@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { useRouter } from 'next/router';
 import { useSession } from "next-auth/react";
 import { useAuth } from "./api/auth/useAuth";
@@ -9,19 +9,32 @@ import Image from "next/image";
 import LOGO from "./assert/images/logo.jpg";
 import Link from "next/link";
 
+
 const SignIn = () => {
+
   const { data: session, status } = useSession();
   const router = useRouter();
-  const { formData, handleInputChange, handleSignIn, errors } = useAuth();
+  const { formData, setFormData, setErrors, handleSignIn, errors } = useAuth();
   const { handleEmailKeyPress } = validationForm();
 
+
   useEffect(() => {
-    // ตรวจสอบสถานะการเข้าสู่ระบบ
-    if (status === "authenticated" && session) {
-      // รีไดเร็กไปยังหน้าโปรไฟล์เมื่อเข้าสู่ระบบสำเร็จ
-      router.push("/profile");
+    if (status === "authenticated") {
+      localStorage.setItem('token', session.user.id); // เปลี่ยน id เป็นค่าที่คุณต้องการ
+      router.push("/"); // เปลี่ยนเส้นทางเมื่อเข้าสู่ระบบสำเร็จ
     }
   }, [session, status, router]);
+
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prevData) => ({
+        ...prevData,
+        [id]: value, // Update the specific input's value
+    }));
+    if (errors.message) {
+        setErrors({}); // Clear errors if any
+    }
+};
 
   return (
     <Container className="py-5">
@@ -38,15 +51,7 @@ const SignIn = () => {
               </Col>
             </div>
 
-            <Col
-              xxl="12"
-              xl="12"
-              lg="12"
-              md="12"
-              sm="12"
-              xs="12"
-              className="mb-4"
-            >
+            <Col xxl="12" xl="12" lg="12" md="12" sm="12" xs="12" className="mb-4">
               <label htmlFor="email" className="form-label th">
                 อีเมล
               </label>
@@ -62,15 +67,7 @@ const SignIn = () => {
               />
             </Col>
 
-            <Col
-              xxl="12"
-              xl="12"
-              lg="12"
-              md="12"
-              sm="12"
-              xs="12"
-              className="mb-2"
-            >
+            <Col xxl="12" xl="12" lg="12" md="12" sm="12" xs="12" className="mb-2">
               <label htmlFor="password" className="form-label th">
                 รหัสผ่าน
               </label>
@@ -86,7 +83,7 @@ const SignIn = () => {
             </Col>
 
             <Col className="th mb-4 right">
-              <Link href={`/resetpass`} className="text-blue">
+              <Link href={`/forgotpass`} className="text-blue">
                 ลืมรหัสผ่าน
               </Link>
               |

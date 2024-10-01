@@ -1,12 +1,13 @@
-import { useSession, getSession, signIn } from "next-auth/react";
+import { useSession, getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import { useSignUp } from "./hooks/useSignUp";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import { mutate  } from "swr";
+import { mutate } from "swr";
 
 const Profile = () => {
   const { data: session, status } = useSession();
+  const loading = status === 'loading';
   const router = useRouter();
   const {
     isSameAddress,
@@ -24,7 +25,10 @@ const Profile = () => {
   } = useSignUp();
 
   useEffect(() => {
-    if (session) {
+    if (loading) return; // รอจนกว่า session จะโหลดเสร็จ
+
+    const token = localStorage.getItem('token');
+    if (session && session.user && token) {
       setUser({
         member_id: session.user.id || "",
         title_name: session.user.title_name || "",
@@ -48,41 +52,32 @@ const Profile = () => {
         postal_code: session.user.postal_code || "",
       });
     } else {
+      // ถ้าไม่มีเซสชัน ให้เปลี่ยนเส้นทางไปยังหน้าเข้าสู่ระบบ
       router.push("/signin");
     }
-  }, [session]);
+  }, [session, loading, router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // อัปเดตข้อมูลผู้ใช้
-    await updateUserData(user);
   
-    // รีเฟรชข้อมูลเซสชัน
-    await mutate('/api/auth/session');
-    const updatedSession = await getSession();
-    setUser({
-      member_id: updatedSession.user.id || "",
-      title_name: updatedSession.user.title_name || "",
-      first_name: updatedSession.user.first_name || "",
-      last_name: updatedSession.user.last_name || "",
-      email: updatedSession.user.email || "",
-      phone: updatedSession.user.phone || "",
-      id_card: updatedSession.user.id_card || "",
-      birth_date: updatedSession.user.birth_date || "",
-      nationality: updatedSession.user.nationality || "",
-      marital_status: updatedSession.user.marital_status || "",
-      current_address: updatedSession.user.current_address || "",
-      current_subdistrict: updatedSession.user.current_subdistrict || "",
-      current_district: updatedSession.user.current_district || "",
-      current_province: updatedSession.user.current_province || "",
-      current_postal_code: updatedSession.user.current_postal_code || "",
-      address: updatedSession.user.address || "",
-      subdistrict: updatedSession.user.subdistrict || "",
-      district: updatedSession.user.district || "",
-      province: updatedSession.user.province || "",
-      postal_code: updatedSession.user.postal_code || "",
-    });
+    // อัปเดตข้อมูลผู้ใช้
+    const response = await updateUserData(user);
+  
+    if (response && response.success) {
+      // รีเฟรชข้อมูลเซสชันหลังจากอัปเดตสำเร็จ
+      await mutate('/api/auth/session');
+      const updatedSession = await getSession();
+  
+      // อัปเดตข้อมูลใน state ของ user ด้วยข้อมูลที่อัปเดต
+      if (updatedSession && updatedSession.user) {
+        setUser((prevUser) => ({
+          ...prevUser,
+          ...updatedSession.user,
+        }));
+      }
+    } else {
+      console.error('Failed to update user data');
+    }
   };
   
   

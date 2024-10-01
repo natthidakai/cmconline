@@ -5,6 +5,11 @@ export default async function handler(req, res) {
     if (req.method === 'POST') {
         const { currentPassword, newPassword, member_id } = req.body;
 
+        // ตรวจสอบความยาวของรหัสผ่านใหม่
+        if (newPassword.length < 8) {
+            return res.status(400).json({ message: 'รหัสผ่านใหม่ต้องมีความยาวอย่างน้อย 8 ตัว' });
+        }
+
         try {
             // ดึงข้อมูลผู้ใช้จากฐานข้อมูล
             const [user] = await Mysql.query('SELECT member_id, password FROM members WHERE member_id = ?', [member_id]);
