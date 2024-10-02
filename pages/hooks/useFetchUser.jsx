@@ -1,32 +1,35 @@
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 
 export const useFetchUser = () => {
-    const { data: session, status } = useSession(); // Fetch session data
+    const { data: session, status } = useSession(); // ดึงข้อมูล session
     const [user, setUser] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
-    const router = useRouter();
 
     useEffect(() => {
         const fetchUserData = async () => {
-            if (status === "loading" || !session) {
-                setLoading(false); // Update loading state
-                return; // Avoid fetching while loading or if there's no session
+            if (status === "loading") {
+                return; // รอจนกว่า session จะโหลด
             }
+
+            if (!session || !session.accessToken) {
+                setLoading(false);
+                setError('No session or access token found.');
+                return; // ไม่มี session หรือ access token ไม่ต้องดึงข้อมูล
+            }
+
+            setLoading(true);
 
             try {
                 const response = await fetch('/api/getUser', {
                     headers: {
-                        'Authorization': `Bearer ${session.accessToken || ''}`, // Ensure accessToken is defined
+                        'Authorization': `Bearer ${session.accessToken}`, // ใส่ accessToken
                     },
                 });
 
-                console.log('Response Status:', response.status); // Log the response status
-
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`); // Log HTTP error
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
                 const usersData = await response.json();
@@ -38,17 +41,14 @@ export const useFetchUser = () => {
                 setUser(usersData);
             } catch (err) {
                 setError(err.message);
-                console.error('Error fetching user data:', err); // Log the actual error
-                if (err.message === 'Invalid user data' || err.message.includes('401')) {
-                    router.push('/signin'); // Redirect to signin on specific errors
-                }
+                console.error('Error fetching user data:', err);
             } finally {
                 setLoading(false);
             }
         };
 
         fetchUserData();
-    }, [status, session, router]); // Run the effect when status or session changes
+    }, [status, session]);
 
     return { user, loading, error };
 };

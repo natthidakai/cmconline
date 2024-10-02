@@ -14,21 +14,23 @@ export default async function handler(req, res) {
 
         try {
             // ค้นหาผู้ใช้ในฐานข้อมูลจากอีเมล
-            const [user] = await Mysql.query('SELECT * FROM members WHERE email = ?', [email]);
+            const [users] = await Mysql.query('SELECT * FROM members WHERE email = ?', [email]);
 
-            if (user.length === 0) {
+            if (users.length === 0) {
                 return res.status(401).json({ message: 'ไม่พบผู้ใช้หรือรหัสผ่านไม่ถูกต้อง' });
             }
 
+            const user = users[0]; // ใช้ user ตัวแรก
+
             // ตรวจสอบรหัสผ่าน
-            const isPasswordValid = await bcrypt.compare(password, user[0].password);
+            const isPasswordValid = await bcrypt.compare(password, user.password);
 
             if (!isPasswordValid) {
                 return res.status(401).json({ message: 'รหัสผ่านไม่ถูกต้อง' });
             }
 
             // สร้าง JWT token
-            const token = jwt.sign({ id: user[0].id, email: user[0].email }, SECRET_KEY, { expiresIn: '1h' });
+            const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: '1h' });
 
             // สำเร็จ: ตอบกลับพร้อม token
             res.status(200).json({ message: 'เข้าสู่ระบบสำเร็จ', token });

@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
 
 export const useSignUp = () => {
   const [errors, setErrors] = useState({});
@@ -18,6 +19,7 @@ export const useSignUp = () => {
 
   const [formErrors, setFormErrors] = useState({});
   const [isSameAddress, setIsSameAddress] = useState(false);
+  const [navigateToProfile, setNavigateToProfile] = useState(false);
 
   const initialUserState = {
     title_name: "",
@@ -121,16 +123,17 @@ export const useSignUp = () => {
 
   const registerUser = async () => {
     setIsLoading(true);
+  
     try {
       // ตรวจสอบข้อมูลการลงทะเบียน
-      const isValid = await validateSignUp(regisData); // ใช้ await ที่นี่
-
+      const isValid = await validateSignUp(regisData);
+  
       if (!isValid) {
         console.error("การตรวจสอบความถูกต้องของฟอร์มล้มเหลว");
         return; // หยุดถ้าการตรวจสอบล้มเหลว
       }
-
-      // Register the user (use your API endpoint)
+  
+      // ลงทะเบียนผู้ใช้
       const response = await fetch("/api/useRegister", {
         method: "POST",
         headers: {
@@ -138,32 +141,23 @@ export const useSignUp = () => {
         },
         body: JSON.stringify(regisData),
       });
-
+  
       if (response.ok) {
-        // รอ signIn หลังจากลงทะเบียนสำเร็จ
-        const loginResponse = await fetch("/api/useLogin", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: regisData.email,
-            password: regisData.password,
-          }),
+        // เข้าสู่ระบบอัตโนมัติหลังจากลงทะเบียนสำเร็จ
+        const loginResult = await signIn("credentials", {
+          redirect: false, // อย่าทำการเปลี่ยนเส้นทางโดยอัตโนมัติ ให้จัดการเอง
+          email: regisData.email,
+          password: regisData.password,
         });
-
-        const loginResult = await loginResponse.json();
-
-        if (loginResponse.ok) {
-          localStorage.setItem("token", loginResult.token);
-          router.push("/profile").then(() => {
-            // แก้ไขเครื่องหมายคำพูดที่นี่
-            router.reload();
-          });
+  
+        if (loginResult.ok) {
+          // ตั้งค่าสถานะเพื่อทำการนำทางไปที่โปรไฟล์หลังจากเข้าสู่ระบบสำเร็จ
+          setNavigateToProfile(true);
         } else {
-          setErrors({ message: loginResult.message });
+          setErrors({ message: loginResult.error });
+          console.error("การเข้าสู่ระบบล้มเหลว:", loginResult.error);
         }
-
+  
         // รีเซ็ตข้อมูลการลงทะเบียน
         setRegisData({
           first_name: "",
@@ -177,9 +171,7 @@ export const useSignUp = () => {
         const errorData = await response.json();
         setFormErrors({
           email: errorData.message.includes("อีเมล") ? errorData.message : "",
-          phone: errorData.message.includes("เบอร์โทรศัพท์")
-            ? errorData.message
-            : "",
+          phone: errorData.message.includes("เบอร์โทรศัพท์") ? errorData.message : "",
         });
         console.error("การลงทะเบียนล้มเหลว:", errorData.message);
       }
@@ -191,16 +183,23 @@ export const useSignUp = () => {
     }
   };
 
+  // จัดการการนำทางใน useEffect
+  useEffect(() => {
+    if (navigateToProfile) {
+      router.push("/profile");
+    }
+  }, [navigateToProfile]); // รัน effect เมื่อ navigateToProfile เปลี่ยนแปลง
+
   const updateUserData = async (user) => {
     setIsLoading(true);
     try {
       const isValid = await validateProfile(user);
-  
+
       if (!isValid) {
         console.error("การตรวจสอบความถูกต้องของฟอร์มล้มเหลว");
         return { success: false }; // เพิ่มการคืนค่าเพื่อแสดงความล้มเหลว
       }
-  
+
       const response = await fetch("/api/updateUser", {
         method: "POST",
         headers: {
@@ -208,7 +207,7 @@ export const useSignUp = () => {
         },
         body: JSON.stringify(user),
       });
-  
+
       if (!response.ok) {
         const errorData = await response.json();
         const errorMessage = errorData.message || "Failed to save user data";
@@ -216,7 +215,7 @@ export const useSignUp = () => {
         alert(`เกิดข้อผิดพลาด: ${errorMessage}`);
         return { success: false }; // เพิ่มการคืนค่าเพื่อแสดงความล้มเหลว
       }
-  
+
       alert("ข้อมูลถูกบันทึกเรียบร้อย");
       router.push("/profile");
       return { success: true }; // คืนค่าสำเร็จ
@@ -228,8 +227,6 @@ export const useSignUp = () => {
       setIsLoading(false);
     }
   };
-  
-
 
   const validateProfile = (user) => {
     let isValid = true;
@@ -436,36 +433,54 @@ export const useSignUp = () => {
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-
+  
     // ตรวจสอบว่ามี id หรือไม่
     if (!id) {
       console.error("ID is missing in the event target.");
       return; // ออกจากฟังก์ชันถ้าไม่มี id
     }
-
+  
     let newValue = value;
-
+  
     // กำหนดเงื่อนไขการอัปเดตค่าใหม่
     const formatters = {
-      email: (val) => val.replace(/[\u0E00-\u0E7F]/g, "").replace(/[^a-zA-Z0-9@._-]/g, ""),
+      email: (val) => {
+        const sanitized = val.replace(/[\u0E00-\u0E7F]/g, "").replace(/[^a-zA-Z0-9@._-]/g, "");
+        // Validate email format
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(sanitized)) {
+          console.warn("Invalid email format:", sanitized);
+          return sanitized; // Return sanitized value even if it's invalid
+        }
+        return sanitized;
+      },
       phone: (val) => val.replace(/\D/g, "").slice(0, 10),
       id_card: (val) => val.replace(/\D/g, "").slice(0, 13),
       current_postal_code: (val) => val.replace(/\D/g, "").slice(0, 5),
       postal_code: (val) => val.replace(/\D/g, "").slice(0, 5),
     };
-
+  
     // ใช้ formatters เพื่ออัปเดต newValue
     if (formatters[id]) {
       newValue = formatters[id](newValue);
     }
-
+  
     // อัปเดต state ของ user
     setUser((prevUser) => ({
       ...prevUser,
       [id]: newValue,
     }));
   };
+  
 
+  const handleInputRegister = (e) => {
+    const { name, value } = e.target;
+
+    // อัปเดตข้อมูล regisData ตามการเปลี่ยนแปลงของฟิลด์
+    setRegisData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
   const handleCheckboxChange = (setUser, setIsSameAddress) => (event) => {
     const { checked } = event.target;
@@ -574,6 +589,7 @@ export const useSignUp = () => {
     submitBooking,
     formData,
     handleChange,
+    handleInputRegister,
     formFieldsPersonal,
     formFieldsCurrentAddress,
     formFieldsAddress,

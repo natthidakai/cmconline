@@ -1,9 +1,8 @@
-import { useSession, getSession } from "next-auth/react";
+import { useSession, getSession } from 'next-auth/react';
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import { useSignUp } from "./hooks/useSignUp";
-import { Container, Row, Col, Button } from "react-bootstrap";
-import { mutate } from "swr";
+import { Container, Row, Col, Button, Spinner } from "react-bootstrap";
 
 const Profile = () => {
   const { data: session, status } = useSession();
@@ -24,8 +23,10 @@ const Profile = () => {
     setErrors
   } = useSignUp();
 
+  const [isSubmitting, setIsSubmitting] = useState(false); // สถานะการส่งข้อมูล
+
   useEffect(() => {
-    if (loading) return; // รอจนกว่า session จะโหลดเสร็จ
+    if (loading) return;
 
     const token = localStorage.getItem('token');
     if (session && session.user && token) {
@@ -52,39 +53,37 @@ const Profile = () => {
         postal_code: session.user.postal_code || "",
       });
     } else {
-      // ถ้าไม่มีเซสชัน ให้เปลี่ยนเส้นทางไปยังหน้าเข้าสู่ระบบ
       router.push("/signin");
     }
   }, [session, loading, router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
   
     // อัปเดตข้อมูลผู้ใช้
     const response = await updateUserData(user);
   
     if (response && response.success) {
-      // รีเฟรชข้อมูลเซสชันหลังจากอัปเดตสำเร็จ
-      await mutate('/api/auth/session');
-      const updatedSession = await getSession();
-  
       // อัปเดตข้อมูลใน state ของ user ด้วยข้อมูลที่อัปเดต
-      if (updatedSession && updatedSession.user) {
-        setUser((prevUser) => ({
-          ...prevUser,
-          ...updatedSession.user,
-        }));
-      }
+      setUser((prevUser) => ({
+        ...prevUser,
+        ...response.updatedUserData,
+      }));
+      // เพิ่มการ console.log เพื่อตรวจสอบข้อมูลที่อัปเดต
+      console.log("Updated user data:", response.updatedUserData);
     } else {
-      console.error('Failed to update user data');
+      // แสดงข้อผิดพลาดที่เกิดขึ้น
+      setErrors({ ...errors, update: "ไม่สามารถอัปเดตข้อมูลได้" });
+      console.error("Update user error:", response); // เพิ่มการ console.log เพื่อดูข้อมูลผิดพลาด
     }
+  
+    setIsSubmitting(false);
   };
   
-  
-  
+
   return (
     <Container className="py-5">
-      {user.password}
       <Row className="justify-content-center">
         <Col xxl="7" xl="6" lg="8" md="10" sm="10" xs="10">
           <h3 className="th px-3 center mb-4">ข้อมูลของฉัน</h3>
@@ -186,7 +185,7 @@ const Profile = () => {
 
             {Object.keys(errors).length > 0 && (
               <div className="text-danger mb-3 th center">
-                {errors.first_name || errors.last_name || errors.phone || errors.email || errors.id_card}
+                {errors.first_name || errors.last_name || errors.phone || errors.email || errors.id_card || errors.update}
               </div>
             )}
 
@@ -195,9 +194,13 @@ const Profile = () => {
                 <Button
                   className="btn-xl th"
                   onClick={handleSubmit}
-                  disabled={false} // Consider managing loading state here
+                  disabled={isSubmitting} // ปิดการใช้งานเมื่อส่งข้อมูล
                 >
-                  บันทึกข้อมูล
+                  {isSubmitting ? (
+                    <Spinner animation="border" size="sm" />
+                  ) : (
+                    "บันทึกข้อมูล"
+                  )}
                 </Button>
               </Col>
             </Row>

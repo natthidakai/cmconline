@@ -19,9 +19,10 @@ const SignIn = () => {
 
 
   useEffect(() => {
-    if (status === "authenticated") {
-      localStorage.setItem('token', session.user.id); // เปลี่ยน id เป็นค่าที่คุณต้องการ
-      router.push("/"); // เปลี่ยนเส้นทางเมื่อเข้าสู่ระบบสำเร็จ
+    // ตรวจสอบสถานะการเข้าสู่ระบบ
+    if (status === "authenticated" && session) {
+      // รีไดเร็กไปยังหน้าโปรไฟล์เมื่อเข้าสู่ระบบสำเร็จ
+      router.push("/");
     }
   }, [session, status, router]);
 

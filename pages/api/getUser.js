@@ -2,37 +2,46 @@ import Mysql from '../../connect/mysql';
 import jwt from 'jsonwebtoken';
 
 export default async function handler(req, res) {
-    const SECRET_KEY = process.env.SECRET_KEY;
-
     if (req.method === 'GET') {
         const token = req.headers.authorization?.split(' ')[1];
 
         if (!token) {
-            return res.status(401).json({ message: 'Unauthorized: Token not provided' });
+            console.error('Unauthorized: No token provided');
+            return res.status(401).json({ message: 'Unauthorized' });
         }
 
         try {
-            const decoded = jwt.verify(token, SECRET_KEY);
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            const member_id = req.query.member_id;
 
-            // ตรวจสอบว่ามีค่า email จาก token หรือไม่
-            if (!decoded.email) {
-                return res.status(400).json({ message: 'Invalid token: Email is missing' });
+            // เพิ่มการบันทึกเพื่อดีบัก member_id
+            console.log('Decoded JWT:', decoded); // บันทึกข้อมูล JWT
+            console.log('Member ID:', member_id); // บันทึกค่า member_id เพื่อตรวจสอบ
+
+            if (!member_id) {
+                console.error('Member ID not provided in the query');
+                return res.status(400).json({ message: 'Bad Request: Member ID not provided' });
             }
 
-            const userEmail = decoded.email;
+            const [user] = await Mysql.query('SELECT * FROM members WHERE member_id = ?', [member_id]);
 
-            // ดึงข้อมูลผู้ใช้จากฐานข้อมูลด้วย email ที่ได้รับ
-            const [user] = await Mysql.query('SELECT * FROM members WHERE email = ?', [userEmail]);
-
-            // ตรวจสอบว่าผู้ใช้ถูกดึงข้อมูลมาหรือไม่
             if (!user) {
+                console.error('User not found for member_id:', member_id);
                 return res.status(404).json({ message: 'User not found' });
             }
 
-            res.status(200).json(user); // ส่งข้อมูลผู้ใช้คนเดียว
+            res.status(200).json({
+                message: 'User data fetched successfully',
+                user: user
+            });
         } catch (error) {
-            console.error('Error fetching user:', error);
-            res.status(500).json({ message: 'Server error' });
+            console.error('Error fetching user:', error.message);
+            if (error instanceof jwt.JsonWebTokenError) {
+                return res.status(401).json({ message: 'Unauthorized: Invalid token' });
+            } else if (error instanceof jwt.TokenExpiredError) {
+                return res.status(401).json({ message: 'Unauthorized: Token expired' });
+            }
+            res.status(500).json({ message: 'Server error', error: error.message }); // เพิ่ม error message สำหรับดีบัก
         }
     } else {
         res.setHeader('Allow', ['GET']);

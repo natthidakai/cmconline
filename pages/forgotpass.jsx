@@ -65,7 +65,7 @@ const ForgotPassword = () => {
                                         onChange={handleInputChange}
                                         onKeyPress={handleEmailKeyPress}
                                     />
-                                    {errors.message && <p style={{ color: 'red' }} className="mt-3 th text-center">{errors.message}</p>}
+                                    {errors.message && <p className="mt-3 th text-center text-danger">{errors.message}</p>}
 
                                 </Col>
                                 <Col className="justify-content-center">
@@ -97,7 +97,7 @@ const ForgotPassword = () => {
                                             onChange={handleInputChange}
                                         />
                                     </Col>
-                                    {errors.message && <p style={{ color: 'red' }} className="mt-3 th text-center">{errors.message}</p>}
+                                    {errors.message && <p className="mt-3 th text-center text-danger">{errors.message}</p>}
                                     <Row>
                                         <Col className="justify-content-center">
                                             <Button type='submit' className="btn-xl th">เปลี่ยนรหัสผ่าน</Button>

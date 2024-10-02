@@ -26,13 +26,6 @@ const ChangePassword = () => {
         }
     }, [session, router]);
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (!session && !token) {
-            router.push("/signin");
-        }
-    }, [session, router]);
-
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         setChangPsw((prevData) => {
@@ -97,7 +90,7 @@ const ChangePassword = () => {
 
                         <Row>
                             {errors && errors.message && (
-                                <div style={{ color: 'red' }} className="mb-3 th center">
+                                <div className="mb-3 th center text-danger">
                                     {errors.message}
                                 </div>
                             )}

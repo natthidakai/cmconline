@@ -43,7 +43,7 @@ export const useAuth = () => {
                 setErrors({ message: result.error });
             } else {
                 // หากเข้าสู่ระบบสำเร็จ ให้เปลี่ยนเส้นทางไปยังหน้าโปรไฟล์
-                router.push("/profile"); // เปลี่ยนเส้นทางไปยังหน้าโปรไฟล์หลังจากเข้าสู่ระบบสำเร็จ
+                router.push("/"); // เปลี่ยนเส้นทางไปยังหน้าโปรไฟล์หลังจากเข้าสู่ระบบสำเร็จ
             }
         } catch (error) {
             console.error("Error during sign in:", error);

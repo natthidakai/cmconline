@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useSession } from "next-auth/react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { useSignUp } from "./hooks/useSignUp";
+import { validationForm  } from "./hooks/validationForm"
 
 import Image from "next/image";
 import LOGO from "./assert/images/logo.jpg";
@@ -12,7 +13,8 @@ const SignUp = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  const { regisData, handleInputChange, errors, formErrors, registerUser, isLoading, handleNumberKeyPress, handleEmailKeyPress  } = useSignUp();
+  const { regisData, errors, formErrors, registerUser, isLoading, handleInputRegister  } = useSignUp();
+  const { handleEmailKeyPress, handleNumberKeyPress } = validationForm();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -49,8 +51,8 @@ const SignUp = () => {
                 type="text"
                 id="first_name"
                 className="form-control th"
-                value={regisData.first_name}
-                onChange={handleInputChange}
+                defaultValue={regisData.first_name}
+                onChange={handleInputRegister}
               />
               {errors.first_name && (
                 <div className="text-danger mt-2 th">{errors.first_name}</div>
@@ -64,8 +66,8 @@ const SignUp = () => {
                 type="text"
                 id="last_name"
                 className="form-control th"
-                value={regisData.last_name}
-                onChange={handleInputChange}
+                defaultValue={regisData.last_name}
+                onChange={handleInputRegister}
               />
               {errors.last_name && (
                 <div className="text-danger mt-2 th">{errors.last_name}</div>
@@ -79,11 +81,11 @@ const SignUp = () => {
                 type="tel"
                 id="phone"
                 className="form-control th"
-                value={regisData.phone}
+                defaultValue={regisData.phone}
                 minLength={10}
                 maxLength={10}
                 onKeyPress={handleNumberKeyPress} 
-                onChange={handleInputChange}
+                onChange={handleInputRegister}
               />
               {errors.phone && (
                 <div className="text-danger mt-2 th">{errors.phone}</div>
@@ -101,8 +103,8 @@ const SignUp = () => {
                 type="email"
                 id="email"
                 className="form-control th"
-                value={regisData.email}
-                onChange={handleInputChange}
+                defaultValue={regisData.email}
+                onChange={handleInputRegister}
                 onKeyPress={handleEmailKeyPress}
               />
               {errors.email && (
@@ -123,8 +125,8 @@ const SignUp = () => {
                 minLength={13}
                 maxLength={13}
                 className="form-control th"
-                value={regisData.id_card}
-                onChange={handleInputChange}
+                defaultValue={regisData.id_card}
+                onChange={handleInputRegister}
                 onKeyPress={handleNumberKeyPress}
               />
               {errors.id_card && (
@@ -143,8 +145,8 @@ const SignUp = () => {
                 type="password"
                 id="password"
                 className="form-control th"
-                value={regisData.password}
-                onChange={handleInputChange}
+                defaultValue={regisData.password}
+                onChange={handleInputRegister}
               />
               {errors.password && (
                 <div className="text-danger mt-2 th">{errors.password}</div>
@@ -158,8 +160,8 @@ const SignUp = () => {
                 type="password"
                 id="CFpassword"
                 className="form-control th"
-                value={regisData.CFpassword}
-                onChange={handleInputChange}
+                defaultValue={regisData.CFpassword}
+                onChange={handleInputRegister}
               />
               {errors.CFpassword && (
                 <div className="text-danger mt-2 th">{errors.CFpassword}</div>
