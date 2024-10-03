@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
+import { useSession } from 'next-auth/react';
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 
 export const useSignUp = () => {
+
+  const { data: session, status } = useSession();
   const [errors, setErrors] = useState({});
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -20,6 +23,46 @@ export const useSignUp = () => {
   const [formErrors, setFormErrors] = useState({});
   const [isSameAddress, setIsSameAddress] = useState(false);
   const [navigateToProfile, setNavigateToProfile] = useState(false);
+
+  const [showAddressSection, setShowAddressSection] = useState(false);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (status === 'authenticated') {
+        const token = session.user?.token;
+        const memberID = session.user.id;
+
+        if (!token) {
+          console.error('No token found in session');
+          return;
+        }
+
+        try {
+          const response = await fetch(`/api/getUser?member_id=${memberID}`, {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Error fetching user data:', errorData.message);
+            setErrors(errorData.message);
+            return;
+          }
+
+          const data = await response.json();
+          setUser(data); // Set user data here
+        } catch (err) {
+          console.error('Error fetching user data:', err);
+          setErrors('Failed to fetch user data');
+        }
+      }
+    };
+
+    fetchUserData();
+  }, [session, status]);
 
   const initialUserState = {
     title_name: "",
@@ -123,16 +166,16 @@ export const useSignUp = () => {
 
   const registerUser = async () => {
     setIsLoading(true);
-  
+
     try {
       // ตรวจสอบข้อมูลการลงทะเบียน
       const isValid = await validateSignUp(regisData);
-  
+
       if (!isValid) {
         console.error("การตรวจสอบความถูกต้องของฟอร์มล้มเหลว");
         return; // หยุดถ้าการตรวจสอบล้มเหลว
       }
-  
+
       // ลงทะเบียนผู้ใช้
       const response = await fetch("/api/useRegister", {
         method: "POST",
@@ -141,7 +184,7 @@ export const useSignUp = () => {
         },
         body: JSON.stringify(regisData),
       });
-  
+
       if (response.ok) {
         // เข้าสู่ระบบอัตโนมัติหลังจากลงทะเบียนสำเร็จ
         const loginResult = await signIn("credentials", {
@@ -149,7 +192,7 @@ export const useSignUp = () => {
           email: regisData.email,
           password: regisData.password,
         });
-  
+
         if (loginResult.ok) {
           // ตั้งค่าสถานะเพื่อทำการนำทางไปที่โปรไฟล์หลังจากเข้าสู่ระบบสำเร็จ
           setNavigateToProfile(true);
@@ -157,7 +200,7 @@ export const useSignUp = () => {
           setErrors({ message: loginResult.error });
           console.error("การเข้าสู่ระบบล้มเหลว:", loginResult.error);
         }
-  
+
         // รีเซ็ตข้อมูลการลงทะเบียน
         setRegisData({
           first_name: "",
@@ -270,117 +313,7 @@ export const useSignUp = () => {
     return isValid;
   };
 
-  const validateBooking = (formData, showAddressSection) => {
-    let isValid = true;
-    const newErrors = {};
-
-    // Validate personal info fields
-    if (!formData.title) {
-      newErrors.title = "กรุณาเลือกคำนำหน้าชื่อ";
-      isValid = false;
-    }
-
-    if (!formData.first_name) {
-      newErrors.first_name = "กรุณาระบุชื่อ";
-      isValid = false;
-    }
-
-    if (!formData.last_name) {
-      newErrors.last_name = "กรุณาระบุนามสกุล";
-      isValid = false;
-    }
-
-    if (!formData.phone) {
-      newErrors.phone = "กรุณาระบุเบอร์โทรศัพท์";
-      isValid = false;
-    }
-
-    if (!formData.email) {
-      newErrors.email = "กรุณาระบุอีเมล";
-      isValid = false;
-    } else if (!validateEmail(formData.email)) {
-      newErrors.email = "รูปแบบอีเมลไม่ถูกต้อง";
-      isValid = false;
-    }
-
-    if (!validateIdCard(formData.id_card)) {
-      newErrors.id_card = "หมายเลขบัตรประชาชนไม่ถูกต้อง";
-      isValid = false;
-    }
-
-    if (!formData.birth_date) {
-      newErrors.birth_date = "กรุณาระบุวันเกิด";
-      isValid = false;
-    }
-
-    if (!formData.nationality) {
-      newErrors.nationality = "กรุณาระบุสัญชาติ";
-      isValid = false;
-    }
-
-    if (!formData.marital_status) {
-      newErrors.marital_status = "กรุณาระบุสถานะภาพ";
-      isValid = false;
-    }
-
-    // Only validate address fields if the address section is visible
-    if (showAddressSection) {
-      if (!formData.current_address) {
-        newErrors.current_address = "กรุณาระบุที่อยู่ปัจจุบัน";
-        isValid = false;
-      }
-
-      if (!formData.current_subdistrict) {
-        newErrors.current_subdistrict = "กรุณาระบุ แขวง/ตำบล";
-        isValid = false;
-      }
-
-      if (!formData.current_district) {
-        newErrors.current_district = "กรุณาระบุ เขต/อำเภอ";
-        isValid = false;
-      }
-
-      if (!formData.current_province) {
-        newErrors.current_province = "กรุณาระบุจังหวัด";
-        isValid = false;
-      }
-
-      if (!formData.current_postal_code) {
-        newErrors.current_postal_code = "กรุณาระบุรหัสไปรษณีย์";
-        isValid = false;
-      }
-
-      if (!formData.address) {
-        newErrors.address = "กรุณาระบุที่อยู่ตามทะเบียนบ้าน";
-        isValid = false;
-      }
-
-      if (!formData.subdistrict) {
-        newErrors.subdistrict = "กรุณาระบุ แขวง/ตำบล";
-        isValid = false;
-      }
-
-      if (!formData.district) {
-        newErrors.district = "กรุณาระบุ เขต/อำเภอ";
-        isValid = false;
-      }
-
-      if (!formData.province) {
-        newErrors.province = "กรุณาระบุจังหวัด";
-        isValid = false;
-      }
-
-      if (!formData.postal_code) {
-        // แก้ชื่อให้ตรงกัน
-        newErrors.postal_code = "กรุณาระบุรหัสไปรษณีย์";
-        isValid = false;
-      }
-    }
-
-    // Set errors state
-    setErrors(newErrors);
-    return isValid;
-  };
+  ;
 
   const [formData, setFormData] = useState({
     title: "",
@@ -433,15 +366,15 @@ export const useSignUp = () => {
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-  
+
     // ตรวจสอบว่ามี id หรือไม่
     if (!id) {
       console.error("ID is missing in the event target.");
       return; // ออกจากฟังก์ชันถ้าไม่มี id
     }
-  
+
     let newValue = value;
-  
+
     // กำหนดเงื่อนไขการอัปเดตค่าใหม่
     const formatters = {
       email: (val) => {
@@ -458,19 +391,19 @@ export const useSignUp = () => {
       current_postal_code: (val) => val.replace(/\D/g, "").slice(0, 5),
       postal_code: (val) => val.replace(/\D/g, "").slice(0, 5),
     };
-  
+
     // ใช้ formatters เพื่ออัปเดต newValue
     if (formatters[id]) {
       newValue = formatters[id](newValue);
     }
-  
+
     // อัปเดต state ของ user
     setUser((prevUser) => ({
       ...prevUser,
       [id]: newValue,
     }));
   };
-  
+
 
   const handleInputRegister = (e) => {
     const { name, value } = e.target;
@@ -507,26 +440,138 @@ export const useSignUp = () => {
     }
   };
 
-  const submitBooking = async (
-    e,
-    projectID,
-    unitNumber,
-    showAddressSection,
-    floorName,
-    towerName
-  ) => {
+  const checkFormPersonal = (user) => {
+    const requiredFields = ["title_name", "first_name", "last_name", "phone", "email", "id_card", "birth_date", "nationality", "marital_status"];
+    const allRequiredFieldsFilled = requiredFields.every((field) => {
+      const value = user[field];
+      if (field === "id_card") return value && value.length === 13;
+      if (field === "phone") return value && value.length === 10;
+      return value && value.trim() !== '';
+    });
+    // console.log("All required fields filled:", allRequiredFieldsFilled);
+    setShowAddressSection(allRequiredFieldsFilled);
+  };
+
+  const validateBooking = (user, showAddressSection) => {
+    // Clear previous error messages
+    setErrors('');
+
+    // Validate personal info fields one by one
+    if (!user.title) {
+      setErrors('กรุณาเลือกคำนำหน้าชื่อ');
+      return false;
+    }
+
+    if (!user.first_name) {
+      setErrors('กรุณาระบุชื่อ');
+      return false;
+    }
+
+    if (!user.last_name) {
+      setErrors('กรุณาระบุนามสกุล');
+      return false;
+    }
+
+    if (!user.phone) {
+      setErrors('กรุณาระบุเบอร์โทรศัพท์');
+      return false;
+    }
+
+    if (!user.email) {
+      setErrors('กรุณาระบุอีเมล');
+      return false;
+    } else if (!validateEmail(user.email)) {
+      setErrors('รูปแบบอีเมลไม่ถูกต้อง');
+      return false;
+    }
+
+    if (!validateIdCard(user.id_card)) {
+      setErrors('หมายเลขบัตรประชาชนไม่ถูกต้อง');
+      return false;
+    }
+
+    if (!user.birth_date) {
+      setErrors('กรุณาระบุวันเกิด');
+      return false;
+    }
+
+    if (!user.nationality) {
+      setErrors('กรุณาระบุสัญชาติ');
+      return false;
+    }
+
+    if (!user.marital_status) {
+      setErrors('กรุณาระบุสถานะภาพ');
+      return false;
+    }
+
+    // Only validate address fields if the address section is visible
+    if (showAddressSection) {
+      if (!user.current_address) {
+        setErrors('กรุณาระบุที่อยู่ปัจจุบัน');
+        return false;
+      }
+
+      if (!user.current_subdistrict) {
+        setErrors('กรุณาระบุ แขวง/ตำบล');
+        return false;
+      }
+
+      if (!user.current_district) {
+        setErrors('กรุณาระบุ เขต/อำเภอ');
+        return false;
+      }
+
+      if (!user.current_province) {
+        setErrors('กรุณาระบุจังหวัด');
+        return false;
+      }
+
+      if (!user.current_postal_code) {
+        setErrors('กรุณาระบุรหัสไปรษณีย์');
+        return false;
+      }
+
+      if (!user.address) {
+        setErrors('กรุณาระบุที่อยู่ตามทะเบียนบ้าน');
+        return false;
+      }
+
+      if (!user.subdistrict) {
+        setErrors('กรุณาระบุ แขวง/ตำบล');
+        return false;
+      }
+
+      if (!user.district) {
+        setErrors('กรุณาระบุ เขต/อำเภอ');
+        return false;
+      }
+
+      if (!user.province) {
+        setErrors('กรุณาระบุจังหวัด');
+        return false;
+      }
+
+      if (!user.postal_code) {
+        setErrors('กรุณาระบุรหัสไปรษณีย์');
+        return false;
+      }
+    }
+
+    // If no errors were found
+    setErrors(''); // Clear errors if everything is valid
+    return true;
+};
+
+
+
+  const submitBooking = async (e, projectID, unitNumber, showAddressSection, floorName, towerName) => {
     e.preventDefault();
 
     if (!user.member_id) {
       console.error("Member ID is missing");
       return;
     }
-
-    console.log("Form Data Being Sent (user):", {
-      ...user,
-      projectID,
-      unitNumber,
-    });
 
     const isValid = validateBooking(user, showAddressSection);
 
@@ -547,14 +592,14 @@ export const useSignUp = () => {
         });
 
         if (response.ok) {
-          // การจองสำเร็จ
+          // Booking successful
           router.push(
             `/step/4?projectID=${projectID}&floorName=${floorName}&towerName=${towerName}&unitNumber=${unitNumber}`
           );
-          // ล้างข้อมูลผู้ใช้
+          // Clear user data
           setUser(initialUserState);
         } else {
-          // จัดการข้อผิดพลาดเมื่อการจองไม่สำเร็จ
+          // Handle error when booking fails
           const errorData = await response.json();
           console.error("Failed to book", errorData);
 
@@ -562,7 +607,7 @@ export const useSignUp = () => {
             alert(errorData.alert);
             router.push(errorData.redirect);
           } else {
-            alert(errorData.alert); // แสดงข้อความแจ้งเตือน
+            alert(errorData.alert); // Show alert message
           }
         }
       } catch (error) {
@@ -573,9 +618,53 @@ export const useSignUp = () => {
     }
   };
 
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+
+    // Check if ID is present
+    if (!id) {
+      console.error("ID is missing in the event target.");
+      return; // Exit if ID is not present
+    }
+
+    let newValue = value;
+
+    // Define formatting conditions
+    const formatters = {
+      email: (val) => {
+        const sanitized = val.replace(/[\u0E00-\u0E7F]/g, "").replace(/[^a-zA-Z0-9@._-]/g, "");
+        // Validate email format
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(sanitized)) {
+          console.warn("Invalid email format:", sanitized);
+          return sanitized; // Return sanitized value even if it's invalid
+        }
+        return sanitized;
+      },
+      phone: (val) => val.replace(/\D/g, "").slice(0, 10),
+      id_card: (val) => val.replace(/\D/g, "").slice(0, 13),
+      current_postal_code: (val) => val.replace(/\D/g, "").slice(0, 5),
+      postal_code: (val) => val.replace(/\D/g, "").slice(0, 5),
+    };
+
+    // Use formatters to update newValue
+    if (formatters[id]) {
+      newValue = formatters[id](value); // Pass the value to the formatter
+    }
+
+    setUser((prevUser) => {
+      const updatedUser = {
+        ...prevUser,
+        [id]: newValue,
+      };
+      // console.log("Updated User Data:", updatedUser); // Log updated user data
+      return updatedUser;
+    });
+  };
+
   return {
     regisData,
     isSameAddress,
+    status,
     setIsSameAddress,
     handleCheckboxChange,
     errors,
@@ -593,5 +682,9 @@ export const useSignUp = () => {
     formFieldsPersonal,
     formFieldsCurrentAddress,
     formFieldsAddress,
+    checkFormPersonal,
+    showAddressSection,
+    handleInputChange,
+    submitBooking,
   };
 };

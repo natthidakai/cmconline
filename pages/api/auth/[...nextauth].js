@@ -120,6 +120,7 @@ export default NextAuth({
                     district: token.district,
                     province: token.province,
                     postal_code: token.postal_code,
+                    token: token,
                 };
                 // console.log("Session after adding token:", session);
             }
