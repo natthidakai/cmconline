@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import { useSession } from 'next-auth/react';
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 
 export const useSignUp = () => {
-
   const { data: session, status } = useSession();
   const [errors, setErrors] = useState({});
   const router = useRouter();
@@ -28,26 +27,26 @@ export const useSignUp = () => {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      if (status === 'authenticated') {
+      if (status === "authenticated") {
         const token = session.user?.token;
         const memberID = session.user.id;
 
         if (!token) {
-          console.error('No token found in session');
+          console.error("No token found in session");
           return;
         }
 
         try {
           const response = await fetch(`/api/getUser?member_id=${memberID}`, {
-            method: 'GET',
+            method: "GET",
             headers: {
-              Authorization: `Bearer ${token}`
-            }
+              Authorization: `Bearer ${token}`,
+            },
           });
 
           if (!response.ok) {
             const errorData = await response.json();
-            console.error('Error fetching user data:', errorData.message);
+            console.error("Error fetching user data:", errorData.message);
             setErrors(errorData.message);
             return;
           }
@@ -55,8 +54,8 @@ export const useSignUp = () => {
           const data = await response.json();
           setUser(data); // Set user data here
         } catch (err) {
-          console.error('Error fetching user data:', err);
-          setErrors('Failed to fetch user data');
+          console.error("Error fetching user data:", err);
+          setErrors("Failed to fetch user data");
         }
       }
     };
@@ -214,7 +213,9 @@ export const useSignUp = () => {
         const errorData = await response.json();
         setFormErrors({
           email: errorData.message.includes("อีเมล") ? errorData.message : "",
-          phone: errorData.message.includes("เบอร์โทรศัพท์") ? errorData.message : "",
+          phone: errorData.message.includes("เบอร์โทรศัพท์")
+            ? errorData.message
+            : "",
         });
         console.error("การลงทะเบียนล้มเหลว:", errorData.message);
       }
@@ -234,6 +235,7 @@ export const useSignUp = () => {
   }, [navigateToProfile]); // รัน effect เมื่อ navigateToProfile เปลี่ยนแปลง
 
   const updateUserData = async (user) => {
+
     setIsLoading(true);
     try {
       const isValid = await validateProfile(user);
@@ -313,10 +315,8 @@ export const useSignUp = () => {
     return isValid;
   };
 
-  ;
-
   const [formData, setFormData] = useState({
-    title: "",
+    title_name: "",
     first_name: "",
     last_name: "",
     email: "",
@@ -337,31 +337,125 @@ export const useSignUp = () => {
   });
 
   const formFieldsPersonal = [
-    { label: "คำนำหน้าชื่อ", id: "title_name", type: "select", options: ["-- กรุณาเลือก --", "นาย", "นาง", "นางสาว"], value: user.title_name, name: 'title_name' },
+    {
+      label: "คำนำหน้าชื่อ",
+      id: "title_name",
+      type: "select",
+      options: ["-- กรุณาเลือก --", "นาย", "นาง", "นางสาว"],
+      value: user.title_name,
+      name: "title_name",
+    },
     { label: "ชื่อ", id: "first_name", type: "text", value: user.first_name },
     { label: "นามสกุล", id: "last_name", type: "text", value: user.last_name },
     { label: "อีเมล", id: "email", type: "text", value: user.email },
     { label: "เบอร์โทรศัพท์", id: "phone", type: "text", value: user.phone },
-    { label: "เลขบัตรประชาชน", id: "id_card", type: "text", value: user.id_card, name: 'id_card' },
-    { label: "วันเกิด", id: "birth_date", type: "date", value: user.birth_date ? new Date(user.birth_date).toISOString().split('T')[0] : '', nacme: 'birth_date' },
-    { label: "สัญชาติ", id: "nationality", type: "text", value: user.nationality, name: 'nationality' },
-    { label: "สถานะภาพ", id: "marital_status", type: "select", options: ["-- กรุณาเลือก --", "โสด", "สมรส", "หย่า", "หม้าย", "ไม่ระบุ"], value: user.marital_status, name: 'marital_status' },
+    {
+      label: "เลขบัตรประชาชน",
+      id: "id_card",
+      type: "text",
+      value: user.id_card,
+      name: "id_card",
+    },
+    {
+      label: "วันเกิด",
+      id: "birth_date",
+      type: "date",
+      value: user.birth_date
+        ? new Date(user.birth_date).toISOString().split("T")[0]
+        : "",
+      nacme: "birth_date",
+    },
+    {
+      label: "สัญชาติ",
+      id: "nationality",
+      type: "text",
+      value: user.nationality,
+      name: "nationality",
+    },
+    {
+      label: "สถานภาพ",
+      id: "marital_status",
+      type: "select",
+      options: ["-- กรุณาเลือก --", "โสด", "สมรส", "หย่า", "หม้าย", "ไม่ระบุ"],
+      value: user.marital_status,
+      name: "marital_status",
+    },
   ];
 
   const formFieldsCurrentAddress = [
-    { label: "ที่อยู่", id: "current_address", type: "text", name: 'current_address', value: user.current_address, },
-    { label: "แขวง/ตำบล", id: "current_subdistrict", type: "text", name: 'current_subdistrict', value: user.current_subdistrict, },
-    { label: "เขต/อำเภอ", id: "current_district", type: "text", name: 'current_district', value: user.current_district, },
-    { label: "จังหวัด", id: "current_province", type: "text", name: 'current_province', value: user.current_province, },
-    { label: "รหัสไปรษณีย์", id: "current_postal_code", type: "text", name: 'current_postal_code', value: user.current_postal_code, },
+    {
+      label: "ที่อยู่",
+      id: "current_address",
+      type: "text",
+      name: "current_address",
+      value: user.current_address,
+    },
+    {
+      label: "แขวง/ตำบล",
+      id: "current_subdistrict",
+      type: "text",
+      name: "current_subdistrict",
+      value: user.current_subdistrict,
+    },
+    {
+      label: "เขต/อำเภอ",
+      id: "current_district",
+      type: "text",
+      name: "current_district",
+      value: user.current_district,
+    },
+    {
+      label: "จังหวัด",
+      id: "current_province",
+      type: "text",
+      name: "current_province",
+      value: user.current_province,
+    },
+    {
+      label: "รหัสไปรษณีย์",
+      id: "current_postal_code",
+      type: "text",
+      name: "current_postal_code",
+      value: user.current_postal_code,
+    },
   ];
 
   const formFieldsAddress = [
-    { label: "ที่อยู่", id: "address", type: "text", name: "address", value: user.address },
-    { label: "แขวง/ตำบล", id: "subdistrict", type: "text", name: "subdistrict", value: user.subdistrict, },
-    { label: "เขต/อำเภอ", id: "district", type: "text", name: "district", value: user.district },
-    { label: "จังหวัด", id: "province", type: "text", name: "province", value: user.province },
-    { label: "รหัสไปรษณีย์", id: "postal_code", type: "text", name: "postal_code", value: user.postal_code, },
+    {
+      label: "ที่อยู่",
+      id: "address",
+      type: "text",
+      name: "address",
+      value: user.address,
+    },
+    {
+      label: "แขวง/ตำบล",
+      id: "subdistrict",
+      type: "text",
+      name: "subdistrict",
+      value: user.subdistrict,
+    },
+    {
+      label: "เขต/อำเภอ",
+      id: "district",
+      type: "text",
+      name: "district",
+      value: user.district,
+    },
+    {
+      label: "จังหวัด",
+      id: "province",
+      type: "text",
+      name: "province",
+      value: user.province,
+    },
+    {
+      label: "รหัสไปรษณีย์",
+      id: "postal_code",
+      type: "text",
+      name: "postal_code",
+      value: user.postal_code,
+    },
   ];
 
   const handleChange = (e) => {
@@ -378,7 +472,9 @@ export const useSignUp = () => {
     // กำหนดเงื่อนไขการอัปเดตค่าใหม่
     const formatters = {
       email: (val) => {
-        const sanitized = val.replace(/[\u0E00-\u0E7F]/g, "").replace(/[^a-zA-Z0-9@._-]/g, "");
+        const sanitized = val
+          .replace(/[\u0E00-\u0E7F]/g, "")
+          .replace(/[^a-zA-Z0-9@._-]/g, "");
         // Validate email format
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(sanitized)) {
           console.warn("Invalid email format:", sanitized);
@@ -404,7 +500,6 @@ export const useSignUp = () => {
     }));
   };
 
-
   const handleInputRegister = (e) => {
     const { name, value } = e.target;
 
@@ -418,171 +513,210 @@ export const useSignUp = () => {
   const handleCheckboxChange = (setUser, setIsSameAddress) => (event) => {
     const { checked } = event.target;
     setIsSameAddress(checked);
-
-    if (checked) {
-      setUser((prevUser) => ({
-        ...prevUser,
-        address: prevUser.current_address,
-        subdistrict: prevUser.current_subdistrict,
-        district: prevUser.current_district,
-        province: prevUser.current_province,
-        postal_code: prevUser.current_postal_code,
-      }));
-    } else {
-      setUser((prevUser) => ({
-        ...prevUser,
-        address: "",
-        subdistrict: "",
-        district: "",
-        province: "",
-        postal_code: "",
-      }));
-    }
+  
+    // Use destructuring for cleaner code
+    setUser((prevUser) => {
+      const {
+        current_address,
+        current_subdistrict,
+        current_district,
+        current_province,
+        current_postal_code,
+      } = prevUser;
+  
+      if (checked) {
+        return {
+          ...prevUser,
+          address: current_address,
+          subdistrict: current_subdistrict,
+          district: current_district,
+          province: current_province,
+          postal_code: current_postal_code,
+        };
+      } else {
+        // Only reset if there are values to clear
+        return {
+          ...prevUser,
+          address: "",
+          subdistrict: "",
+          district: "",
+          province: "",
+          postal_code: "",
+        };
+      }
+    });
   };
+  
 
   const checkFormPersonal = (user) => {
-    const requiredFields = ["title_name", "first_name", "last_name", "phone", "email", "id_card", "birth_date", "nationality", "marital_status"];
+    const requiredFields = [
+      "title_name",
+      "first_name",
+      "last_name",
+      "phone",
+      "email",
+      "id_card",
+      "birth_date",
+      "nationality",
+      "marital_status",
+    ];
     const allRequiredFieldsFilled = requiredFields.every((field) => {
       const value = user[field];
       if (field === "id_card") return value && value.length === 13;
       if (field === "phone") return value && value.length === 10;
-      return value && value.trim() !== '';
+      return value && value.trim() !== "";
     });
     // console.log("All required fields filled:", allRequiredFieldsFilled);
     setShowAddressSection(allRequiredFieldsFilled);
   };
 
   const validateBooking = (user, showAddressSection) => {
-    // Clear previous error messages
-    setErrors('');
+    let isValid = true;
+    const newErrors = {};
 
-    // Validate personal info fields one by one
-    if (!user.title) {
-      setErrors('กรุณาเลือกคำนำหน้าชื่อ');
-      return false;
+    if (!user.title_name) {
+      newErrors.title_name = "กรุณาเลือกคำนำหน้าชื่อ";
+      isValid = false;
     }
 
     if (!user.first_name) {
-      setErrors('กรุณาระบุชื่อ');
-      return false;
+      newErrors.first_name = "กรุณาระบุชื่อ";
+      isValid = false;
     }
 
     if (!user.last_name) {
-      setErrors('กรุณาระบุนามสกุล');
-      return false;
-    }
-
-    if (!user.phone) {
-      setErrors('กรุณาระบุเบอร์โทรศัพท์');
-      return false;
+      newErrors.last_name = "กรุณาระบุนามสกุล";
+      isValid = false;
     }
 
     if (!user.email) {
-      setErrors('กรุณาระบุอีเมล');
-      return false;
+      newErrors.email = "กรุณาระบุอีเมล";
+      isValid = false;
     } else if (!validateEmail(user.email)) {
-      setErrors('รูปแบบอีเมลไม่ถูกต้อง');
-      return false;
+      newErrors.email = "รูปแบบอีเมลไม่ถูกต้อง";
+      isValid = false;
     }
 
-    if (!validateIdCard(user.id_card)) {
-      setErrors('หมายเลขบัตรประชาชนไม่ถูกต้อง');
-      return false;
+    if (!user.phone) {
+      newErrors.phone = "กรุณาระบุเบอร์โทรศัพท์";
+      isValid = false;
+    } else if (!validatePhone(user.phone)) {
+      newErrors.phone = "เบอร์โทรศัพท์ต้องเป็นตัวเลขเท่านั้น";
+      isValid = false;
+    }
+
+    if (!user.id_card) {
+      newErrors.id_card = "กรุณาระบุเลขบัตรประชาชน";
+      isValid = false;
+    } else if (!validateIdCard(user.id_card)) {
+      newErrors.id_card = "หมายเลขบัตรประชาชนไม่ถูกต้อง";
+      isValid = false;
     }
 
     if (!user.birth_date) {
-      setErrors('กรุณาระบุวันเกิด');
-      return false;
+      newErrors.birth_date = "กรุณาระบุวันเกิด";
+      isValid = false;
     }
 
     if (!user.nationality) {
-      setErrors('กรุณาระบุสัญชาติ');
-      return false;
+      newErrors.nationality = "กรุณาระบุสัญชาติ";
+      isValid = false;
     }
 
     if (!user.marital_status) {
-      setErrors('กรุณาระบุสถานะภาพ');
-      return false;
+      newErrors.marital_status = "กรุณาระบุสถานภาพ";
+      isValid = false;
     }
 
-    // Only validate address fields if the address section is visible
     if (showAddressSection) {
       if (!user.current_address) {
-        setErrors('กรุณาระบุที่อยู่ปัจจุบัน');
-        return false;
+        newErrors.current_address = "กรุณาระบุที่อยู่ปัจจุบัน";
+        isValid = false;
       }
 
       if (!user.current_subdistrict) {
-        setErrors('กรุณาระบุ แขวง/ตำบล');
-        return false;
+        newErrors.current_subdistrict = "กรุณาระบุ แขวง/ตำบล";
+        isValid = false;
       }
 
       if (!user.current_district) {
-        setErrors('กรุณาระบุ เขต/อำเภอ');
-        return false;
+        newErrors.current_district = "กรุณาระบุ เขต/อำเภอ";
+        isValid = false;
       }
 
       if (!user.current_province) {
-        setErrors('กรุณาระบุจังหวัด');
-        return false;
+        newErrors.current_province = "กรุณาระบุจังหวัด";
+        isValid = false;
       }
 
       if (!user.current_postal_code) {
-        setErrors('กรุณาระบุรหัสไปรษณีย์');
-        return false;
+        newErrors.current_postal_code = "กรุณาระบุรหัสไปรษณีย์";
+        isValid = false;
       }
 
       if (!user.address) {
-        setErrors('กรุณาระบุที่อยู่ตามทะเบียนบ้าน');
-        return false;
+        newErrors.address = "กรุณาระบุที่อยู่ตามทะเบียนบ้าน";
+        isValid = false;
       }
 
       if (!user.subdistrict) {
-        setErrors('กรุณาระบุ แขวง/ตำบล');
-        return false;
+        newErrors.subdistrict = "กรุณาระบุ แขวง/ตำบล";
+        isValid = false;
       }
 
       if (!user.district) {
-        setErrors('กรุณาระบุ เขต/อำเภอ');
-        return false;
+        newErrors.district = "กรุณาระบุ เขต/อำเภอ";
+        isValid = false;
       }
 
       if (!user.province) {
-        setErrors('กรุณาระบุจังหวัด');
-        return false;
+        newErrors.province = "กรุณาระบุจังหวัด";
+        isValid = false;
       }
 
       if (!user.postal_code) {
-        setErrors('กรุณาระบุรหัสไปรษณีย์');
-        return false;
+        newErrors.postal_code = "กรุณาระบุรหัสไปรษณีย์";
+        isValid = false;
       }
     }
+    
+    setErrors(newErrors);
+    return isValid;
+  };
 
-    // If no errors were found
-    setErrors(''); // Clear errors if everything is valid
-    return true;
-};
+  const formatDate = (date) => {
+    const d = new Date(date);
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  };
 
-
-
-  const submitBooking = async (e, projectID, unitNumber, showAddressSection, floorName, towerName) => {
+  const submitBooking = async (
+    e,
+    projectID,
+    unitNumber,
+    showAddressSection,
+    floorName,
+    towerName
+  ) => {
     e.preventDefault();
-
+  
     if (!user.member_id) {
       console.error("Member ID is missing");
       return;
     }
-
+  
     const isValid = validateBooking(user, showAddressSection);
-
+  
     if (isValid) {
       try {
+        const formattedBirthDate = formatDate(user.birth_date); // Format the date here
+  
         const updatedUser = {
           ...user,
           projectID,
           unitNumber,
+          birth_date: formattedBirthDate, // Add the formatted date here
         };
-
+  
         const response = await fetch("/api/booking", {
           method: "POST",
           headers: {
@@ -590,7 +724,7 @@ export const useSignUp = () => {
           },
           body: JSON.stringify(updatedUser),
         });
-
+  
         if (response.ok) {
           // Booking successful
           router.push(
@@ -602,7 +736,7 @@ export const useSignUp = () => {
           // Handle error when booking fails
           const errorData = await response.json();
           console.error("Failed to book", errorData);
-
+  
           if (errorData.redirect) {
             alert(errorData.alert);
             router.push(errorData.redirect);
@@ -617,49 +751,53 @@ export const useSignUp = () => {
       console.error("Form validation failed");
     }
   };
+  
+  
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
-
+  
     // Check if ID is present
     if (!id) {
       console.error("ID is missing in the event target.");
       return; // Exit if ID is not present
     }
-
+  
     let newValue = value;
-
+  
     // Define formatting conditions
     const formatters = {
       email: (val) => {
-        const sanitized = val.replace(/[\u0E00-\u0E7F]/g, "").replace(/[^a-zA-Z0-9@._-]/g, "");
-        // Validate email format
+        const sanitized = val
+          .replace(/[\u0E00-\u0E7F]/g, "") // Remove Thai characters
+          .replace(/[^a-zA-Z0-9@._-]/g, ""); // Remove non-email-related characters
+        // Log warning if email format is invalid
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(sanitized)) {
           console.warn("Invalid email format:", sanitized);
-          return sanitized; // Return sanitized value even if it's invalid
         }
         return sanitized;
       },
-      phone: (val) => val.replace(/\D/g, "").slice(0, 10),
-      id_card: (val) => val.replace(/\D/g, "").slice(0, 13),
-      current_postal_code: (val) => val.replace(/\D/g, "").slice(0, 5),
-      postal_code: (val) => val.replace(/\D/g, "").slice(0, 5),
+      phone: (val) => val.replace(/\D/g, "").slice(0, 10), // Limit phone number to 10 digits
+      id_card: (val) => val.replace(/\D/g, "").slice(0, 13), // Limit ID card to 13 digits
+      current_postal_code: (val) => val.replace(/\D/g, "").slice(0, 5), // Limit postal code to 5 digits
+      postal_code: (val) => val.replace(/\D/g, "").slice(0, 5), // Limit postal code to 5 digits
     };
-
-    // Use formatters to update newValue
+  
+    // Use formatter if applicable
     if (formatters[id]) {
-      newValue = formatters[id](value); // Pass the value to the formatter
+      newValue = formatters[id](value);
     }
-
-    setUser((prevUser) => {
-      const updatedUser = {
-        ...prevUser,
-        [id]: newValue,
-      };
-      // console.log("Updated User Data:", updatedUser); // Log updated user data
-      return updatedUser;
-    });
+  
+    // Update user state with the formatted value
+    setUser((prevUser) => ({
+      ...prevUser,
+      [id]: newValue, // Update only the changed field
+    }));
+    
+    // Optional: Call validation function (checkFormPersonal) to validate as user types
+    checkFormPersonal({ ...user, [id]: newValue });
   };
+  
 
   return {
     regisData,

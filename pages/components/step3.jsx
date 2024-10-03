@@ -1,199 +1,260 @@
 import { useSession } from "next-auth/react";
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import Loading from '../components/loading';
-import { useSignUp } from '../hooks/useSignUp';
+import Loading from "../components/loading";
+import { useSignUp } from "../hooks/useSignUp";
 
 const Step3 = () => {
-    const router = useRouter();
-    const {
-        projectID,
-        floorName,
-        towerName,
-        unitNumber
-    } = router.query;
+  const router = useRouter();
+  const { projectID, floorName, towerName, unitNumber } = router.query;
 
-    const {
-        errors,
-        isSameAddress,
-        handleCheckboxChange,
-        user,
-        setUser,
-        status,
-        formFieldsPersonal,
-        formFieldsCurrentAddress,
-        formFieldsAddress,
-        showAddressSection,
-        checkFormPersonal,
-        handleInputChange,
-        submitBooking,
-    } = useSignUp();
+  const {
+    errors,
+    isSameAddress,
+    setIsSameAddress,
+    handleCheckboxChange,
+    user,
+    setUser,
+    status,
+    formFieldsPersonal,
+    formFieldsCurrentAddress,
+    formFieldsAddress,
+    showAddressSection,
+    handleInputChange,
+    submitBooking,
+  } = useSignUp();
 
-    const [errorMessages, setErrorMessages] = useState([]);
+  const [errorMessages, setErrorMessages] = useState([]);
 
-    useEffect(() => {
-        if (Object.keys(errors).length > 0) {
-            setErrorMessages(Object.values(errors));
-        }
-    }, [errors]);
-
-    const handleSubmit = (e) => {
-        e.preventDefault(); // Prevent default form submission
-        
-        // Clear previous error messages
-        setErrorMessages([]);
-    
-        // Check fields one by one
-        for (let i = 0; i < formFieldsPersonal.length; i++) {
-            const field = formFieldsPersonal[i];
-            // Assuming checkFormPersonal returns an error message or null if no error
-            const error = checkFormPersonal(user, field.id);
-            
-            // If an error exists for this field, set the error message and return
-            if (error) {
-                setErrorMessages([error]); // Show only the first error
-                return; // Exit the function
-            }
-        }
-    
-        // If there are no errors, proceed to submit the booking
-        submitBooking(e, projectID, unitNumber, showAddressSection, floorName, towerName);
-    };
-    
-    
-
-    if (status === 'loading') {
-        return <Loading />;
+  useEffect(() => {
+    if (Object.keys(errors).length > 0) {
+      setErrorMessages(Object.values(errors));
     }
+  }, [errors]);
 
-    return (
-        <Container className='py-5'>
-            <h3 className="th px-3 center">ข้อมูลการจอง</h3>
-            <Col className="th center font-18 text-blue font-500 mb-5">ข้อมูลส่วนบุคคลทั้งหมด จะถูกเก็บเป็นความลับ</Col>
-            {status === 'authenticated' ? (
-                <Col>
-                    {user && (
-                        <Row className='justify-content-center'>
-                            <Col xxl="10" xl="10" lg="10" md="10" sm="10" xs="10">
-                                <h5 className='th'>ข้อมูลส่วนบุคคล</h5>
-                                <Row className='box-step-3 mb-5'>
-                                    {formFieldsPersonal.map((field) => (
-                                        <Col key={field.id} xxl={4} xl={4} lg={4} md={4} sm={12} xs={12} className="mb-4">
-                                            <label htmlFor={field.id} className="form-label th">{field.label}</label>
-                                            {field.type === "select" ? (
-                                                <select
-                                                    id={field.id}
-                                                    name={field.id}
-                                                    className="form-select th"
-                                                    value={field.value}
-                                                    onChange={handleInputChange}
-                                                >
-                                                    {field.options.map((option, index) => (
-                                                        <option key={index} value={option}>{option}</option>
-                                                    ))}
-                                                </select>
-                                            ) : (
-                                                <input
-                                                    type={field.type}
-                                                    name={field.id}
-                                                    id={field.id}
-                                                    className="form-control th"
-                                                    value={field.value}
-                                                    onChange={handleInputChange}
-                                                />
-                                            )}
-                                        </Col>
-                                    ))}
-                                    
-                                    {errors.message && <div className="error-message">{errors.message}</div>}
-                                </Row>
+  const handleSubmit = (e) => {
+    submitBooking(e, projectID, unitNumber, showAddressSection, floorName, towerName);
+    };
+
+  if (status === "loading") {
+    return <Loading />;
+  }
+
+  return (
+    <Container className="py-5">
+      <h3 className="th px-3 center">ข้อมูลการจอง</h3>
+      <Col className="th center font-18 text-blue font-500 mb-5">
+        ข้อมูลส่วนบุคคลทั้งหมด จะถูกเก็บเป็นความลับ
+      </Col>
+      {status === "authenticated" ? (
+        <Col>
+          {user && (
+            <Row className="justify-content-center">
+              <Col xxl="10" xl="10" lg="10" md="10" sm="10" xs="10">
+                <h5 className="th">ข้อมูลส่วนบุคคล</h5>
+                <Row className="box-step-3 mb-5">
+                  {formFieldsPersonal.map((field) => (
+                    <Col
+                      key={field.id}
+                      xxl={4}
+                      xl={4}
+                      lg={4}
+                      md={4}
+                      sm={12}
+                      xs={12}
+                      className="mb-4"
+                    >
+                      <label htmlFor={field.id} className="form-label th">
+                        {field.label}
+                      </label>
+                      {field.type === "select" ? (
+                        <select
+                          id={field.id}
+                          name={field.id}
+                          className="form-select th"
+                          value={field.value || ""}
+                          onChange={handleInputChange}
+                        >
+                          {field.options.map((option, index) => (
+                            <option key={index} value={option}>
+                              {option}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <input
+                          type={field.type}
+                          name={field.id}
+                          id={field.id}
+                          className="form-control th"
+                          value={field.value || ""}
+                          onChange={handleInputChange}
+                        />
+                      )}
+                    </Col>
+                  ))}
+
+                  {Object.keys(errors).length > 0 && (
+                    <div className="text-danger mb-3 th center">
+                      {errors.title_name ||
+                        errors.first_name ||
+                        errors.last_name ||
+                        errors.email ||
+                        errors.phone ||
+                        errors.id_card ||
+                        errors.birth_date ||
+                        errors.nationality ||
+                        errors.marital_status}
+                    </div>
+                  )}
+                </Row>
+              </Col>
+
+              {showAddressSection && (
+                <Col xxl="10" xl="10" lg="10" md="10" sm="10" xs="10">
+                  <Row>
+                    <Col xxl="12" xl="12" lg="12" md="12" sm="12" xs="12">
+                      <h5 className="th">ที่อยู่ปัจจุบัน</h5>
+                      <Row className="box-step-3 mb-5">
+                        {formFieldsCurrentAddress.map((field) => {
+                          const colSize = ["current_address"].includes(field.id)
+                            ? "12"
+                            : "6";
+                          return (
+                            <Col
+                              key={field.id}
+                              xxl={colSize}
+                              xl={colSize}
+                              lg={colSize}
+                              md={colSize}
+                              sm={12}
+                              xs={12}
+                              className="mb-4"
+                            >
+                              <label
+                                htmlFor={field.id}
+                                className="form-label th"
+                              >
+                                {field.label}
+                              </label>
+                              <input
+                                type={field.type}
+                                id={field.id}
+                                name={field.id}
+                                className="form-control th"
+                                value={field.value || ""}
+                                onChange={handleInputChange}
+                              />
                             </Col>
+                          );
+                        })}
 
-                            {showAddressSection && (
-                                <Col xxl="10" xl="10" lg="10" md="10" sm="10" xs="10">
-                                    <Row>
-                                        <Col xxl="12" xl="12" lg="12" md="12" sm="12" xs="12">
-                                            <h5 className='th'>ที่อยู่ปัจจุบัน</h5>
-                                            <Row className='box-step-3 mb-5'>
-                                                {formFieldsCurrentAddress.map((field) => {
-                                                    const colSize = ["current_address"].includes(field.id) ? "12" : "6";
-                                                    return (
-                                                        <Col key={field.id} xxl={colSize} xl={colSize} lg={colSize} md={colSize} sm={12} xs={12} className="mb-4">
-                                                            <label htmlFor={field.id} className="form-label th">{field.label}</label>
-                                                            <input
-                                                                type={field.type}
-                                                                id={field.id}
-                                                                name={field.id}
-                                                                className="form-control th"
-                                                                value={field.value}
-                                                                onChange={handleInputChange}
-                                                            />
-                                                        </Col>
-                                                    );
-                                                })}
-                                            </Row>
-                                        </Col>
+                        {Object.keys(errors).length > 0 && (
+                          <div className="text-danger mb-3 th center">
+                            {errors.current_address ||
+                              errors.current_subdistrict ||
+                              errors.current_district ||
+                              errors.current_province ||
+                              errors.current_postal_code}
+                          </div>
+                        )}
+                      </Row>
+                    </Col>
 
-                                        <Col xxl="12" xl="12" lg="12" md="12" sm="12" xs="12">
-                                            <Row>
-                                                <Col><h5 className='th'>ที่อยู่ตามทะเบียนบ้าน</h5></Col>
-                                                <Col className='sameAddressCheckbox'>
-                                                    <input
-                                                        className="form-check-input mt-0"
-                                                        type="checkbox"
-                                                        id="sameAddressCheckbox"
-                                                        checked={isSameAddress}
-                                                        onChange={handleCheckboxChange(setUser)}
-                                                    />
-                                                    <label htmlFor="sameAddressCheckbox" className="form-label th m-0 pl-1">ที่อยู่เดียวกับที่อยู่ปัจจุบัน</label>
-                                                </Col>
-                                            </Row>
+                    <Col xxl="12" xl="12" lg="12" md="12" sm="12" xs="12">
+                      <Row>
+                        <Col>
+                          <h5 className="th">ที่อยู่ตามทะเบียนบ้าน</h5>
+                        </Col>
+                        <Col className="sameAddressCheckbox">
+                          <input
+                            className="form-check-input mt-0"
+                            type="checkbox"
+                            id="sameAddressCheckbox"
+                            checked={isSameAddress}
+                            onChange={handleCheckboxChange(setUser, setIsSameAddress)}
+                          />
+                          <label
+                            htmlFor="sameAddressCheckbox"
+                            className="form-label th m-0 pl-1"
+                          >
+                            ที่อยู่เดียวกับที่อยู่ปัจจุบัน
+                          </label>
+                        </Col>
+                      </Row>
 
-                                            {!isSameAddress && (
-                                                <Row className='box-step-3 mb-5'>
-                                                    {formFieldsAddress.map((field) => {
-                                                        const colSize = ["address"].includes(field.id) ? "12" : "6";
-                                                        return (
-                                                            <Col key={field.id} xxl={colSize} xl={colSize} lg={colSize} md={colSize} sm={12} xs={12} className="mb-4">
-                                                                <label htmlFor={field.id} className="form-label th">{field.label}</label>
-                                                                <input
-                                                                    type={field.type}
-                                                                    id={field.id}
-                                                                    name={field.id}
-                                                                    className="form-control th"
-                                                                    value={field.value}
-                                                                    onChange={handleInputChange}
-                                                                />
-                                                            </Col>
-                                                        );
-                                                    })}
-                                                </Row>
-                                            )}
-                                        </Col>
-                                    </Row>
-                                </Col>
-                            )}
+                      {!isSameAddress && (
+                        <Row className="box-step-3 mb-5">
+                          {formFieldsAddress.map((field) => {
+                            const colSize = ["address"].includes(field.id)
+                              ? "12"
+                              : "6";
+                            return (
+                              <Col
+                                key={field.id}
+                                xxl={colSize}
+                                xl={colSize}
+                                lg={colSize}
+                                md={colSize}
+                                sm={12}
+                                xs={12}
+                                className="mb-4"
+                              >
+                                <label
+                                  htmlFor={field.id}
+                                  className="form-label th"
+                                >
+                                  {field.label}
+                                </label>
+                                <input
+                                  type={field.type}
+                                  id={field.id}
+                                  name={field.id}
+                                  className="form-control th"
+                                  value={field.value || ''}
+                                  onChange={handleInputChange}
+                                />
+                              </Col>
+                            );
+                          })}
 
-                            <Row>
-                                <Col className='justify-content-center'>
-                                    <Button 
-                                        type="button" // Ensure it's a button type to prevent form submission
-                                        className="btn-xl th"
-                                        onClick={handleSubmit}
-                                    >
-                                        ลงทะเบียนจอง
-                                    </Button>
-                                </Col>
-                            </Row>
+                          {Object.keys(errors).length > 0 && (
+                            <div className="text-danger mb-3 th center">
+                              {errors.address ||
+                                errors.subdistrict ||
+                                errors.district ||
+                                errors.province ||
+                                errors.postal_code
+                            }
+                            </div>
+                          )}
                         </Row>
-                    )}
+                      )}
+                    </Col>
+                  </Row>
                 </Col>
-            ) : (
-                <div className="th center">กรุณาเข้าสู่ระบบก่อนดำเนินการต่อ</div>
-            )}
-        </Container>
-    );
+              )}
+
+              <Row>
+                <Col className="justify-content-center">
+                  <Button
+                    type="button" // Ensure it's a button type to prevent form submission
+                    className="btn-xl th"
+                    onClick={handleSubmit}
+                  >
+                    ลงทะเบียนจอง
+                  </Button>
+                </Col>
+              </Row>
+            </Row>
+          )}
+        </Col>
+      ) : (
+        <div className="th center">กรุณาเข้าสู่ระบบก่อนดำเนินการต่อ</div>
+      )}
+    </Container>
+  );
 };
 
 export default Step3;

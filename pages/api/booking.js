@@ -4,7 +4,7 @@ export default async function handler(req, res) {
     if (req.method === 'POST') {
         const {
             member_id,
-            title,
+            title_name,
             first_name,
             last_name,
             email,
@@ -40,7 +40,7 @@ export default async function handler(req, res) {
             const updateMemberSql = `
                 UPDATE members
                 SET 
-                    title = ?,
+                    title_name = ?,
                     first_name = ?,
                     last_name = ?,
                     email = ?,
@@ -62,7 +62,7 @@ export default async function handler(req, res) {
                 WHERE member_id = ?`;
 
             const [updateResult] = await connection.execute(updateMemberSql, [
-                title, first_name, last_name, email, phone, id_card, birth_date, nationality, marital_status,
+                title_name, first_name, last_name, email, phone, id_card, birth_date, nationality, marital_status,
                 current_address, current_subdistrict, current_district, current_province, current_postal_code,
                 address, subdistrict, district, province, postal_code, member_id
             ]);

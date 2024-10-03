@@ -20,7 +20,6 @@ const Step3 = ({ initialUserData }) => {
     const [roomDetails, setRoomDetails] = useState(null);
     const [showAddressSection, setShowAddressSection] = useState(false);
 
-
     useEffect(() => {
         if (projectID && unitNumber) {
             setUser(prevUser => ({
