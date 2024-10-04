@@ -5,11 +5,11 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 export const useAuth = () => {
     const { data: session } = useSession();
 
-    const [errors, setErrors] = useState({});
+    const [errorsSignIn, setErrorsSignIn] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
 
-    const [formData, setFormData] = useState({ email: '', password: '' });
+    const [signInData, setSignInData] = useState({ email: '', password: '' });
     const [changPsw, setChangPsw] = useState({ currentPassword: '', newPassword: '', confirmPassword: '' });
     const [resetPsw, setResetPsw] = useState({ email: '', newPassword: '', confirmPassword: '' })
     const [currentPassword, setCurrentPassword] = useState('');
@@ -21,11 +21,11 @@ export const useAuth = () => {
     const handleSignIn = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-        setErrors({}); // ล้างข้อผิดพลาดก่อน
+        setErrorsSignIn({}); // ล้างข้อผิดพลาดก่อน
     
         // ตรวจสอบว่าอีเมลและรหัสผ่านไม่เป็นค่าว่าง
-        if (!formData.email || !formData.password) {
-            setErrors({ message: "กรุณาระบุอีเมลและรหัสผ่าน" });
+        if (!signInData.email || !signInData.password) {
+            setErrorsSignIn({ message: "กรุณาระบุอีเมลและรหัสผ่าน" });
             setIsLoading(false);
             return; // หยุดการทำงานถ้าข้อมูลไม่ครบ
         }
@@ -34,53 +34,62 @@ export const useAuth = () => {
             // ลองเข้าสู่ระบบ
             const result = await signIn("credentials", {
                 redirect: false,
-                email: formData.email,
-                password: formData.password,
+                email: signInData.email,
+                password: signInData.password,
             });
     
             // ตรวจสอบผลการเข้าสู่ระบบ
             if (result.error) {
-                setErrors({ message: result.error });
+                setErrorsSignIn({ message: result.error });
             } else {
-                // หากเข้าสู่ระบบสำเร็จ ให้เปลี่ยนเส้นทางไปยังหน้าโปรไฟล์
-                router.push("/"); // เปลี่ยนเส้นทางไปยังหน้าโปรไฟล์หลังจากเข้าสู่ระบบสำเร็จ
+                // router.push("/");
+                window.location.reload();
             }
         } catch (error) {
             console.error("Error during sign in:", error);
-            setErrors({ message: "เกิดข้อผิดพลาดในการเข้าสู่ระบบ" });
+            setErrorsSignIn({ message: "เกิดข้อผิดพลาดในการเข้าสู่ระบบ" });
         } finally {
             setIsLoading(false); // กำหนดเป็น false ในทุกกรณี
         }
     };
     
-
     const handleSignOut = () => {
         signOut({ callbackUrl: '/' });
     };
 
+    const handleInputChange = (e) => {
+        const { id, value } = e.target;
+        setSignInData((prevData) => ({
+          ...prevData,
+          [id]: value, // Update the specific input's value
+        }));
+        if (errorsSignIn.message) {
+            setErrorsSignIn({}); // Clear errors if any
+        }
+      };
 
     const changePassword = async (e, session) => {
         e.preventDefault(); // ป้องกันการส่งฟอร์ม
-        setErrors(null);
+        setErrorsSignIn(null);
         setIsLoading(true);
 
         const { currentPassword, newPassword, confirmPassword } = changPsw;
 
         // Validate inputs
         if (!currentPassword) {
-            setErrors({ message: 'กรุณาระบุรหัสผ่านปัจจุบัน' });
+            setErrorsSignIn({ message: 'กรุณาระบุรหัสผ่านปัจจุบัน' });
             setIsLoading(false);
             return;
         } else if (!newPassword) {
-            setErrors({ message: 'กรุณากำหนดรหัสผ่านใหม่' });
+            setErrorsSignIn({ message: 'กรุณากำหนดรหัสผ่านใหม่' });
             setIsLoading(false);
             return;
         } else if (!confirmPassword) {
-            setErrors({ message: 'กรุณายืนยันรหัสผ่านใหม่' });
+            setErrorsSignIn({ message: 'กรุณายืนยันรหัสผ่านใหม่' });
             setIsLoading(false);
             return;
         } else if (newPassword !== confirmPassword) {
-            setErrors({ message: 'รหัสผ่านใหม่ไม่ตรงกัน' });
+            setErrorsSignIn({ message: 'รหัสผ่านใหม่ไม่ตรงกัน' });
             setIsLoading(false);
             return;
         }
@@ -97,7 +106,7 @@ export const useAuth = () => {
                 const data = await response.json();
                 // ถ้ารหัสผ่านปัจจุบันไม่ถูกต้อง
                 if (data.error && data.error === 'Invalid current password') {
-                    setErrors({ message: 'รหัสผ่านปัจจุบันไม่ถูกต้อง' });
+                    setErrorsSignIn({ message: 'รหัสผ่านปัจจุบันไม่ถูกต้อง' });
                 } else {
                     throw new Error(data.message || 'เกิดข้อผิดพลาดในการเปลี่ยนรหัสผ่าน');
                 }
@@ -110,7 +119,7 @@ export const useAuth = () => {
             alert('เปลี่ยนรหัสผ่านเรียบร้อย'); // แสดงข้อความยืนยัน
             router.push('/profile'); // ไปยังหน้าโปรไฟล์
         } catch (error) {
-            setErrors({ message: error.message }); // ตั้งค่าข้อผิดพลาดหากเกิดข้อผิดพลาด
+            setErrorsSignIn({ message: error.message }); // ตั้งค่าข้อผิดพลาดหากเกิดข้อผิดพลาด
         } finally {
             setIsLoading(false); // ปิดสถานะการโหลด
         }
@@ -141,13 +150,13 @@ export const useAuth = () => {
 
         // ตรวจสอบว่ามีการกรอกอีเมลหรือไม่
         if (!resetPsw.email) {
-            setErrors({ message: 'กรุณากรอกอีเมล' }); // ตั้งค่าข้อความเตือน
+            setErrorsSignIn({ message: 'กรุณากรอกอีเมล' }); // ตั้งค่าข้อความเตือน
             return; // หยุดการทำงานถ้าข้อมูลไม่ครบ
         }
 
         // ตรวจสอบรูปแบบอีเมล
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(resetPsw.email)) {
-            setErrors({ message: 'รูปแบบอีเมลไม่ถูกต้อง' }); // ตั้งค่าข้อความเตือน
+            setErrorsSignIn({ message: 'รูปแบบอีเมลไม่ถูกต้อง' }); // ตั้งค่าข้อความเตือน
             return; // หยุดการทำงานถ้ารูปแบบอีเมลไม่ถูกต้อง
         }
 
@@ -165,37 +174,36 @@ export const useAuth = () => {
             // อีเมลมีอยู่ในระบบ ให้แสดงช่องกรอก newPassword
             setShowNewPasswordInput(true); // ตั้งค่าสถานะเพื่อแสดงฟอร์มกรอกรหัสผ่านใหม่
             setEmailChecked(true); // ตั้งค่าสถานะอีเมลที่ตรวจสอบแล้ว
-            setErrors('')
+            setErrorsSignIn('')
         } else {
-            setErrors({ message: data.message }); // แสดงข้อความข้อผิดพลาด
+            setErrorsSignIn({ message: data.message }); // แสดงข้อความข้อผิดพลาด
         }
     };
-
 
     const resetPassword = async (e) => {
         e.preventDefault(); // ป้องกันการส่งฟอร์มแบบปกติ
 
         // ตรวจสอบว่ามีการกรอกอีเมลหรือไม่
         if (!resetPsw.email) {
-            setErrors({ message: 'กรุณากรอกอีเมล' }); // ตั้งค่าข้อความเตือน
+            setErrorsSignIn({ message: 'กรุณากรอกอีเมล' }); // ตั้งค่าข้อความเตือน
             return; // หยุดการทำงานถ้าข้อมูลไม่ครบ
         }
 
         // ตรวจสอบว่ามีการกรอกรหัสผ่านใหม่หรือไม่
         if (!resetPsw.newPassword) {
-            setErrors({ message: 'กรุณากรอกรหัสผ่านใหม่' }); // ตั้งค่าข้อความเตือน
+            setErrorsSignIn({ message: 'กรุณากรอกรหัสผ่านใหม่' }); // ตั้งค่าข้อความเตือน
             return; // หยุดการทำงานถ้าข้อมูลไม่ครบ
         }
 
         // ตรวจสอบว่ามีการกรอกรหัสผ่านใหม่หรือไม่
         if (!resetPsw.confirmPassword) {
-            setErrors({ message: 'กรุณายืนยันรหัสผ่านใหม่' }); // ตั้งค่าข้อความเตือน
+            setErrorsSignIn({ message: 'กรุณายืนยันรหัสผ่านใหม่' }); // ตั้งค่าข้อความเตือน
             return; // หยุดการทำงานถ้าข้อมูลไม่ครบ
         }
 
         // ตรวจสอบว่ารหัสผ่านใหม่และการยืนยันรหัสผ่านตรงกันหรือไม่
         if (resetPsw.newPassword !== resetPsw.confirmPassword) {
-            setErrors({ message: 'การยืนยันรหัสผ่านไม่สำเร็จ' }); // ตั้งค่าข้อความเตือน
+            setErrorsSignIn({ message: 'การยืนยันรหัสผ่านไม่สำเร็จ' }); // ตั้งค่าข้อความเตือน
             return; // หยุดการทำงานถ้าข้อมูลไม่ครบ
         }
 
@@ -213,17 +221,16 @@ export const useAuth = () => {
             alert('รีเซ็ตรหัสผ่านสำเร็จ'); // แสดงข้อความสำเร็จเป็น string
             router.push('/signin'); // หรือเปลี่ยนไปยังหน้าที่ต้องการหลังจากรีเซ็ตรหัสผ่านสำเร็จ
         } else {
-            setErrors({ message: data.message }); // แจ้งข้อผิดพลาด
+            setErrorsSignIn({ message: data.message }); // แจ้งข้อผิดพลาด
         }
     };
 
-
-
     return {
-        formData,
-        setFormData,
-        setErrors,
-        errors,
+        signInData,
+        setSignInData,
+        handleInputChange,
+        setErrorsSignIn,
+        errorsSignIn,
         isLoading,
         handleSignIn,
         handleSignOut,

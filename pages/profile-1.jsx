@@ -6,7 +6,8 @@ import { Container, Row, Col, Button, Spinner } from "react-bootstrap";
 
 const Profile = () => {
   const { data: session, status } = useSession();
-    const router = useRouter();
+  const loading = status === 'loading';
+  const router = useRouter();
 
   const {
     isSameAddress,
@@ -26,15 +27,36 @@ const Profile = () => {
   const [isSubmitting, setIsSubmitting] = useState(false); // สถานะการส่งข้อมูล
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    // ตรวจสอบสถานะการโหลด
-    if (status === "loading") return; // ถ้ากำลังโหลดไม่ทำอะไร
+    if (loading) return;
 
-    // หากไม่มี session หรือ token
-    if (!session && !token) {
-        router.push("/signin");
+    const token = localStorage.getItem('token');
+    if (session && token) {
+      setUser({
+        member_id: session.user.id || "",
+        title_name: session.user.title_name || "",
+        first_name: session.user.first_name || "",
+        last_name: session.user.last_name || "",
+        email: session.user.email || "",
+        phone: session.user.phone || "",
+        id_card: session.user.id_card || "",
+        birth_date: session.user.birth_date || "",
+        nationality: session.user.nationality || "",
+        marital_status: session.user.marital_status || "",
+        current_address: session.user.current_address || "",
+        current_subdistrict: session.user.current_subdistrict || "",
+        current_district: session.user.current_district || "",
+        current_province: session.user.current_province || "",
+        current_postal_code: session.user.current_postal_code || "",
+        address: session.user.address || "",
+        subdistrict: session.user.subdistrict || "",
+        district: session.user.district || "",
+        province: session.user.province || "",
+        postal_code: session.user.postal_code || "",
+      });
+    } else {
+      router.push("/signin");
     }
-}, [session, status, router]);
+  }, [session, loading, router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

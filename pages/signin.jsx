@@ -14,9 +14,8 @@ const SignIn = () => {
 
   const { data: session, status } = useSession();
   const router = useRouter();
-  const { formData, setFormData, setErrors, handleSignIn, errors } = useAuth();
+  const { signInData, handleInputChange, handleSignIn, errorsSignIn } = useAuth();
   const { handleEmailKeyPress } = validationForm();
-
 
   useEffect(() => {
     // ตรวจสอบสถานะการเข้าสู่ระบบ
@@ -25,17 +24,6 @@ const SignIn = () => {
       router.push("/");
     }
   }, [session, status, router]);
-
-  const handleInputChange = (e) => {
-    const { id, value } = e.target;
-    setFormData((prevData) => ({
-        ...prevData,
-        [id]: value, // Update the specific input's value
-    }));
-    if (errors.message) {
-        setErrors({}); // Clear errors if any
-    }
-};
 
   return (
     <Container className="py-5">
@@ -61,7 +49,7 @@ const SignIn = () => {
                 id="email"
                 name="email"
                 className="form-control th"
-                value={formData.email}
+                value={signInData?.email || ''}
                 onChange={handleInputChange}
                 onKeyPress={handleEmailKeyPress}
                 required
@@ -77,14 +65,14 @@ const SignIn = () => {
                 id="password"
                 name="password"
                 className="form-control th"
-                value={formData.password}
+                value={signInData.password}
                 onChange={handleInputChange}
                 required
               />
             </Col>
 
             <Col className="th mb-4 right">
-              <Link href={`/forgotpass`} className="text-blue">
+              <Link href={`/password`} className="text-blue">
                 ลืมรหัสผ่าน
               </Link>
               |
@@ -94,9 +82,9 @@ const SignIn = () => {
             </Col>
 
             <Row>
-              {errors.message && (
+              {errorsSignIn.message && (
                 <div className="text-danger mb-3 th center">
-                  {errors.message}
+                  {errorsSignIn.message}
                 </div>
               )}
               <Col className="justify-content-center">

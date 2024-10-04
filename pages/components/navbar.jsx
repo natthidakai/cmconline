@@ -65,7 +65,7 @@ const Menubar = () => {
                                 <NavDropdown.Item as={Link} href={`/mybooking`} onClick={handleLinkClick}>
                                     รายการจอง
                                 </NavDropdown.Item>
-                                <NavDropdown.Item as={Link} href={`/changepass`} onClick={handleLinkClick}>
+                                <NavDropdown.Item as={Link} href={`/password`} onClick={handleLinkClick}>
                                     เปลี่ยนรหัสผ่าน
                                 </NavDropdown.Item>
                                 <NavDropdown.Item href="#" onClick={handleSignOut}>

@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 
 export const useSignUp = () => {
+  
   const { data: session, status } = useSession();
   const [errors, setErrors] = useState({});
   const router = useRouter();
@@ -24,6 +25,30 @@ export const useSignUp = () => {
   const [navigateToProfile, setNavigateToProfile] = useState(false);
 
   const [showAddressSection, setShowAddressSection] = useState(false);
+
+  const initialUserState = {
+    title_name: "",
+    first_name: "",
+    last_name: "",
+    email: "",
+    phone: "",
+    id_card: "",
+    birth_date: "",
+    nationality: "",
+    marital_status: "",
+    current_address: "",
+    current_subdistrict: "",
+    current_district: "",
+    current_province: "",
+    current_postal_code: "",
+    address: "",
+    subdistrict: "",
+    district: "",
+    province: "",
+    postal_code: "",
+  };
+
+  const [user, setUser] = useState(initialUserState);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -63,29 +88,9 @@ export const useSignUp = () => {
     fetchUserData();
   }, [session, status]);
 
-  const initialUserState = {
-    title_name: "",
-    first_name: "",
-    last_name: "",
-    email: "",
-    phone: "",
-    id_card: "",
-    birth_date: "",
-    nationality: "",
-    marital_status: "",
-    current_address: "",
-    current_subdistrict: "",
-    current_district: "",
-    current_province: "",
-    current_postal_code: "",
-    address: "",
-    subdistrict: "",
-    district: "",
-    province: "",
-    postal_code: "",
-  };
-
-  const [user, setUser] = useState(initialUserState);
+  useEffect(() => {
+    checkFormPersonal(user);
+  }, [user]);
 
   const validateIdCard = (id) => {
     if (!/^\d{13}$/.test(id)) return false;
@@ -714,7 +719,7 @@ export const useSignUp = () => {
           ...user,
           projectID,
           unitNumber,
-          birth_date: formattedBirthDate, // Add the formatted date here
+          birth_date: formattedBirthDate,
         };
   
         const response = await fetch("/api/booking", {
@@ -751,50 +756,42 @@ export const useSignUp = () => {
       console.error("Form validation failed");
     }
   };
-  
-  
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
   
-    // Check if ID is present
     if (!id) {
       console.error("ID is missing in the event target.");
-      return; // Exit if ID is not present
+      return;
     }
   
     let newValue = value;
   
-    // Define formatting conditions
     const formatters = {
       email: (val) => {
         const sanitized = val
-          .replace(/[\u0E00-\u0E7F]/g, "") // Remove Thai characters
-          .replace(/[^a-zA-Z0-9@._-]/g, ""); // Remove non-email-related characters
-        // Log warning if email format is invalid
+          .replace(/[\u0E00-\u0E7F]/g, "")
+          .replace(/[^a-zA-Z0-9@._-]/g, "");
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(sanitized)) {
           console.warn("Invalid email format:", sanitized);
         }
         return sanitized;
       },
-      phone: (val) => val.replace(/\D/g, "").slice(0, 10), // Limit phone number to 10 digits
-      id_card: (val) => val.replace(/\D/g, "").slice(0, 13), // Limit ID card to 13 digits
-      current_postal_code: (val) => val.replace(/\D/g, "").slice(0, 5), // Limit postal code to 5 digits
-      postal_code: (val) => val.replace(/\D/g, "").slice(0, 5), // Limit postal code to 5 digits
+      phone: (val) => val.replace(/\D/g, "").slice(0, 10),
+      id_card: (val) => val.replace(/\D/g, "").slice(0, 13),
+      current_postal_code: (val) => val.replace(/\D/g, "").slice(0, 5),
+      postal_code: (val) => val.replace(/\D/g, "").slice(0, 5),
     };
   
-    // Use formatter if applicable
     if (formatters[id]) {
       newValue = formatters[id](value);
     }
   
-    // Update user state with the formatted value
     setUser((prevUser) => ({
       ...prevUser,
-      [id]: newValue, // Update only the changed field
+      [id]: newValue,
     }));
     
-    // Optional: Call validation function (checkFormPersonal) to validate as user types
     checkFormPersonal({ ...user, [id]: newValue });
   };
   

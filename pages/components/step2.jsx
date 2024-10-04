@@ -40,7 +40,7 @@ const Step2 = () => {
     };
 
     const fetchDetail = async (unitNumber) => {
-        console.log('unitNumber', unitNumber);
+        // console.log('unitNumber', unitNumber);
         setLoading(true);
         setError(null);
         try {
