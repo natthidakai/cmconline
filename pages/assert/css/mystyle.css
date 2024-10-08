@@ -228,6 +228,8 @@ a.btn-xl.th.btn.btn-primary:hover {
     cursor: default;
 }
 
+.pointer {cursor: pointer;}
+
 .box-step.active {
     background-color: #034078 !important;
     /* สีฟ้าเข้มสำหรับปุ่มที่ active */

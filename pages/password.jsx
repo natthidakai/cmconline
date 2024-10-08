@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { Container } from 'react-bootstrap';
 
 import { useSession } from "next-auth/react";
-import ForgotPassword from './components/forgotpass';
+import ForgotPassword from './components/forgetpass';
 import ChangePass from './components/changepass';
 
 const ChangePassword = () => {

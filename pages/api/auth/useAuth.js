@@ -11,12 +11,12 @@ export const useAuth = () => {
 
     const [signInData, setSignInData] = useState({ email: '', password: '' });
     const [changPsw, setChangPsw] = useState({ currentPassword: '', newPassword: '', confirmPassword: '' });
-    const [resetPsw, setResetPsw] = useState({ email: '', newPassword: '', confirmPassword: '' })
+    const [resetPsw, setResetPsw] = useState({ email: '', otp: '', newPassword: '', confirmPassword: '' })
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [emailChecked, setEmailChecked] = useState(false);
-    const [showNewPasswordInput, setShowNewPasswordInput] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
 
     const handleSignIn = async (e) => {
         e.preventDefault();
@@ -146,85 +146,133 @@ export const useAuth = () => {
     };
 
     const checkEmail = async (e) => {
-        e.preventDefault(); // ป้องกันการส่งฟอร์มแบบปกติ
+        e.preventDefault(); 
 
-        // ตรวจสอบว่ามีการกรอกอีเมลหรือไม่
         if (!resetPsw.email) {
-            setErrorsSignIn({ message: 'กรุณากรอกอีเมล' }); // ตั้งค่าข้อความเตือน
-            return; // หยุดการทำงานถ้าข้อมูลไม่ครบ
+            setErrorsSignIn({ message: 'กรุณาระบุอีเมล' });
+            return;
         }
 
-        // ตรวจสอบรูปแบบอีเมล
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(resetPsw.email)) {
-            setErrorsSignIn({ message: 'รูปแบบอีเมลไม่ถูกต้อง' }); // ตั้งค่าข้อความเตือน
-            return; // หยุดการทำงานถ้ารูปแบบอีเมลไม่ถูกต้อง
+            setErrorsSignIn({ message: 'รูปแบบอีเมลไม่ถูกต้อง โปรดลองอีกครั้ง' });
+            return;
         }
 
-        const response = await fetch('/api/resetPassword', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email: resetPsw.email }), // ส่งอีเมลที่กรอก
-        });
+        setIsLoading(true);
 
-        const data = await response.json();
+        try {
+            const response = await fetch('/api/resetPassword', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: resetPsw.email }),
+            });
 
-        if (response.ok) {
-            // อีเมลมีอยู่ในระบบ ให้แสดงช่องกรอก newPassword
-            setShowNewPasswordInput(true); // ตั้งค่าสถานะเพื่อแสดงฟอร์มกรอกรหัสผ่านใหม่
-            setEmailChecked(true); // ตั้งค่าสถานะอีเมลที่ตรวจสอบแล้ว
-            setErrorsSignIn('')
-        } else {
-            setErrorsSignIn({ message: data.message }); // แสดงข้อความข้อผิดพลาด
+            const data = await response.json();
+
+            if (response.ok) {
+                setShowNewPassword(true);
+                setEmailChecked(true);
+                setErrorsSignIn(''); // Clear errors on success
+            } else {
+                setErrorsSignIn({ message: data.message }); // Display error message
+            }
+        } catch (error) {
+            console.error('Error during email check:', error);
+            setErrorsSignIn({ message: 'เกิดข้อผิดพลาดในการตรวจสอบอีเมล' }); // General error message
+        } finally {
+            setIsLoading(false); // Stop loading
         }
     };
 
     const resetPassword = async (e) => {
-        e.preventDefault(); // ป้องกันการส่งฟอร์มแบบปกติ
-
-        // ตรวจสอบว่ามีการกรอกอีเมลหรือไม่
+        e.preventDefault();
+    
+        // Validate email
         if (!resetPsw.email) {
-            setErrorsSignIn({ message: 'กรุณากรอกอีเมล' }); // ตั้งค่าข้อความเตือน
-            return; // หยุดการทำงานถ้าข้อมูลไม่ครบ
+            setErrorsSignIn({ message: 'กรุณาระบุอีเมล' });
+            return;
         }
-
-        // ตรวจสอบว่ามีการกรอกรหัสผ่านใหม่หรือไม่
+    
+        // Validate OTP
+        if (!resetPsw.otp) {
+            setErrorsSignIn({ message: 'กรุณาระบุ OTP' });
+            return;
+        }
+    
+        // Validate new password
         if (!resetPsw.newPassword) {
-            setErrorsSignIn({ message: 'กรุณากรอกรหัสผ่านใหม่' }); // ตั้งค่าข้อความเตือน
-            return; // หยุดการทำงานถ้าข้อมูลไม่ครบ
+            setErrorsSignIn({ message: 'กรุณากรอกรหัสผ่านใหม่' });
+            return;
         }
-
-        // ตรวจสอบว่ามีการกรอกรหัสผ่านใหม่หรือไม่
+    
+        // Validate confirm password
         if (!resetPsw.confirmPassword) {
-            setErrorsSignIn({ message: 'กรุณายืนยันรหัสผ่านใหม่' }); // ตั้งค่าข้อความเตือน
-            return; // หยุดการทำงานถ้าข้อมูลไม่ครบ
+            setErrorsSignIn({ message: 'กรุณายืนยันรหัสผ่านใหม่' });
+            return;
         }
-
-        // ตรวจสอบว่ารหัสผ่านใหม่และการยืนยันรหัสผ่านตรงกันหรือไม่
+    
+        // Check if new password and confirm password match
         if (resetPsw.newPassword !== resetPsw.confirmPassword) {
-            setErrorsSignIn({ message: 'การยืนยันรหัสผ่านไม่สำเร็จ' }); // ตั้งค่าข้อความเตือน
-            return; // หยุดการทำงานถ้าข้อมูลไม่ครบ
+            setErrorsSignIn({ message: 'การยืนยันรหัสผ่านไม่สำเร็จ' });
+            return;
         }
 
-        const response = await fetch('/api/resetPassword', {
+        setIsLoading(true);
+    
+        try {
+            // Send data to API
+            const response = await fetch('/api/resetPassword', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    email: resetPsw.email, 
+                    otp: resetPsw.otp, 
+                    newPassword: resetPsw.newPassword 
+                }),
+            });
+    
+            const data = await response.json();
+    
+            // Check the result from API
+            if (response.ok) {
+                alert('รีเซ็ตรหัสผ่านสำเร็จ');
+                router.push('/signin'); // Navigate to sign-in page
+            } else {
+                setErrorsSignIn({ message: data.message || 'เกิดข้อผิดพลาดในการรีเซ็ตรหัสผ่าน' });
+            }
+        } catch (error) {
+            console.error('Error during password reset:', error);
+            setErrorsSignIn({ message: 'เกิดข้อผิดพลาดในการเชื่อมต่อกับเซิร์ฟเวอร์' });
+        } finally {
+            setIsLoading(false); // Stop loading
+        }
+    };   
+    
+    const requestNewOTP = () => {
+        // Call the API to request a new OTP
+        fetch('/api/resetPassword', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email: resetPsw.email, newPassword: resetPsw.newPassword }), // ส่งอีเมลและรหัสผ่านใหม่
+            body: JSON.stringify({ email: resetPsw.email }), // Send email to request new OTP
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle response, e.g. show success message
+            if (data.message) {
+                console.log(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error requesting new OTP:', error);
         });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            alert('รีเซ็ตรหัสผ่านสำเร็จ'); // แสดงข้อความสำเร็จเป็น string
-            router.push('/signin'); // หรือเปลี่ยนไปยังหน้าที่ต้องการหลังจากรีเซ็ตรหัสผ่านสำเร็จ
-        } else {
-            setErrorsSignIn({ message: data.message }); // แจ้งข้อผิดพลาด
-        }
     };
-
+    
     return {
         signInData,
         setSignInData,
@@ -250,8 +298,8 @@ export const useAuth = () => {
         setResetPsw,
         emailChecked,
         setEmailChecked,
-        showNewPasswordInput,
-        setShowNewPasswordInput,
+        showNewPassword,
+        requestNewOTP,
         isLoggedIn: !!session,
     };
 };
