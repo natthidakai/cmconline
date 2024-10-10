@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 import { useSession } from "next-auth/react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Modal } from "react-bootstrap";
 import { useSignUp } from "./hooks/useSignUp";
-import { validationForm  } from "./hooks/validationForm"
+import { validationForm } from "./hooks/validationForm"
 
 import Image from "next/image";
 import LOGO from "./assert/images/logo.jpg";
@@ -13,7 +13,19 @@ const SignUp = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  const { regisData, errors, formErrors, registerUser, isLoading, handleInputRegister  } = useSignUp();
+  const {
+    regisData,
+    errors,
+    registerUser,
+    isLoading,
+    handleInputRegister,
+    show,
+    setRegisData,
+    handleClose,
+    handleShow,
+    formRegister
+  } = useSignUp();
+
   const { handleEmailKeyPress, handleNumberKeyPress } = validationForm();
 
   const handleSubmit = (e) => {
@@ -44,127 +56,46 @@ const SignUp = () => {
               </Col>
             </div>
 
-            <Col xxl="6" xl="6" lg="6" md="6" sm="12" xs="12" className="mb-4">
-              <label htmlFor="first_name" className="form-label th">ชื่อ</label>
+            {formRegister.map((field, index) => {
+              // กำหนด colSize ตามชื่อฟิลด์
+              const colSize = ["phone", "id_card", "email"].includes(field.name) ? "12" : "6";
+
+              return (
+                <Col key={`${field.name}-${index}`} xxl={colSize} xl={colSize} lg={colSize} md={colSize} sm={12} xs={12} className="mb-4">
+                  <label htmlFor={field.name} className="form-label th">
+                    {field.label}
+                  </label>
+                  <input
+                    type={field.type}
+                    id={field.name}
+                    name={field.name}
+                    className="form-control th"
+                    defaultValue={field.value} // ใช้ defaultValue เพื่อกำหนดค่าเริ่มต้น
+                    onChange={handleInputRegister}
+                    onKeyPress={field.name === "phone" || field.name === "id_card" ? handleNumberKeyPress : field.name === "email" ? handleEmailKeyPress : undefined}
+                  />
+                  {errors[field.name] && <div className="text-danger th mt-2">{errors[field.name]}</div>}
+                </Col>
+              );
+            })}
+
+            <Col xxl="12" xl="12" lg="12" md="12" sm="12" xs="12" className="mb-5">
               <input
-                name="first_name"
-                type="text"
-                id="first_name"
-                className="form-control th"
-                defaultValue={regisData.first_name}
-                onChange={handleInputRegister}
+                className="form-check-input"
+                type="checkbox"
+                checked={regisData.conditions}
+                id="conditions"
+                name="conditions"
+                onChange={(e) => {
+                  setRegisData({ ...regisData, conditions: e.target.checked });
+                  handleShow(); // เรียก handleShow เมื่อมีการเปลี่ยนแปลงเช็คบ็อกซ์
+                }}
               />
-              {errors.first_name && (
-                <div className="text-danger mt-2 th">{errors.first_name}</div>
-              )}
-            </Col>
-
-            <Col xxl="6" xl="6" lg="6" md="6" sm="12" xs="12" className="mb-4">
-              <label htmlFor="last_name" className="form-label th">นามสกุล</label>
-              <input
-                name="last_name"
-                type="text"
-                id="last_name"
-                className="form-control th"
-                defaultValue={regisData.last_name}
-                onChange={handleInputRegister}
-              />
-              {errors.last_name && (
-                <div className="text-danger mt-2 th">{errors.last_name}</div>
-              )}
-            </Col>
-
-            <Col xxl="12" xl="12" lg="12" md="12" sm="12" xs="12" className="mb-4">
-              <label htmlFor="phone" className="form-label th">เบอร์โทรศัพท์</label>
-              <input
-                name="phone"
-                type="tel"
-                id="phone"
-                className="form-control th"
-                defaultValue={regisData.phone}
-                minLength={10}
-                maxLength={10}
-                onKeyPress={handleNumberKeyPress} 
-                onChange={handleInputRegister}
-              />
-              {errors.phone && (
-                <div className="text-danger mt-2 th">{errors.phone}</div>
-              )}
-
-              {formErrors.phone && (
-                <div className="text-danger mt-2 th">{formErrors.phone}</div>
-              )}
-            </Col>
-
-            <Col xxl="12" xl="12" lg="12" md="12" sm="12" xs="12" className="mb-4">
-              <label htmlFor="email" className="form-label th">อีเมล</label>
-              <input
-                name="email"
-                type="email"
-                id="email"
-                className="form-control th"
-                defaultValue={regisData.email}
-                onChange={handleInputRegister}
-                onKeyPress={handleEmailKeyPress}
-              />
-              {errors.email && (
-                <div className="text-danger mt-2 th">{errors.email}</div>
-              )}
-
-              {formErrors.email && (
-                <div className="text-danger mt-2 th">{formErrors.email}</div>
-              )}
-            </Col>
-
-            <Col xxl="12" xl="12" lg="12" md="12" sm="12" xs="12" className="mb-4">
-              <label htmlFor="id_card" className="form-label th">เลขบัตรประชาชน</label>
-              <input
-                name="id_card"
-                type="id_card"
-                id="id_card"
-                minLength={13}
-                maxLength={13}
-                className="form-control th"
-                defaultValue={regisData.id_card}
-                onChange={handleInputRegister}
-                onKeyPress={handleNumberKeyPress}
-              />
-              {errors.id_card && (
-                <div className="text-danger mt-2 th">{errors.id_card}</div>
-              )}
-
-              {formErrors.id_card && (
-                <div className="text-danger mt-2 th">{formErrors.id_card}</div>
-              )}
-            </Col>
-
-            <Col xxl="6" xl="6" lg="6" md="6" sm="12" xs="12" className="mb-4">
-              <label htmlFor="password" className="form-label th">รหัสผ่าน</label>
-              <input
-                name="password"
-                type="password"
-                id="password"
-                className="form-control th"
-                defaultValue={regisData.password}
-                onChange={handleInputRegister}
-              />
-              {errors.password && (
-                <div className="text-danger mt-2 th">{errors.password}</div>
-              )}
-            </Col>
-
-            <Col xxl="6" xl="6" lg="6" md="6" sm="12" xs="12" className="mb-5">
-              <label htmlFor="CFpassword" className="form-label th">ยืนยันรหัสผ่าน</label>
-              <input
-                name="CFpassword"
-                type="password"
-                id="CFpassword"
-                className="form-control th"
-                defaultValue={regisData.CFpassword}
-                onChange={handleInputRegister}
-              />
-              {errors.CFpassword && (
-                <div className="text-danger mt-2 th">{errors.CFpassword}</div>
+              <label className="form-check-label ms-2 th" htmlFor="conditions">
+                <Col className="pointer text-blue">Terms & Conditions</Col>
+              </label>
+              {errors.conditions && (
+                <div className="text-danger mt-2 th center">{errors.conditions}</div>
               )}
             </Col>
 
@@ -176,6 +107,18 @@ const SignUp = () => {
                 </Button>
               </Col>
             </Row>
+
+            <Modal show={show} onHide={handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title className="th">Terms & Conditions</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <p className="th">ยินดีต้อนรับสู่เว็บไซต์ของเรา! การสมัครสมาชิกถือว่าท่านได้ยอมรับข้อตกลงและเงื่อนไขในการเก็บรวบรวม ใช้ และแบ่งปันข้อมูลส่วนบุคคลของท่านเพื่อวัตถุประสงค์ทางการตลาด กรุณาอ่านเงื่อนไขเหล่านี้อย่างละเอียดก่อนดำเนินการสมัครสมาชิก</p>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button className="btn-xl th" onClick={handleClose}>ยอมรับเงื่อนไข</Button>
+              </Modal.Footer>
+            </Modal>
           </Row>
         </Col>
       </Row>

@@ -19,11 +19,12 @@ const Profile = () => {
     formFieldsCurrentAddress,
     formFieldsAddress,
     updateUserData,
+    isLoading,
+    setIsLoading,
     errors = {}, // Ensure errors is always defined as an object
     setErrors
   } = useSignUp();
 
-  const [isSubmitting, setIsSubmitting] = useState(false); // สถานะการส่งข้อมูล
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -38,7 +39,7 @@ const Profile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    setIsLoading(true);
 
     // อัปเดตข้อมูลผู้ใช้
     const response = await updateUserData(user);
@@ -59,7 +60,7 @@ const Profile = () => {
       console.error("Update user error:", response); // ดูข้อมูลผิดพลาด
     }
 
-    setIsSubmitting(false);
+    setIsLoading(false);
   };
 
   return (
@@ -174,13 +175,9 @@ const Profile = () => {
                 <Button
                   className="btn-xl th"
                   onClick={handleSubmit}
-                  disabled={isSubmitting}
+                  disabled={isLoading}
                 >
-                  {isSubmitting ? (
-                    <Spinner animation="border" size="sm" />
-                  ) : (
-                    "บันทึกข้อมูล"
-                  )}
+                  {isLoading ? 'กำลังดำเนินการ...' : 'บันทึกข้อมูล'}
                 </Button>
               </Col>
             </Row>

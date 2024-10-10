@@ -515,7 +515,9 @@ select,
     display: flex;
 }
 
-
+.modal {
+    --bs-modal-width: 45%;
+}
 
 
 

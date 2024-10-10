@@ -9,6 +9,10 @@ export const useSignUp = () => {
   const [errors, setErrors] = useState({});
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const [regisData, setRegisData] = useState({
     first_name: "",
@@ -18,6 +22,7 @@ export const useSignUp = () => {
     id_card: "",
     password: "",
     CFpassword: "",
+    conditions: false // เปลี่ยนจาก "" เป็น false
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -114,6 +119,7 @@ export const useSignUp = () => {
   };
 
   const validateSignUp = (regisData) => {
+
     let isValid = true;
     const newErrors = {};
 
@@ -164,6 +170,11 @@ export const useSignUp = () => {
       isValid = false;
     }
 
+    if (!regisData.conditions) {
+      newErrors.conditions = "กรุณายอมรับเงื่อนไขการสมัครสมาชิก";
+      isValid = false;
+    }
+
     setErrors(newErrors);
     return isValid;
   };
@@ -178,7 +189,8 @@ export const useSignUp = () => {
       if (!isValid) {
         console.error("การตรวจสอบความถูกต้องของฟอร์มล้มเหลว");
         return; // หยุดถ้าการตรวจสอบล้มเหลว
-      }
+      } 
+
 
       // ลงทะเบียนผู้ใช้
       const response = await fetch("/api/useRegister", {
@@ -213,20 +225,20 @@ export const useSignUp = () => {
           email: "",
           password: "",
           CFpassword: "",
+          conditions: false,
         });
       } else {
         const errorData = await response.json();
-        setFormErrors({
+        setErrors({
           email: errorData.message.includes("อีเมล") ? errorData.message : "",
-          phone: errorData.message.includes("เบอร์โทรศัพท์")
-            ? errorData.message
-            : "",
+          phone: errorData.message.includes("เบอร์โทรศัพท์") ? errorData.message : "",
+          id_card: errorData.message.includes("หมายเลขบัตรประชาชน") ? errorData.message : "",
         });
         console.error("การลงทะเบียนล้มเหลว:", errorData.message);
       }
     } catch (error) {
       console.error("เกิดข้อผิดพลาด:", error);
-      setFormErrors({ general: "เกิดข้อผิดพลาดในการสมัครสมาชิก" });
+      setErrors({ general: "เกิดข้อผิดพลาดในการสมัครสมาชิก" });
     } finally {
       setIsLoading(false);
     }
@@ -340,6 +352,16 @@ export const useSignUp = () => {
     province: "",
     postal_code: "",
   });
+
+  const formRegister = [
+    { label: 'ชื่อ', name: 'first_name', type: 'text', value: regisData.first_name },
+    { label: 'นามสกุล', name: 'last_name', type: 'text', value: regisData.last_name },
+    { label: 'เบอร์โทรศัพท์', name: 'phone', type: 'tel', value: regisData.phone,},
+    { label: 'อีเมล', name: 'email', type: 'email', value: regisData.email},
+    { label: 'เลขบัตรประชาชน', name: 'id_card', type: 'text', value: regisData.id_card },
+    { label: 'รหัสผ่าน', name: 'password', type: 'password', value: regisData.password },
+    { label: 'ยืนยันรหัสผ่าน', name: 'CFpassword', type: 'password', value: regisData.CFpassword }
+  ]
 
   const formFieldsPersonal = [
     {
@@ -798,6 +820,7 @@ export const useSignUp = () => {
 
   return {
     regisData,
+    setRegisData,
     isSameAddress,
     status,
     setIsSameAddress,
@@ -807,6 +830,7 @@ export const useSignUp = () => {
     formErrors,
     registerUser,
     isLoading,
+    setIsLoading,
     updateUserData,
     setUser,
     user,
@@ -821,5 +845,9 @@ export const useSignUp = () => {
     showAddressSection,
     handleInputChange,
     submitBooking,
+    show, 
+    handleClose, 
+    handleShow,
+    formRegister
   };
 };

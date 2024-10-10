@@ -55,7 +55,7 @@ const Menubar = () => {
                         {session ? (
                             <NavDropdown title={
                                 <div className="d-flex align-items-center">
-                                    <Image src={User} alt="User Icon" width={30} height={30} />
+                                    <Image src={User} alt="User Icon" width={20} height={20} />
                                     <span className="ms-2">ข้อมูลของฉัน</span>
                                 </div>
                             } id="basic-nav-dropdown" className="th font-18 mb-0 box-profile-menu ms-3">
@@ -74,7 +74,7 @@ const Menubar = () => {
                             </NavDropdown>
                         ) : (
                             <div className="th box-login-menu d-flex align-items-center">
-                                <Image src={User} alt="User Icon" width={30} height={30} />
+                                <Image src={User} alt="User Icon" width={20} height={20} />
                                 <Link href={`/signup`} onClick={handleLinkClick} className="ms-2 text-blue">
                                     สมัครสมาชิก
                                 </Link>

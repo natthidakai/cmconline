@@ -4,7 +4,7 @@ import nodemailer from 'nodemailer';
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
-        const { first_name, last_name, phone, email, id_card, password } = req.body;
+        const { first_name, last_name, phone, email, id_card, password, conditions } = req.body;
 
         // ตรวจสอบการส่งข้อมูลครบถ้วน
         if (!first_name || !last_name || !phone || !email || !password) {
@@ -19,7 +19,7 @@ export default async function handler(req, res) {
                 return res.status(400).json({ message: 'อีเมลนี้ถูกใช้งานแล้ว' });
             }
         } catch (error) {
-            console.error('Error checking existing email:', error);
+            // console.error('Error checking existing email:', error);
             return res.status(500).json({ message: 'เกิดข้อผิดพลาดในการตรวจสอบอีเมล' });
         }
 
@@ -31,7 +31,7 @@ export default async function handler(req, res) {
                 return res.status(400).json({ message: 'เบอร์โทรศัพท์นี้ถูกใช้งานแล้ว' });
             }
         } catch (error) {
-            console.error('Error checking existing phone:', error);
+            // console.error('Error checking existing phone:', error);
             return res.status(500).json({ message: 'เกิดข้อผิดพลาดในการตรวจสอบเบอร์โทรศัพท์' });
         }
 
@@ -43,7 +43,7 @@ export default async function handler(req, res) {
                 return res.status(400).json({ message: 'หมายเลขบัตรประชาชนนี้ถูกใช้งานแล้ว' });
             }
         } catch (error) {
-            console.error('Error checking existing ID card:', error);
+            // console.error('Error checking existing ID card:', error);
             return res.status(500).json({ message: 'เกิดข้อผิดพลาดในการตรวจสอบหมายเลขบัตรประชาชน' });
         }
 
@@ -54,8 +54,8 @@ export default async function handler(req, res) {
         // เพิ่มข้อมูลผู้ใช้ลงในฐานข้อมูล
         try {
             await Mysql.query(
-                'INSERT INTO members (first_name, last_name, phone, email, id_card, password, create_date) VALUES (?, ?, ?, ?, ?, ?, NOW())',
-                [first_name, last_name, phone, email, id_card, hashedPassword]
+                'INSERT INTO members (first_name, last_name, phone, email, id_card, password, conditions, create_date) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())',
+                [first_name, last_name, phone, email, id_card, hashedPassword, conditions]
             );
 
             // ส่งอีเมลยืนยันการสมัครสมาชิก
@@ -63,7 +63,7 @@ export default async function handler(req, res) {
 
             res.status(201).json({ message: 'สมัครสมาชิกสำเร็จ' });
         } catch (error) {
-            console.error('Error registering user:', error);
+            // console.error('Error registering user:', error);
             return res.status(500).json({ message: 'เกิดข้อผิดพลาดในการสมัครสมาชิก' });
         }
     } else {
@@ -98,7 +98,7 @@ async function sendSignUpEmail(email) {
         await transporter.sendMail(mailOptions);
         console.log('Signup notification email sent successfully');
     } catch (error) {
-        console.error('Error sending signup email:', error);
+        // console.error('Error sending signup email:', error);
         throw new Error(`Failed to send signup notification email: ${error.message}`);
     }
 }
