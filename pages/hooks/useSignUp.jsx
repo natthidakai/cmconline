@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 
 export const useSignUp = () => {
-  
+
   const { data: session, status } = useSession();
   const [errors, setErrors] = useState({});
   const router = useRouter();
@@ -189,7 +189,7 @@ export const useSignUp = () => {
       if (!isValid) {
         console.error("การตรวจสอบความถูกต้องของฟอร์มล้มเหลว");
         return; // หยุดถ้าการตรวจสอบล้มเหลว
-      } 
+      }
 
 
       // ลงทะเบียนผู้ใช้
@@ -356,8 +356,8 @@ export const useSignUp = () => {
   const formRegister = [
     { label: 'ชื่อ', name: 'first_name', type: 'text', value: regisData.first_name },
     { label: 'นามสกุล', name: 'last_name', type: 'text', value: regisData.last_name },
-    { label: 'เบอร์โทรศัพท์', name: 'phone', type: 'tel', value: regisData.phone,},
-    { label: 'อีเมล', name: 'email', type: 'email', value: regisData.email},
+    { label: 'เบอร์โทรศัพท์', name: 'phone', type: 'tel', value: regisData.phone, },
+    { label: 'อีเมล', name: 'email', type: 'email', value: regisData.email },
     { label: 'เลขบัตรประชาชน', name: 'id_card', type: 'text', value: regisData.id_card },
     { label: 'รหัสผ่าน', name: 'password', type: 'password', value: regisData.password },
     { label: 'ยืนยันรหัสผ่าน', name: 'CFpassword', type: 'password', value: regisData.CFpassword }
@@ -540,7 +540,7 @@ export const useSignUp = () => {
   const handleCheckboxChange = (setUser, setIsSameAddress) => (event) => {
     const { checked } = event.target;
     setIsSameAddress(checked);
-  
+
     // Use destructuring for cleaner code
     setUser((prevUser) => {
       const {
@@ -550,7 +550,7 @@ export const useSignUp = () => {
         current_province,
         current_postal_code,
       } = prevUser;
-  
+
       if (checked) {
         return {
           ...prevUser,
@@ -573,7 +573,7 @@ export const useSignUp = () => {
       }
     });
   };
-  
+
 
   const checkFormPersonal = (user) => {
     const requiredFields = [
@@ -706,7 +706,7 @@ export const useSignUp = () => {
         isValid = false;
       }
     }
-    
+
     setErrors(newErrors);
     return isValid;
   };
@@ -725,6 +725,7 @@ export const useSignUp = () => {
     towerName
   ) => {
     e.preventDefault();
+    setIsLoading(true); // Start loading state
   
     if (!user.member_id) {
       console.error("Member ID is missing");
@@ -732,63 +733,64 @@ export const useSignUp = () => {
     }
   
     const isValid = validateBooking(user, showAddressSection);
+
+    if (!isValid) {
+      setIsLoading(false);
+      return;
+    }
   
-    if (isValid) {
-      try {
-        const formattedBirthDate = formatDate(user.birth_date); // Format the date here
+    try {
+      const formattedBirthDate = formatDate(user.birth_date); // Format the date
+      const updatedUser = {
+        ...user,
+        projectID,
+        unitNumber,
+        birth_date: formattedBirthDate,
+      };
   
-        const updatedUser = {
-          ...user,
-          projectID,
-          unitNumber,
-          birth_date: formattedBirthDate,
-        };
+      // Make API call to submit the booking
+      const response = await fetch("/api/booking", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedUser),
+      });
   
-        const response = await fetch("/api/booking", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedUser),
-        });
+      if (response.ok) {
+        // Booking successful
+        router.push(`/step/4?projectID=${projectID}&floorName=${floorName}&towerName=${towerName}&unitNumber=${unitNumber}`);
+        setUser(initialUserState); // Clear user data
+      } else {
+        // Handle error when booking fails
+        const errorData = await response.json();
+        console.error("Failed to book", errorData);
+        const errorMessage = errorData.alert || "An unexpected error occurred.";
+        alert(errorMessage); // Show specific error message
   
-        if (response.ok) {
-          // Booking successful
-          router.push(
-            `/step/4?projectID=${projectID}&floorName=${floorName}&towerName=${towerName}&unitNumber=${unitNumber}`
-          );
-          // Clear user data
-          setUser(initialUserState);
-        } else {
-          // Handle error when booking fails
-          const errorData = await response.json();
-          console.error("Failed to book", errorData);
-  
-          if (errorData.redirect) {
-            alert(errorData.alert);
-            router.push(errorData.redirect);
-          } else {
-            alert(errorData.alert); // Show alert message
-          }
+        if (errorData.redirect) {
+          router.push(errorData.redirect);
         }
-      } catch (error) {
-        console.error("Error submitting form", error);
       }
-    } else {
-      console.error("Form validation failed");
+    } catch (error) {
+      console.error("Error submitting form", error);
+      alert("There was an error processing your request. Please try again later."); // Inform user of error
+    } finally {
+      setIsLoading(false); // Always reset loading state
     }
   };
+  
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
-  
+
     if (!id) {
       console.error("ID is missing in the event target.");
       return;
     }
-  
+
     let newValue = value;
-  
+
     const formatters = {
       email: (val) => {
         const sanitized = val
@@ -804,19 +806,19 @@ export const useSignUp = () => {
       current_postal_code: (val) => val.replace(/\D/g, "").slice(0, 5),
       postal_code: (val) => val.replace(/\D/g, "").slice(0, 5),
     };
-  
+
     if (formatters[id]) {
       newValue = formatters[id](value);
     }
-  
+
     setUser((prevUser) => ({
       ...prevUser,
       [id]: newValue,
     }));
-    
+
     checkFormPersonal({ ...user, [id]: newValue });
   };
-  
+
 
   return {
     regisData,
@@ -845,8 +847,8 @@ export const useSignUp = () => {
     showAddressSection,
     handleInputChange,
     submitBooking,
-    show, 
-    handleClose, 
+    show,
+    handleClose,
     handleShow,
     formRegister
   };

@@ -14,7 +14,7 @@ const SignIn = () => {
 
   const { data: session, status } = useSession();
   const router = useRouter();
-  const { signInData, handleInputChange, handleSignIn, errorsSignIn } = useAuth();
+  const { signInData, handleSignInChange, handleSignIn, errorsSignIn, isLoading } = useAuth();
   const { handleEmailKeyPress } = validationForm();
 
   useEffect(() => {
@@ -50,8 +50,8 @@ const SignIn = () => {
                 name="email"
                 className="form-control th"
                 value={signInData?.email || ''}
-                onChange={handleInputChange}
-                onKeyPress={handleEmailKeyPress}
+                onChange={handleSignInChange}
+                onKeyDown={handleEmailKeyPress}
                 required
               />
             </Col>
@@ -66,7 +66,7 @@ const SignIn = () => {
                 name="password"
                 className="form-control th"
                 value={signInData.password}
-                onChange={handleInputChange}
+                onChange={handleSignInChange}
                 required
               />
             </Col>
@@ -88,8 +88,8 @@ const SignIn = () => {
                 </div>
               )}
               <Col className="justify-content-center">
-                <Button className="btn-xl th" onClick={handleSignIn}>
-                  เข้าสู่ระบบ
+                <Button className="btn-xl th" onClick={handleSignIn} disabled={isLoading}>
+                  {isLoading ? 'กำลังเข้าสู่ระบบ...' : 'เข้าสู่ระบบ'}
                 </Button>
               </Col>
             </Row>

@@ -1,8 +1,8 @@
 import React, { useState, useCallback } from "react";
-import { Container, Navbar, Offcanvas, NavDropdown, Nav } from 'react-bootstrap';
+import { Container, Navbar, Offcanvas, NavDropdown, Nav, Col } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
-import { useAuth } from '../api/auth/useAuth'; 
+import { useAuth } from '../api/auth/useAuth';
 
 import Image from 'next/image';
 import User from '../assert/images/profile-user.png';
@@ -53,12 +53,26 @@ const Menubar = () => {
                         </Nav>
 
                         {session ? (
-                            <NavDropdown title={
-                                <div className="d-flex align-items-center">
-                                    <Image src={User} alt="User Icon" width={20} height={20} />
-                                    <span className="ms-2">ข้อมูลของฉัน</span>
-                                </div>
-                            } id="basic-nav-dropdown" className="th font-18 mb-0 box-profile-menu ms-3">
+                            //      <NavDropdown 
+                            //      title={
+                            //          <div className="d-flex align-items-center nav-dropdown-title">
+                            //              <Image src={User} alt="User Icon" width={20} height={20} />
+                            //              <span className="ms-2">ข้อมูลของฉัน</span>
+                            //          </div>
+                            //      } 
+                            //      id="basic-nav-dropdown" 
+                            //      className="th font-18 mb-0 box-profile-menu ms-3"
+                            //  >
+                            <NavDropdown
+                                title={
+                                    <span className="align-items-center nav-dropdown-title">
+                                        <Image src={User} alt="User Icon" width={20} height={20} />
+                                        <span className="ms-2">ข้อมูลของฉัน</span>
+                                    </span>
+                                }
+                                id="basic-nav-dropdown"
+                                className="th font-18 mb-0 box-profile-menu ms-3"
+                            >
                                 <NavDropdown.Item as={Link} href={`/profile`} onClick={handleLinkClick}>
                                     ข้อมูลส่วนตัว
                                 </NavDropdown.Item>

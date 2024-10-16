@@ -195,6 +195,31 @@ a.btn-xl.th.btn.btn-primary:hover {
     z-index: 10;
 }
 
+.awaiting-payment, .cancel-reservation, .reservation-successful {
+    padding: .4rem 1rem;
+    width: 100%;
+    color: #fff;
+    text-align: center;
+}
+
+.dropdown-menu.show {
+    border-radius: 20px;
+    border: 2px #eee solid;
+    margin-top: 5px;
+}
+
+.awaiting-payment {
+    background-color: #ee6338;
+}
+
+.cancel-reservation {
+    background-color: #ec2e2e;
+}
+
+.reservation-successful {
+    background-color: #35582d;
+}
+
 .img-full {
     width: 100%;
     height: 100%;

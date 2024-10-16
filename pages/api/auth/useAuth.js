@@ -57,7 +57,7 @@ export const useAuth = () => {
         signOut({ callbackUrl: '/' });
     };
 
-    const handleInputChange = (e) => {
+    const handleSignInChange = (e) => {
         const { id, value } = e.target;
         setSignInData((prevData) => ({
           ...prevData,
@@ -66,7 +66,7 @@ export const useAuth = () => {
         if (errorsSignIn.message) {
             setErrorsSignIn({}); // Clear errors if any
         }
-      };
+    };
 
     const changePassword = async (e, session) => {
         e.preventDefault(); // ป้องกันการส่งฟอร์ม
@@ -276,7 +276,7 @@ export const useAuth = () => {
     return {
         signInData,
         setSignInData,
-        handleInputChange,
+        handleSignInChange,
         setErrorsSignIn,
         errorsSignIn,
         isLoading,

@@ -72,7 +72,7 @@ const SignUp = () => {
                     className="form-control th"
                     defaultValue={field.value} // ใช้ defaultValue เพื่อกำหนดค่าเริ่มต้น
                     onChange={handleInputRegister}
-                    onKeyPress={field.name === "phone" || field.name === "id_card" ? handleNumberKeyPress : field.name === "email" ? handleEmailKeyPress : undefined}
+                    onKeyDown={field.name === "phone" || field.name === "id_card" ? handleNumberKeyPress : field.name === "email" ? handleEmailKeyPress : undefined}
                   />
                   {errors[field.name] && <div className="text-danger th mt-2">{errors[field.name]}</div>}
                 </Col>

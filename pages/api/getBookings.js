@@ -7,14 +7,7 @@ export default async function handler(req, res) {
 
             // Query to fetch all bookings
             const [bookings] = await connection.execute(`
-                SELECT 
-                    booking_id,
-                    member_id,
-                    projectID,
-                    unitNumber,
-                    booking_date
-                FROM bookings
-                ORDER BY booking_date DESC
+                SELECT * FROM bookings ORDER BY booking_date DESC
             `);
 
             connection.release();

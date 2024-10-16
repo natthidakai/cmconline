@@ -1,5 +1,4 @@
-import { signIn } from 'next-auth/react';
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useRouter } from "next/router";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Loading from "../components/loading";
@@ -18,10 +17,11 @@ const Step3 = () => {
   const { projectID, floorName, towerName, unitNumber } = router.query;
 
   const { handleEmailKeyPress } = validationForm();
-  const { signInData, handleSignIn, handleInputChange, errorsSignIn } = useAuth();
+  const { signInData, handleSignIn, handleSignInChange, errorsSignIn } = useAuth();
 
   const {
     errors,
+    handleInputChange,
     isSameAddress,
     setIsSameAddress,
     handleCheckboxChange,
@@ -33,6 +33,7 @@ const Step3 = () => {
     formFieldsAddress,
     showAddressSection,
     submitBooking,
+    isLoading,
   } = useSignUp();
 
 
@@ -60,16 +61,7 @@ const Step3 = () => {
                   <h5 className="th">ข้อมูลส่วนบุคคล</h5>
                   <Row className="box-step-3 mb-5">
                     {formFieldsPersonal.map((field) => (
-                      <Col
-                        key={field.id}
-                        xxl={4}
-                        xl={4}
-                        lg={4}
-                        md={4}
-                        sm={12}
-                        xs={12}
-                        className="mb-4"
-                      >
+                      <Col key={field.id} xxl={4} xl={4} lg={4} md={4} sm={12} xs={12} className="mb-4" >
                         <label htmlFor={field.id} className="form-label th">
                           {field.label}
                         </label>
@@ -196,22 +188,8 @@ const Step3 = () => {
                                 ? "12"
                                 : "6";
                               return (
-                                <Col
-                                  key={field.id}
-                                  xxl={colSize}
-                                  xl={colSize}
-                                  lg={colSize}
-                                  md={colSize}
-                                  sm={12}
-                                  xs={12}
-                                  className="mb-4"
-                                >
-                                  <label
-                                    htmlFor={field.id}
-                                    className="form-label th"
-                                  >
-                                    {field.label}
-                                  </label>
+                                <Col key={field.id} xxl={colSize} xl={colSize} lg={colSize} md={colSize} sm={12} xs={12} className="mb-4" >
+                                  <label htmlFor={field.id} className="form-label th" > {field.label} </label>
                                   <input
                                     type={field.type}
                                     id={field.id}
@@ -243,12 +221,8 @@ const Step3 = () => {
 
                 <Row>
                   <Col className="justify-content-center">
-                    <Button
-                      type="button" // Ensure it's a button type to prevent form submission
-                      className="btn-xl th"
-                      onClick={handleSubmit}
-                    >
-                      ลงทะเบียนจอง
+                    <Button type="button" className="btn-xl th" onClick={handleSubmit} disabled={isLoading}>
+                      {isLoading ? 'กำลังดำเนินการ...' : 'บันทึกข้อมูล'}
                     </Button>
                   </Col>
                 </Row>
@@ -271,32 +245,28 @@ const Step3 = () => {
               </div>
 
               <Col xxl="12" xl="12" lg="12" md="12" sm="12" xs="12" className="mb-4">
-                <label htmlFor="email" className="form-label th">
-                  อีเมล
-                </label>
+                <label htmlFor="email" className="form-label th"> อีเมล </label>
                 <input
                   type="email"
                   id="email"
                   name="email"
                   className="form-control th"
                   value={signInData.email}
-                  onChange={handleInputChange}
-                  onKeyPress={handleEmailKeyPress}
+                  onChange={handleSignInChange}
+                  onKeyDown={handleEmailKeyPress}
                   required
                 />
               </Col>
 
               <Col xxl="12" xl="12" lg="12" md="12" sm="12" xs="12" className="mb-2">
-                <label htmlFor="password" className="form-label th">
-                  รหัสผ่าน
-                </label>
+                <label htmlFor="password" className="form-label th"> รหัสผ่าน </label>
                 <input
                   type="password"
                   id="password"
                   name="password"
                   className="form-control th"
                   value={signInData.password}
-                  onChange={handleInputChange}
+                  onChange={handleSignInChange}
                   required
                 />
               </Col>
@@ -320,8 +290,8 @@ const Step3 = () => {
                 )}
 
                 <Col className="justify-content-center">
-                  <Button className="btn-xl th" onClick={handleSignIn}>
-                    เข้าสู่ระบบ
+                  <Button className="btn-xl th" onClick={handleSignIn} disabled={isLoading}>
+                    {isLoading ? 'กำลังเข้าสู่ระบบ...' : 'เข้าสู่ระบบ'}
                   </Button>
                 </Col>
               </Row>
