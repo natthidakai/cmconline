@@ -30,7 +30,7 @@ const callProject = async (req, res) => {
             ,[ProjectStatus]
             ,[MINPrice] 
                 FROM [CRMRE_Production].[dbo].[vw_ITF_ProjectInfo] 
-                WHERE ProjectID = 'BH-BN36'
+                WHERE ProjectID = 'CT-E18P'
         `;
 
         console.log('Query result:', result);

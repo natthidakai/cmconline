@@ -1,52 +1,24 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { Container, Col } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Container } from "react-bootstrap";
 import ProjectCard from "./components/ProjectCard";
 import Image from "next/image";
 
 import Loading from './components/loading';
 
-
 import Banner from "./assert/images/banner.jpg";
 import Condo from "./assert/images/condominium.png";
 
 const Homepage = () => {
-  const [projects, setProjects] = useState([]);
-  const [visibleProjects, setVisibleProjects] = useState(4); // Number of projects to display initially
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  // Fetch projects data
-  const fetchProjects = useCallback(async () => {
-    setLoading(true);
-    try {
-      const res = await fetch("/api/callProject");
-      const data = await res.json();
-
-      if (data.success && Array.isArray(data.projects)) {
-        // Directly set projects without filtering based on unit availability
-        setProjects(data.projects.filter(project => project.ProjectStatus !== '3'));
-      } else {
-        setError("Invalid data");
-      }
-    } catch (err) {
-      setError("Error fetching data");
-    } finally {
-      setLoading(false);
-    }
+  // ใช้ useEffect เพื่อตั้งค่า loading หลังจากข้อมูลโหลดเสร็จ
+  useEffect(() => {
+    setLoading(false);
   }, []);
 
-  useEffect(() => {
-    fetchProjects();
-  }, [fetchProjects]);
-
   return (
-
     <div className="bg-white">
-      {loading ? (
-        <Loading />
-      ) : (
-        <Image src={Banner} alt="Banner" className="img-full" />
-      )}
+      <Image src={Banner} alt="Banner" className="img-full" />
 
       <Container className="py-5">
         <div className="align-items-baseline justify-content-center-m mt-3">
@@ -56,15 +28,8 @@ const Homepage = () => {
         {loading ? (
           <Loading />
         ) : (
-            <ProjectCard
-              projects={projects}
-              visibleProjects={visibleProjects}
-              setVisibleProjects={setVisibleProjects}
-              loading={loading}
-              error={error}
-            />
+          <ProjectCard />
         )}
-
       </Container>
     </div>
   );

@@ -64,12 +64,12 @@ const Step1 = ({ projectID }) => {
 
     const towerNames = [...new Set(status.map((unit) => unit.TowerName))];
     const uniqueFilteredFloors = [
-        ...new Set(
-            status
-                .filter((unit) => unit.TowerName === selectedTower)
-                .map((unit) => unit.FloorName)
-        ),
-    ];
+    ...new Set(
+        status
+            .filter((unit) => unit.TowerName === selectedTower) // ไม่กรอง FloorName
+            .map((unit) => unit.FloorName)
+    ),
+];
 
     const floorPlanImagePath = `/images/${projectID}/${selectedTower}/Floor/${selectedFloor}.jpg`;
 
