@@ -69,12 +69,12 @@ const FloorPlanAndUnits = ({
 
             {/* Display Selected Unit Information */}
             {unitNumbers.length > 0 ? (
-                <Col className="py-4 justify-content-center" xxl="12">
+                <Col className="justify-content-center" xxl="12">
                     <Row>
                         {unitNumbers.map((unitNumber, index) => {
                             const modelID = unitModelIDs[unitNumber] || "Unknown"; // Get the ModelID from unitModelIDs
                             return (
-                                <Col xxl="1" key={index}>
+                                <Col xxl="1" xl="1" lg="1" md="1" sm="2" xs="2" key={index}>
                                     <Link
                                         href={`/step/2?projectID=${projectID}&floorName=${selectedFloor}&towerName=${selectedTower}&unitNumber=${unitNumber}`}
                                         className={`box-booking ${projectID}-${unitNumber}`}
