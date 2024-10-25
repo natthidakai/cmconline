@@ -558,122 +558,6 @@ select,
 
 
 
-/****************** CT-E18P ******************/
-.CT-E18P-201 {
-    bottom: -86%;
-    left: 29%;
-}
-
-.CT-E18P-202 {
-    bottom: -86%;
-    left: 22.5%;
-}
-
-.CT-E18P-203 {
-    bottom: -65%;
-    left: 26%;
-}
-
-.CT-E18P-204 {
-    bottom: -65%;
-    left: 30%;
-}
-
-.CT-E18P-205 {
-    bottom: -65%;
-    left: 33.5%;
-}
-
-.CT-E18P-206 {
-    bottom: -65%;
-    left: 37.5%;
-}
-
-.CT-E18P-207 {
-    bottom: -65%;
-    left: 41.5%;
-}
-
-.CT-E18P-208 {
-    bottom: -65%;
-    left: 45.5%;
-}
-
-.CT-E18P-209 {
-    bottom: -65%;
-    left: 49%;
-}
-
-.CT-E18P-210 {
-    bottom: -65%;
-    left: 53%;
-}
-
-.CT-E18P-211 {
-    bottom: -65%;
-    left: 56.5%;
-}
-
-.CT-E18P-212 {
-    bottom: -65%;
-    left: 60%;
-}
-
-.CT-E18P-213 {
-    bottom: -65%;
-    left: 65%;
-}
-
-.CT-E18P-214 {
-    bottom: -65%;
-    left: 71%;
-}
-
-.CT-E18P-215 {
-    bottom: -65%;
-    left: 76.5%;
-}
-
-.CT-E18P-216 {
-    bottom: -73.5%;
-    left: 75%;
-}
-
-.CT-E18P-217 {
-    bottom: -73.5%;
-    left: 67%;
-}
-
-.CT-E18P-218 {
-    bottom: -73.5%;
-    left: 60%;
-}
-
-.CT-E18P-219 {
-    bottom: -73.5%;
-    left: 53.5%;
-}
-
-.CT-E18P-220 {
-    bottom: -73.5%;
-    left: 46.5%;
-}
-
-.CT-E18P-221 {
-    bottom: -75%;
-    left: 41.5%;
-}
-
-.CT-E18P-222 {
-    bottom: -75%;
-    left: 37.5%;
-}
-
-.CT-E18P-223 {
-    bottom: -75%;
-    left: 34%;
-}
-/****************** CT-E18P ******************/
 
 
 
@@ -695,997 +579,3554 @@ select,
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-/* 14 Pro Max, 13 Pro Max, 12 Pro Max แนวนอน */
-@media (min-width: 932px) and (max-width: 1024px) {
+/* iPhone SE (รุ่นที่ 2 และ 3)/iPhone 7/iPhone 8  - แนวตั้ง */
+@media (device-width: 375px) and (device-height: 667px) and (orientation: portrait) {
     .img-floorplan {
-        width: 115%;
+        width: 100%;
         object-fit: contain;
         height: auto;
     }
 
-    .justify-content-center-m {
-        justify-content: center !important;
-        display: flex;
-    }
-
-    .box-facility {
-        padding-left: 0;
-    }
-
     .box-booking {
-        width: 15px;
-        height: 15px;
+        width: 12px;
+        height: 12px;
+        border: 2px solid #fff;
     }
 
-    /****************** CT-E18P ******************/
+    .CT-E18P-201,
     .CT-E18P-202 {
-        bottom: -206% !important;
-        left: 17% !important;
-    }
-    /****************** CT-E18P ******************/
-}
-
-
-
-/* iPhone 14 Pro Max, 13 Pro Max, 12 Pro Max  แนวตั้ง */
-@media (min-width: 430px) and (max-width: 931.98px) {
-    .img-floorplan {
-        width: 115%;
-        object-fit: contain;
-        height: auto;
+        bottom: -141%;
     }
 
-    .justify-content-center-m {
-        justify-content: center !important;
-        display: flex;
+    .CT-E18P-203,
+    .CT-E18P-204,
+    .CT-E18P-205,
+    .CT-E18P-206,
+    .CT-E18P-207,
+    .CT-E18P-208,
+    .CT-E18P-209,
+    .CT-E18P-210,
+    .CT-E18P-211,
+    .CT-E18P-212,
+    .CT-E18P-213,
+    .CT-E18P-214,
+    .CT-E18P-215 {
+        bottom: -132.5%;
     }
 
-    .box-facility {
-        padding-left: 0;
+    .CT-E18P-216,
+    .CT-E18P-217,
+    .CT-E18P-218,
+    .CT-E18P-219,
+    .CT-E18P-220 {
+        bottom: -136%;
     }
 
-    .box-booking {
-        width: 15px;
-        height: 15px;
+    .CT-E18P-221,
+    .CT-E18P-222,
+    .CT-E18P-223 {
+        bottom: -136.5%;
     }
 
-    /****************** CT-E18P ******************/
     .CT-E18P-201 {
-        bottom: -73%;
-        left: 15%;
+        left: 20%;
     }
 
     .CT-E18P-202 {
-        bottom: -73%;
-        left: 5%;
-    }
-
-    .CT-E18P-203 {
-        bottom: -65.5%;
         left: 11%;
     }
 
+    .CT-E18P-203 {
+        left: 16%;
+    }
+
     .CT-E18P-204 {
-        bottom: -65.5%;
-        left: 17%;
+        left: 21%;
     }
 
     .CT-E18P-205 {
-        bottom: -65.5%;
-        left: 23%;
+        left: 27%;
     }
 
     .CT-E18P-206 {
-        bottom: -65.5%;
-        left: 30%;
+        left: 32%;
     }
 
     .CT-E18P-207 {
-        bottom: -65.5%;
-        left: 36%;
+        left: 37%;
     }
 
     .CT-E18P-208 {
-        bottom: -65.5%;
-        left: 41.5%;
+        left: 42.5%;
     }
 
     .CT-E18P-209 {
-        bottom: -65.5%;
-        left: 47%;
+        left: 47.5%;
     }
 
     .CT-E18P-210 {
-        bottom: -65.5%;
-        left: 54%;
+        left: 53%;
     }
 
     .CT-E18P-211 {
-        bottom: -65.5%;
-        left: 60%;
+        left: 58.5%;
+
     }
 
     .CT-E18P-212 {
-        bottom: -65.5%;
-        left: 66%;
+        left: 63.5%;
     }
 
     .CT-E18P-213 {
-        bottom: -65.5%;
-        left: 73%;
+        left: 70%;
     }
 
     .CT-E18P-214 {
-        bottom: -65.5%;
-        left: 83%;
+        left: 78.5%;
     }
 
     .CT-E18P-215 {
-        bottom: -65.5%;
-        left: 92%;
+        left: 86%;
     }
 
     .CT-E18P-216 {
-        bottom: -69%;
-        left: 90%;
+        left: 86%;
     }
 
     .CT-E18P-217 {
-        bottom: -69%;
-        left: 76%;
+        left: 72%;
     }
 
     .CT-E18P-218 {
-        bottom: -69%;
-        left: 65%;
+        left: 62%;
     }
 
     .CT-E18P-219 {
-        bottom: -69%;
         left: 54%;
     }
 
     .CT-E18P-220 {
-        bottom: -69%;
         left: 44%;
     }
 
     .CT-E18P-221 {
-        bottom: -69.5%;
-        left: 36%;
+        left: 37%;
     }
 
     .CT-E18P-222 {
-        bottom: -69.5%;
-        left: 30%;
+        left: 32%;
     }
 
     .CT-E18P-223 {
-        bottom: -69.5%;
+        left: 27%;
+    }
+}
+
+/* iPhone SE (รุ่นที่ 2 และ 3)/iPhone 7/iPhone 8 - แนวนอน */
+@media (min-width: 375px) and (max-width: 667px) and (orientation: landscape) and (device-width: 667px) and (device-height: 375px) {
+    .img-floorplan {
+        width: 100%;
+        height: auto;
+    }
+
+    .box-booking {
+        width: 12px;
+        height: 12px;
+        border: 2px solid #fff;
+    }
+
+    .CT-E18P-201,
+    .CT-E18P-202 {
+        bottom: -381%;
+    }
+
+    .CT-E18P-203,
+    .CT-E18P-204,
+    .CT-E18P-205,
+    .CT-E18P-206,
+    .CT-E18P-207,
+    .CT-E18P-208,
+    .CT-E18P-209,
+    .CT-E18P-210,
+    .CT-E18P-211,
+    .CT-E18P-212,
+    .CT-E18P-213,
+    .CT-E18P-214,
+    .CT-E18P-215 {
+        bottom: -360%;
+    }
+
+    .CT-E18P-216,
+    .CT-E18P-217,
+    .CT-E18P-218,
+    .CT-E18P-219,
+    .CT-E18P-220 {
+        bottom: -368.5%;
+    }
+
+    .CT-E18P-221,
+    .CT-E18P-222,
+    .CT-E18P-223 {
+        bottom: -370%;
+    }
+
+    .CT-E18P-201 {
+        left: 26%;
+    }
+
+    .CT-E18P-202 {
+        left: 19%;
+    }
+
+    .CT-E18P-203 {
+        left: 22%;
+    }
+
+    .CT-E18P-204 {
+        left: 26.5%;
+    }
+
+    .CT-E18P-205 {
+        left: 31%;
+    }
+
+    .CT-E18P-206 {
+        left: 35.5%;
+    }
+
+    .CT-E18P-207 {
+        left: 40%;
+    }
+
+    .CT-E18P-208 {
+        left: 44.5%;
+    }
+
+    .CT-E18P-209 {
+        left: 48.5%;
+    }
+
+    .CT-E18P-210 {
+        left: 53%;
+    }
+
+    .CT-E18P-211 {
+        left: 57.5%;
+
+    }
+
+    .CT-E18P-212 {
+        left: 62%;
+    }
+
+    .CT-E18P-213 {
+        left: 67%;
+    }
+
+    .CT-E18P-214 {
+        left: 73.5%;
+    }
+
+    .CT-E18P-215 {
+        left: 80%;
+    }
+
+    .CT-E18P-216 {
+        left: 78%;
+    }
+
+    .CT-E18P-217 {
+        left: 69%;
+    }
+
+    .CT-E18P-218 {
+        left: 61%;
+    }
+
+    .CT-E18P-219 {
+        left: 54%;
+    }
+
+    .CT-E18P-220 {
+        left: 46%;
+    }
+
+    .CT-E18P-221 {
+        left: 40%;
+    }
+
+    .CT-E18P-222 {
+        left: 35.5%;
+    }
+
+    .CT-E18P-223 {
+        left: 31%;
+    }
+}
+
+
+
+/* iPhone X/11 Pro- แนวตั้ง */
+@media (device-width: 375px) and (device-height: 812px) and (orientation: portrait) {
+    .img-floorplan {
+        width: 100%;
+        object-fit: contain;
+        height: auto;
+    }
+
+    .box-booking {
+        width: 12px;
+        height: 12px;
+        border: 2px solid #fff;
+    }
+
+    .CT-E18P-201,
+    .CT-E18P-202 {
+        bottom: -97.5%;
+    }
+
+    .CT-E18P-203,
+    .CT-E18P-204,
+    .CT-E18P-205,
+    .CT-E18P-206,
+    .CT-E18P-207,
+    .CT-E18P-208,
+    .CT-E18P-209,
+    .CT-E18P-210,
+    .CT-E18P-211,
+    .CT-E18P-212,
+    .CT-E18P-213,
+    .CT-E18P-214,
+    .CT-E18P-215 {
+        bottom: -91%;
+    }
+
+    .CT-E18P-216,
+    .CT-E18P-217,
+    .CT-E18P-218,
+    .CT-E18P-219,
+    .CT-E18P-220 {
+        bottom: -93.8%;
+    }
+
+    .CT-E18P-221,
+    .CT-E18P-222,
+    .CT-E18P-223 {
+        bottom: -94.5%;
+    }
+
+    .CT-E18P-201 {
+        left: 20%;
+    }
+
+    .CT-E18P-202 {
+        left: 11%;
+    }
+
+    .CT-E18P-203 {
+        left: 16%;
+    }
+
+    .CT-E18P-204 {
+        left: 21%;
+    }
+
+    .CT-E18P-205 {
+        left: 27%;
+    }
+
+    .CT-E18P-206 {
+        left: 32%;
+    }
+
+    .CT-E18P-207 {
+        left: 37%;
+    }
+
+    .CT-E18P-208 {
+        left: 42.5%;
+    }
+
+    .CT-E18P-209 {
+        left: 47.5%;
+    }
+
+    .CT-E18P-210 {
+        left: 53%;
+    }
+
+    .CT-E18P-211 {
+        left: 58.5%;
+
+    }
+
+    .CT-E18P-212 {
+        left: 63.5%;
+    }
+
+    .CT-E18P-213 {
+        left: 70%;
+    }
+
+    .CT-E18P-214 {
+        left: 78.5%;
+    }
+
+    .CT-E18P-215 {
+        left: 86%;
+    }
+
+    .CT-E18P-216 {
+        left: 86%;
+    }
+
+    .CT-E18P-217 {
+        left: 72%;
+    }
+
+    .CT-E18P-218 {
+        left: 62%;
+    }
+
+    .CT-E18P-219 {
+        left: 54%;
+    }
+
+    .CT-E18P-220 {
+        left: 44%;
+    }
+
+    .CT-E18P-221 {
+        left: 37%;
+    }
+
+    .CT-E18P-222 {
+        left: 32%;
+    }
+
+    .CT-E18P-223 {
+        left: 27%;
+    }
+}
+
+/* iPhone X/11 Pro - แนวนอน */
+@media (min-width: 375px) and (max-width: 812px) and (orientation: landscape) and (device-width: 812px) and (device-height: 375px) {
+    .img-floorplan {
+        width: 100%;
+        object-fit: contain;
+        height: auto;
+    }
+
+    .box-booking {
+        width: 15px;
+        height: 15px;
+    }
+
+    .CT-E18P-201,
+    .CT-E18P-202 {
+        bottom: -251%;
+    }
+
+    .CT-E18P-203,
+    .CT-E18P-204,
+    .CT-E18P-205,
+    .CT-E18P-206,
+    .CT-E18P-207,
+    .CT-E18P-208,
+    .CT-E18P-209,
+    .CT-E18P-210,
+    .CT-E18P-211,
+    .CT-E18P-212,
+    .CT-E18P-213,
+    .CT-E18P-214,
+    .CT-E18P-215 {
+        bottom: -220%;
+    }
+
+    .CT-E18P-216,
+    .CT-E18P-217,
+    .CT-E18P-218,
+    .CT-E18P-219,
+    .CT-E18P-220 {
+        bottom: -232%;
+    }
+
+    .CT-E18P-221,
+    .CT-E18P-222,
+    .CT-E18P-223 {
+        bottom: -235%;
+    }
+
+    .CT-E18P-201 {
+        left: 20%;
+    }
+
+    .CT-E18P-202 {
+        left: 12%;
+    }
+
+    .CT-E18P-203 {
+        left: 17%;
+    }
+
+    .CT-E18P-204 {
+        left: 22%;
+    }
+
+    .CT-E18P-205 {
+        left: 27%;
+    }
+
+    .CT-E18P-206 {
+        left: 33%;
+    }
+
+    .CT-E18P-207 {
+        left: 38%;
+    }
+
+    .CT-E18P-208 {
+        left: 43%;
+    }
+
+    .CT-E18P-209 {
+        left: 48.5%;
+    }
+
+    .CT-E18P-210 {
+        left: 54%;
+    }
+
+    .CT-E18P-211 {
+        left: 59%;
+
+    }
+
+    .CT-E18P-212 {
+        left: 64%;
+    }
+
+    .CT-E18P-213 {
+        left: 71%;
+    }
+
+    .CT-E18P-214 {
+        left: 79%;
+    }
+
+    .CT-E18P-215 {
+        left: 87%;
+    }
+
+    .CT-E18P-216 {
+        left: 85%;
+    }
+
+    .CT-E18P-217 {
+        left: 73%;
+    }
+
+    .CT-E18P-218 {
+        left: 64%;
+    }
+
+    .CT-E18P-219 {
+        left: 54.5%;
+    }
+
+    .CT-E18P-220 {
+        left: 45%;
+    }
+
+    .CT-E18P-221 {
+        left: 38%;
+    }
+
+    .CT-E18P-222 {
+        left: 33%;
+    }
+
+    .CT-E18P-223 {
+        left: 28%;
+    }
+}
+
+
+
+/* iPhone 14/13 Pro/13/12 Pro/12 - แนวตั้ง */
+@media (min-width: 390px) and (max-width: 844px) and (orientation: portrait) {
+    .img-floorplan {
+        width: 100%;
+        height: auto;
+    }
+
+    .box-booking {
+        width: 12px;
+        height: 12px;
+        border: 2px solid #fff;
+    }
+
+    .CT-E18P-201,
+    .CT-E18P-202 {
+        bottom: -92.5%;
+    }
+
+    .CT-E18P-203,
+    .CT-E18P-204,
+    .CT-E18P-205,
+    .CT-E18P-206,
+    .CT-E18P-207,
+    .CT-E18P-208,
+    .CT-E18P-209,
+    .CT-E18P-210,
+    .CT-E18P-211,
+    .CT-E18P-212,
+    .CT-E18P-213,
+    .CT-E18P-214,
+    .CT-E18P-215 {
+        bottom: -86%;
+    }
+
+    .CT-E18P-216,
+    .CT-E18P-217,
+    .CT-E18P-218,
+    .CT-E18P-219,
+    .CT-E18P-220 {
+        bottom: -88.5%;
+    }
+
+    .CT-E18P-221,
+    .CT-E18P-222,
+    .CT-E18P-223 {
+        bottom: -89%;
+    }
+
+    .CT-E18P-201 {
+        left: 20%;
+    }
+
+    .CT-E18P-202 {
+        left: 11%;
+    }
+
+    .CT-E18P-203 {
+        left: 16%;
+    }
+
+    .CT-E18P-204 {
+        left: 21.5%;
+    }
+
+    .CT-E18P-205 {
+        left: 27%;
+    }
+
+    .CT-E18P-206 {
+        left: 32%;
+    }
+
+    .CT-E18P-207 {
+        left: 38%;
+    }
+
+    .CT-E18P-208 {
+        left: 43%;
+    }
+
+    .CT-E18P-209 {
+        left: 48.5%;
+    }
+
+    .CT-E18P-210 {
+        left: 53.5%;
+    }
+
+    .CT-E18P-211 {
+        left: 58.5%;
+
+    }
+
+    .CT-E18P-212 {
+        left: 64%;
+    }
+
+    .CT-E18P-213 {
+        left: 70%;
+    }
+
+    .CT-E18P-214 {
+        left: 78.5%;
+    }
+
+    .CT-E18P-215 {
+        left: 86.5%;
+    }
+
+    .CT-E18P-216 {
+        left: 83%;
+    }
+
+    .CT-E18P-217 {
+        left: 73%;
+    }
+
+    .CT-E18P-218 {
+        left: 63%;
+    }
+
+    .CT-E18P-219 {
+        left: 54%;
+    }
+
+    .CT-E18P-220 {
+        left: 44%;
+    }
+
+    .CT-E18P-221 {
+        left: 37.5%;
+    }
+
+    .CT-E18P-222 {
+        left: 32%;
+    }
+
+    .CT-E18P-223 {
+        left: 27%;
+    }
+}
+
+/* iPhone 14/13 Pro/13/12 Pro/12- แนวนอน */
+@media (min-width: 390px) and (max-width: 844px) and (orientation: landscape) and (device-width: 844px) and (device-height: 390px) {
+    .img-floorplan {
+        width: 100%;
+        height: auto;
+    }
+
+    .box-booking {
+        width: 15px;
+        height: 15px;
+        border: 2px solid #fff;
+    }
+
+    .CT-E18P-201,
+    .CT-E18P-202 {
+        bottom: -237.5%;
+    }
+
+    .CT-E18P-203,
+    .CT-E18P-204,
+    .CT-E18P-205,
+    .CT-E18P-206,
+    .CT-E18P-207,
+    .CT-E18P-208,
+    .CT-E18P-209,
+    .CT-E18P-210,
+    .CT-E18P-211,
+    .CT-E18P-212,
+    .CT-E18P-213,
+    .CT-E18P-214,
+    .CT-E18P-215 {
+        bottom: -208%;
+    }
+
+    .CT-E18P-216,
+    .CT-E18P-217,
+    .CT-E18P-218,
+    .CT-E18P-219,
+    .CT-E18P-220 {
+        bottom: -219.5%;
+    }
+
+    .CT-E18P-221,
+    .CT-E18P-222,
+    .CT-E18P-223 {
+        bottom: -222%;
+    }
+
+    .CT-E18P-201 {
+        left: 22%;
+    }
+
+    .CT-E18P-202 {
+        left: 13%;
+    }
+
+    .CT-E18P-203 {
+        left: 18%;
+    }
+
+    .CT-E18P-204 {
         left: 23%;
     }
-    /****************** CT-E18P ******************/
+
+    .CT-E18P-205 {
+        left: 28%;
+    }
+
+    .CT-E18P-206 {
+        left: 33.5%;
+    }
+
+    .CT-E18P-207 {
+        left: 38%;
+    }
+
+    .CT-E18P-208 {
+        left: 43%;
+    }
+
+    .CT-E18P-209 {
+        left: 48.5%;
+    }
+
+    .CT-E18P-210 {
+        left: 53.5%;
+    }
+
+    .CT-E18P-211 {
+        left: 58.5%;
+
+    }
+
+    .CT-E18P-212 {
+        left: 64%;
+    }
+
+    .CT-E18P-213 {
+        left: 70%;
+    }
+
+    .CT-E18P-214 {
+        left: 78%;
+    }
+
+    .CT-E18P-215 {
+        left: 85.5%;
+    }
+
+    .CT-E18P-216 {
+        left: 83%;
+    }
+
+    .CT-E18P-217 {
+        left: 72%;
+    }
+
+    .CT-E18P-218 {
+        left: 63%;
+    }
+
+    .CT-E18P-219 {
+        left: 54%;
+    }
+
+    .CT-E18P-220 {
+        left: 46%;
+    }
+
+    .CT-E18P-221 {
+        left: 38.5%;
+    }
+
+    .CT-E18P-222 {
+        left: 33%;
+    }
+
+    .CT-E18P-223 {
+        left: 28%;
+    }
+}
+
+
+
+/* iPhone 7 Plus และ iPhone 8 Plus - แนวตั้ง */
+@media (device-width: 414px) and (device-height: 736px) and (orientation: portrait) {
+    .img-floorplan {
+        width: 100%;
+        height: auto;
+    }
+
+    .box-booking {
+        width: 12px;
+        height: 12px;
+        border: 2px solid #fff;
+    }
+
+    .CT-E18P-201,
+    .CT-E18P-202 {
+        bottom: -121.5%;
+    }
+
+    .CT-E18P-203,
+    .CT-E18P-204,
+    .CT-E18P-205,
+    .CT-E18P-206,
+    .CT-E18P-207,
+    .CT-E18P-208,
+    .CT-E18P-209,
+    .CT-E18P-210,
+    .CT-E18P-211,
+    .CT-E18P-212,
+    .CT-E18P-213,
+    .CT-E18P-214,
+    .CT-E18P-215 {
+        bottom: -113.5%;
+    }
+
+    .CT-E18P-216,
+    .CT-E18P-217,
+    .CT-E18P-218,
+    .CT-E18P-219,
+    .CT-E18P-220 {
+        bottom: -116.8%;
+    }
+
+    .CT-E18P-221,
+    .CT-E18P-222,
+    .CT-E18P-223 {
+        bottom: -117.5%;
+    }
+
+    .CT-E18P-201 {
+        left: 20%;
+    }
+
+    .CT-E18P-202 {
+        left: 11%;
+    }
+
+    .CT-E18P-203 {
+        left: 16%;
+    }
+
+    .CT-E18P-204 {
+        left: 21.5%;
+    }
+
+    .CT-E18P-205 {
+        left: 27%;
+    }
+
+    .CT-E18P-206 {
+        left: 32%;
+    }
+
+    .CT-E18P-207 {
+        left: 38%;
+    }
+
+    .CT-E18P-208 {
+        left: 43%;
+    }
+
+    .CT-E18P-209 {
+        left: 48.5%;
+    }
+
+    .CT-E18P-210 {
+        left: 53.5%;
+    }
+
+    .CT-E18P-211 {
+        left: 58.5%;
+
+    }
+
+    .CT-E18P-212 {
+        left: 64%;
+    }
+
+    .CT-E18P-213 {
+        left: 70%;
+    }
+
+    .CT-E18P-214 {
+        left: 78.5%;
+    }
+
+    .CT-E18P-215 {
+        left: 86.5%;
+    }
+
+    .CT-E18P-216 {
+        left: 83%;
+    }
+
+    .CT-E18P-217 {
+        left: 73%;
+    }
+
+    .CT-E18P-218 {
+        left: 63%;
+    }
+
+    .CT-E18P-219 {
+        left: 54%;
+    }
+
+    .CT-E18P-220 {
+        left: 44%;
+    }
+
+    .CT-E18P-221 {
+        left: 37.5%;
+    }
+
+    .CT-E18P-222 {
+        left: 32%;
+    }
+
+    .CT-E18P-223 {
+        left: 27%;
+    }
+}
+
+/* iPhone 7 Plus และ iPhone 8 Plus - แนวนอน */
+@media (min-width: 414px) and (max-width: 736px) and (orientation: landscape) and (device-width: 736px) and (device-height: 414px) {
+    .img-floorplan {
+        width: 100%;
+        height: auto;
+    }
+
+    .box-booking {
+        width: 12px;
+        height: 12px;
+        border: 2px solid #fff;
+    }
+
+    .CT-E18P-201,
+    .CT-E18P-202 {
+        bottom: -335.5%;
+    }
+
+    .CT-E18P-203,
+    .CT-E18P-204,
+    .CT-E18P-205,
+    .CT-E18P-206,
+    .CT-E18P-207,
+    .CT-E18P-208,
+    .CT-E18P-209,
+    .CT-E18P-210,
+    .CT-E18P-211,
+    .CT-E18P-212,
+    .CT-E18P-213,
+    .CT-E18P-214,
+    .CT-E18P-215 {
+        bottom: -316.5%;
+    }
+
+    .CT-E18P-216,
+    .CT-E18P-217,
+    .CT-E18P-218,
+    .CT-E18P-219,
+    .CT-E18P-220 {
+        bottom: -324%;
+    }
+
+    .CT-E18P-221,
+    .CT-E18P-222,
+    .CT-E18P-223 {
+        bottom: -325.5%;
+    }
+
+    .CT-E18P-201 {
+        left: 28%;
+    }
+
+    .CT-E18P-202 {
+        left: 21%;
+    }
+
+    .CT-E18P-203 {
+        left: 25%;
+    }
+
+    .CT-E18P-204 {
+        left: 29%;
+    }
+
+    .CT-E18P-205 {
+        left: 33%;
+    }
+
+    .CT-E18P-206 {
+        left: 37%;
+    }
+
+    .CT-E18P-207 {
+        left: 41%;
+    }
+
+    .CT-E18P-208 {
+        left: 45%;
+    }
+
+    .CT-E18P-209 {
+        left: 49%;
+    }
+
+    .CT-E18P-210 {
+        left: 53%;
+    }
+
+    .CT-E18P-211 {
+        left: 56.5%;
+
+    }
+
+    .CT-E18P-212 {
+        left: 60.5%;
+    }
+
+    .CT-E18P-213 {
+        left: 65.5%;
+    }
+
+    .CT-E18P-214 {
+        left: 71.5%;
+    }
+
+    .CT-E18P-215 {
+        left: 78%;
+    }
+
+    .CT-E18P-216 {
+        left: 76%;
+    }
+
+    .CT-E18P-217 {
+        left: 68%;
+    }
+
+    .CT-E18P-218 {
+        left: 60%;
+    }
+
+    .CT-E18P-219 {
+        left: 53.5%;
+    }
+
+    .CT-E18P-220 {
+        left: 46%;
+    }
+
+    .CT-E18P-221 {
+        left: 41%;
+    }
+
+    .CT-E18P-222 {
+        left: 37%;
+    }
+
+    .CT-E18P-223 {
+        left: 33%;
+    }
+}
+
+
+
+/* iPhone XR/11/11 Pro Max - แนวตั้ง */
+@media (device-width: 414px) and (device-height: 896px) and (orientation: portrait) {
+    .box-booking {
+        width: 12px;
+        height: 12px;
+        border: 2px solid #fff;
+    }
+
+    .CT-E18P-201,
+    .CT-E18P-202 {
+        bottom: -82%;
+    }
+
+    .CT-E18P-203,
+    .CT-E18P-204,
+    .CT-E18P-205,
+    .CT-E18P-206,
+    .CT-E18P-207,
+    .CT-E18P-208,
+    .CT-E18P-209,
+    .CT-E18P-210,
+    .CT-E18P-211,
+    .CT-E18P-212,
+    .CT-E18P-213,
+    .CT-E18P-214,
+    .CT-E18P-215 {
+        bottom: -75.5%;
+    }
+
+    .CT-E18P-216,
+    .CT-E18P-217,
+    .CT-E18P-218,
+    .CT-E18P-219,
+    .CT-E18P-220 {
+        bottom: -78%;
+    }
+
+    .CT-E18P-221,
+    .CT-E18P-222,
+    .CT-E18P-223 {
+        bottom: -78.5%;
+    }
+
+    .CT-E18P-201 {
+        left: 20%;
+    }
+
+    .CT-E18P-202 {
+        left: 12%;
+    }
+
+    .CT-E18P-203 {
+        left: 16%;
+    }
+
+    .CT-E18P-204 {
+        left: 21%;
+    }
+
+    .CT-E18P-205 {
+        left: 27%;
+    }
+
+    .CT-E18P-206 {
+        left: 32%;
+    }
+
+    .CT-E18P-207 {
+        left: 37%;
+    }
+
+    .CT-E18P-208 {
+        left: 43%;
+    }
+
+    .CT-E18P-209 {
+        left: 48%;
+    }
+
+    .CT-E18P-210 {
+        left: 53%;
+    }
+
+    .CT-E18P-211 {
+        left: 58.5%;
+
+    }
+
+    .CT-E18P-212 {
+        left: 64%;
+    }
+
+    .CT-E18P-213 {
+        left: 70%;
+    }
+
+    .CT-E18P-214 {
+        left: 79%;
+    }
+
+    .CT-E18P-215 {
+        left: 86.5%;
+    }
+
+    .CT-E18P-216 {
+        left: 84.5%;
+    }
+
+    .CT-E18P-217 {
+        left: 72%;
+    }
+
+    .CT-E18P-218 {
+        left: 63%;
+    }
+
+    .CT-E18P-219 {
+        left: 54%;
+    }
+
+    .CT-E18P-220 {
+        left: 45%;
+    }
+
+    .CT-E18P-221 {
+        left: 37%;
+    }
+
+    .CT-E18P-222 {
+        left: 32%;
+    }
+
+    .CT-E18P-223 {
+        left: 27%;
+    }
+}
+
+/* iPhone XR/11/11 Pro Max - แนวนอน */
+@media (min-width: 414px) and (max-width: 896px) and (orientation: landscape) and (device-width: 896px) and (device-height: 414px) {
+    .img-floorplan {
+        width: 100%;
+        height: auto;
+    }
+
+    .box-booking {
+        width: 15px;
+        height: 15px;
+    }
+
+    .CT-E18P-201,
+    .CT-E18P-202 {
+        bottom: -218%;
+    }
+
+    .CT-E18P-203,
+    .CT-E18P-204,
+    .CT-E18P-205,
+    .CT-E18P-206,
+    .CT-E18P-207,
+    .CT-E18P-208,
+    .CT-E18P-209,
+    .CT-E18P-210,
+    .CT-E18P-211,
+    .CT-E18P-212,
+    .CT-E18P-213,
+    .CT-E18P-214,
+    .CT-E18P-215 {
+        bottom: -189.5%;
+    }
+
+    .CT-E18P-216,
+    .CT-E18P-217,
+    .CT-E18P-218,
+    .CT-E18P-219,
+    .CT-E18P-220 {
+        bottom: -201.5%;
+    }
+
+    .CT-E18P-221,
+    .CT-E18P-222,
+    .CT-E18P-223 {
+        bottom: -203%;
+    }
+
+    .CT-E18P-201 {
+        left: 23%;
+    }
+
+    .CT-E18P-202 {
+        left: 15%;
+    }
+
+    .CT-E18P-203 {
+        left: 20%;
+    }
+
+    .CT-E18P-204 {
+        left: 25%;
+    }
+
+    .CT-E18P-205 {
+        left: 29%;
+    }
+
+    .CT-E18P-206 {
+        left: 34%;
+    }
+
+    .CT-E18P-207 {
+        left: 38.5%;
+    }
+
+    .CT-E18P-208 {
+        left: 43.5%;
+    }
+
+    .CT-E18P-209 {
+        left: 48.5%;
+    }
+
+    .CT-E18P-210 {
+        left: 53%;
+    }
+
+    .CT-E18P-211 {
+        left: 58.5%;
+
+    }
+
+    .CT-E18P-212 {
+        left: 64%;
+    }
+
+    .CT-E18P-213 {
+        left: 69%;
+    }
+
+    .CT-E18P-214 {
+        left: 76%;
+    }
+
+    .CT-E18P-215 {
+        left: 84%;
+    }
+
+    .CT-E18P-216 {
+        left: 81%;
+    }
+
+    .CT-E18P-217 {
+        left: 71%;
+    }
+
+    .CT-E18P-218 {
+        left: 62%;
+    }
+
+    .CT-E18P-219 {
+        left: 54%;
+    }
+
+    .CT-E18P-220 {
+        left: 45%;
+    }
+
+    .CT-E18P-221 {
+        left: 39%;
+    }
+
+    .CT-E18P-222 {
+        left: 34%;
+    }
+
+    .CT-E18P-223 {
+        left: 29.5%;
+    }
+}
+
+
+
+/* iPhone 14 Pro - แนวตั้ง */
+@media (device-width: 393px) and (device-height: 852px) and (orientation: portrait) {
+    .img-floorplan {
+        width: 100%;
+        height: auto;
+    }
+
+    .box-booking {
+        width: 12px;
+        height: 12px;
+        border: 2px solid #fff;
+    }
+
+    .CT-E18P-201,
+    .CT-E18P-202 {
+        bottom: -91%;
+    }
+
+    .CT-E18P-203,
+    .CT-E18P-204,
+    .CT-E18P-205,
+    .CT-E18P-206,
+    .CT-E18P-207,
+    .CT-E18P-208,
+    .CT-E18P-209,
+    .CT-E18P-210,
+    .CT-E18P-211,
+    .CT-E18P-212,
+    .CT-E18P-213,
+    .CT-E18P-214,
+    .CT-E18P-215 {
+        bottom: -84.5%;
+    }
+
+    .CT-E18P-216,
+    .CT-E18P-217,
+    .CT-E18P-218,
+    .CT-E18P-219,
+    .CT-E18P-220 {
+        bottom: -87.2%;
+    }
+
+    .CT-E18P-221,
+    .CT-E18P-222,
+    .CT-E18P-223 {
+        bottom: -88%;
+    }
+}
+
+/* iPhone 14 Pro - แนวนอน */
+@media (min-width: 393px) and (max-width: 852px) and (orientation: landscape) and (aspect-ratio: 852/393) {
+    .img-floorplan {
+        width: 100%;
+        height: auto;
+    }
+
+    .box-booking {
+        width: 15px;
+        height: 15px;
+    }
+
+    .CT-E18P-201,
+    .CT-E18P-202 {
+        bottom: -235.5%;
+    }
+
+    .CT-E18P-203,
+    .CT-E18P-204,
+    .CT-E18P-205,
+    .CT-E18P-206,
+    .CT-E18P-207,
+    .CT-E18P-208,
+    .CT-E18P-209,
+    .CT-E18P-210,
+    .CT-E18P-211,
+    .CT-E18P-212,
+    .CT-E18P-213,
+    .CT-E18P-214,
+    .CT-E18P-215 {
+        bottom: -205%;
+    }
+
+    .CT-E18P-216,
+    .CT-E18P-217,
+    .CT-E18P-218,
+    .CT-E18P-219,
+    .CT-E18P-220 {
+        bottom: -218%;
+    }
+
+    .CT-E18P-221,
+    .CT-E18P-222,
+    .CT-E18P-223 {
+        bottom: -220%;
+    }
+
+    .CT-E18P-201 {
+        left: 23.5%;
+    }
+
+    .CT-E18P-202 {
+        left: 13%;
+    }
+
+    .CT-E18P-203 {
+        left: 18.2%;
+    }
+
+    .CT-E18P-204 {
+        left: 23.5%;
+    }
+
+    .CT-E18P-205 {
+        left: 28.5%;
+    }
+
+    .CT-E18P-206 {
+        left: 33.5%;
+    }
+
+    .CT-E18P-207 {
+        left: 38.5%;
+    }
+
+    .CT-E18P-208 {
+        left: 43.5%;
+    }
+
+    .CT-E18P-209 {
+        left: 48.5%;
+    }
+
+    .CT-E18P-210 {
+        left: 53.5%;
+    }
+
+    .CT-E18P-211 {
+        left: 58.5%;
+
+    }
+
+    .CT-E18P-212 {
+        left: 63.5%;
+    }
+
+    .CT-E18P-213 {
+        left: 70%;
+    }
+
+    .CT-E18P-214 {
+        left: 77.5%;
+    }
+
+    .CT-E18P-215 {
+        left: 85%;
+    }
+
+    .CT-E18P-216 {
+        left: 83%;
+    }
+
+    .CT-E18P-217 {
+        left: 71.5%;
+    }
+
+    .CT-E18P-218 {
+        left: 63%;
+    }
+
+    .CT-E18P-219 {
+        left: 55%;
+    }
+
+    .CT-E18P-220 {
+        left: 45.5%;
+    }
+
+    .CT-E18P-221 {
+        left: 38.5%;
+    }
+
+    .CT-E18P-222 {
+        left: 33.5%;
+    }
+
+    .CT-E18P-223 {
+        left: 28%;
+    }
+}
+
+
+
+/* iPhone 13 Pro Max - แนวตั้ง */
+@media (device-width: 430px) and (device-height: 926px) and (orientation: portrait) {
+    .img-floorplan {
+        width: 100%;
+        height: auto;
+    }
+
+    .box-booking {
+        width: 12px;
+        height: 12px;
+        border: 2px solid #fff;
+    }
+
+    .CT-E18P-201,
+    .CT-E18P-202 {
+        bottom: -78.5%;
+    }
+
+    .CT-E18P-203,
+    .CT-E18P-204,
+    .CT-E18P-205,
+    .CT-E18P-206,
+    .CT-E18P-207,
+    .CT-E18P-208,
+    .CT-E18P-209,
+    .CT-E18P-210,
+    .CT-E18P-211,
+    .CT-E18P-212,
+    .CT-E18P-213,
+    .CT-E18P-214,
+    .CT-E18P-215 {
+        bottom: -72%;
+    }
+
+    .CT-E18P-216,
+    .CT-E18P-217,
+    .CT-E18P-218,
+    .CT-E18P-219,
+    .CT-E18P-220 {
+        bottom: -74.5%;
+    }
+
+    .CT-E18P-221,
+    .CT-E18P-222,
+    .CT-E18P-223 {
+        bottom: -75%;
+    }
+}
+
+/* iPhone 13 Pro Max - แนวนอน */
+@media (min-width: 430px) and (max-width: 926px) and (orientation: landscape) and (device-width: 926px) and (device-height: 430px) {
+    .img-floorplan {
+        width: 100%;
+        height: auto;
+    }
+
+    .box-booking {
+        width: 15px;
+        height: 15px;
+    }
+
+    .CT-E18P-201,
+    .CT-E18P-202 {
+        bottom: -206.5%;
+    }
+
+    .CT-E18P-203,
+    .CT-E18P-204,
+    .CT-E18P-205,
+    .CT-E18P-206,
+    .CT-E18P-207,
+    .CT-E18P-208,
+    .CT-E18P-209,
+    .CT-E18P-210,
+    .CT-E18P-211,
+    .CT-E18P-212,
+    .CT-E18P-213,
+    .CT-E18P-214,
+    .CT-E18P-215 {
+        bottom: -180%;
+    }
+
+    .CT-E18P-216,
+    .CT-E18P-217,
+    .CT-E18P-218,
+    .CT-E18P-219,
+    .CT-E18P-220 {
+        bottom: -190%;
+    }
+
+    .CT-E18P-221,
+    .CT-E18P-222,
+    .CT-E18P-223 {
+        bottom: -192%;
+    }
+
+    .CT-E18P-201 {
+        left: 24%;
+    }
+
+    .CT-E18P-202 {
+        left: 16%;
+    }
+
+    .CT-E18P-203 {
+        left: 21%;
+    }
+
+    .CT-E18P-204 {
+        left: 26%;
+    }
+
+    .CT-E18P-205 {
+        left: 30%;
+    }
+
+    .CT-E18P-206 {
+        left: 35%;
+    }
+
+    .CT-E18P-207 {
+        left: 39.5%;
+    }
+
+    .CT-E18P-208 {
+        left: 44%;
+    }
+
+    .CT-E18P-209 {
+        left: 48.5%;
+    }
+
+    .CT-E18P-210 {
+        left: 53.5%;
+    }
+
+    .CT-E18P-211 {
+        left: 57.5%;
+
+    }
+
+    .CT-E18P-212 {
+        left: 63%;
+    }
+
+    .CT-E18P-213 {
+        left: 68%;
+    }
+
+    .CT-E18P-214 {
+        left: 75.5%;
+    }
+
+    .CT-E18P-215 {
+        left: 82.5%;
+    }
+
+    .CT-E18P-216 {
+        left: 81%;
+    }
+
+    .CT-E18P-217 {
+        left: 70.5%;
+    }
+
+    .CT-E18P-218 {
+        left: 62%;
+    }
+
+    .CT-E18P-219 {
+        left: 54%;
+    }
+
+    .CT-E18P-220 {
+        left: 46%;
+    }
+
+    .CT-E18P-221 {
+        left: 40.5%;
+    }
+
+    .CT-E18P-222 {
+        left: 35%;
+    }
+
+    .CT-E18P-223 {
+        left: 30%;
+    }
+}
+
+
+
+/* iPhone 14 Pro Max - แนวตั้ง */
+@media (device-width: 430px) and (device-height: 932px) and (orientation: portrait) {
+
+    .CT-E18P-201,
+    .CT-E18P-202 {
+        bottom: -77.5%;
+    }
+
+    .CT-E18P-203,
+    .CT-E18P-204,
+    .CT-E18P-205,
+    .CT-E18P-206,
+    .CT-E18P-207,
+    .CT-E18P-208,
+    .CT-E18P-209,
+    .CT-E18P-210,
+    .CT-E18P-211,
+    .CT-E18P-212,
+    .CT-E18P-213,
+    .CT-E18P-214,
+    .CT-E18P-215 {
+        bottom: -70.5%;
+    }
+
+    .CT-E18P-216,
+    .CT-E18P-217,
+    .CT-E18P-218,
+    .CT-E18P-219,
+    .CT-E18P-220 {
+        bottom: -73.5%;
+    }
+
+    .CT-E18P-221,
+    .CT-E18P-222,
+    .CT-E18P-223 {
+        bottom: -74%;
+    }
+}
+
+/* iPhone 14 Pro Max - แนวนอน */
+@media (min-width: 430px) and (max-width: 932px) and (orientation: landscape) and (device-width: 932px) and (device-height: 430px) {
+    .img-floorplan {
+        width: 100%;
+        height: auto;
+    }
+
+    .box-booking {
+        width: 15px;
+        height: 15px;
+    }
+
+    .CT-E18P-201,
+    .CT-E18P-202 {
+        bottom: -206.5%;
+    }
+
+    .CT-E18P-203,
+    .CT-E18P-204,
+    .CT-E18P-205,
+    .CT-E18P-206,
+    .CT-E18P-207,
+    .CT-E18P-208,
+    .CT-E18P-209,
+    .CT-E18P-210,
+    .CT-E18P-211,
+    .CT-E18P-212,
+    .CT-E18P-213,
+    .CT-E18P-214,
+    .CT-E18P-215 {
+        bottom: -180%;
+    }
+
+    .CT-E18P-216,
+    .CT-E18P-217,
+    .CT-E18P-218,
+    .CT-E18P-219,
+    .CT-E18P-220 {
+        bottom: -190%;
+    }
+
+    .CT-E18P-221,
+    .CT-E18P-222,
+    .CT-E18P-223 {
+        bottom: -192%;
+    }
+
+    .CT-E18P-201 {
+        left: 24%;
+    }
+
+    .CT-E18P-202 {
+        left: 16%;
+    }
+
+    .CT-E18P-203 {
+        left: 21%;
+    }
+
+    .CT-E18P-204 {
+        left: 26%;
+    }
+
+    .CT-E18P-205 {
+        left: 30%;
+    }
+
+    .CT-E18P-206 {
+        left: 35%;
+    }
+
+    .CT-E18P-207 {
+        left: 39.5%;
+    }
+
+    .CT-E18P-208 {
+        left: 44%;
+    }
+
+    .CT-E18P-209 {
+        left: 48.5%;
+    }
+
+    .CT-E18P-210 {
+        left: 53.5%;
+    }
+
+    .CT-E18P-211 {
+        left: 57.5%;
+
+    }
+
+    .CT-E18P-212 {
+        left: 63%;
+    }
+
+    .CT-E18P-213 {
+        left: 68%;
+    }
+
+    .CT-E18P-214 {
+        left: 75.5%;
+    }
+
+    .CT-E18P-215 {
+        left: 82.5%;
+    }
+
+    .CT-E18P-216 {
+        left: 81%;
+    }
+
+    .CT-E18P-217 {
+        left: 70.5%;
+    }
+
+    .CT-E18P-218 {
+        left: 62%;
+    }
+
+    .CT-E18P-219 {
+        left: 54%;
+    }
+
+    .CT-E18P-220 {
+        left: 46%;
+    }
+
+    .CT-E18P-221 {
+        left: 40.5%;
+    }
+
+    .CT-E18P-222 {
+        left: 35%;
+    }
+
+    .CT-E18P-223 {
+        left: 30%;
+    }
 }
 
 
 
 /* iPad Mini แนวตั้ง */
-@media (min-width: 768px) and (max-width: 1023.99px) {
-    .ready2move,
-    .newproject {
-        width: 70%;
-    }
-
-    .box-facility {
-        padding-left: 0;
-    }
-
-    .img-floorplan {
-        width: 100%;
-    }
-
+@media (min-width: 768px) and (max-width: 1080px) and (orientation: portrait) {
     .box-booking {
-        width: 20px;
-        height: 20px;
+        width: 15px;
+        height: 15px;
     }
 
-    /****************** CT-E18P ******************/
-    .CT-E18P-201 {
+    .CT-E18P-201,
+    .CT-E18P-202 {
         bottom: -28.5%;
-        left: 19%;
+    }
+
+    .CT-E18P-203,
+    .CT-E18P-204,
+    .CT-E18P-205,
+    .CT-E18P-206,
+    .CT-E18P-207,
+    .CT-E18P-208,
+    .CT-E18P-209,
+    .CT-E18P-210,
+    .CT-E18P-211,
+    .CT-E18P-212,
+    .CT-E18P-213,
+    .CT-E18P-214,
+    .CT-E18P-215 {
+        bottom: -17%;
+    }
+
+    .CT-E18P-216,
+    .CT-E18P-217,
+    .CT-E18P-218,
+    .CT-E18P-219,
+    .CT-E18P-220 {
+        bottom: -21.5%;
+    }
+
+    .CT-E18P-221,
+    .CT-E18P-222,
+    .CT-E18P-223 {
+        bottom: -22.5%;
+    }
+
+    .CT-E18P-201 {
+        left: 20%;
     }
 
     .CT-E18P-202 {
-        bottom: -28.5%;
-        left: 9.5%;
+        left: 10%;
     }
 
     .CT-E18P-203 {
-        bottom: -17.5%;
         left: 15%;
     }
 
     .CT-E18P-204 {
-        bottom: -17.5%;
         left: 20%;
     }
 
     .CT-E18P-205 {
-        bottom: -17.5%;
         left: 26%;
     }
 
     .CT-E18P-206 {
-        bottom: -17.5%;
-        left: 31.5%;
+        left: 32%;
     }
 
     .CT-E18P-207 {
-        bottom: -17.5%;
         left: 37%;
     }
 
     .CT-E18P-208 {
-        bottom: -17.5%;
-        left: 42.5%
+        left: 43%;
     }
 
     .CT-E18P-209 {
-        bottom: -17.5%;
         left: 48.5%;
     }
 
     .CT-E18P-210 {
-        bottom: -17.5%;
-        left: 54.5%;
+        left: 54%;
     }
 
     .CT-E18P-211 {
-        bottom: -17.5%;
         left: 59.5%;
+
     }
 
     .CT-E18P-212 {
-        bottom: -17.5%;
         left: 65%;
     }
 
     .CT-E18P-213 {
-        bottom: -17.5%;
         left: 72%;
     }
 
     .CT-E18P-214 {
-        bottom: -17.5%;
         left: 81%;
     }
 
     .CT-E18P-215 {
-        bottom: -17.5%;
         left: 89%;
     }
 
     .CT-E18P-216 {
-        bottom: -22%;
         left: 87%;
     }
 
     .CT-E18P-217 {
-        bottom: -22%;
-        left: 72%;
+        left: 74%;
     }
 
     .CT-E18P-218 {
-        bottom: -22%;
-        left: 63%;
+        left: 65%;
     }
 
     .CT-E18P-219 {
-        bottom: -22%;
-        left: 54.5%;
+        left: 56%;
     }
 
     .CT-E18P-220 {
-        bottom: -22%;
-        left: 45.5%;
+        left: 46%;
     }
 
     .CT-E18P-221 {
-        bottom: -23%;
-        left: 37%
+        left: 38%;
     }
 
     .CT-E18P-222 {
-        bottom: -23%;
         left: 32%;
     }
 
     .CT-E18P-223 {
-        bottom: -23%;
         left: 26%;
     }
-    /****************** CT-E18P ******************/
+}
+
+/* iPad Mini แนวนอน */
+@media (min-width: 768px) and (max-width: 1080px) and (orientation: landscape) {
+    .img-floorplan {
+        width: 100%;
+        height: auto;
+    }
+
+    .CT-E18P-201,
+    .CT-E18P-202 {
+        bottom: -78%;
+    }
+
+    .CT-E18P-203,
+    .CT-E18P-204,
+    .CT-E18P-205,
+    .CT-E18P-206,
+    .CT-E18P-207,
+    .CT-E18P-208,
+    .CT-E18P-209,
+    .CT-E18P-210,
+    .CT-E18P-211,
+    .CT-E18P-212,
+    .CT-E18P-213,
+    .CT-E18P-214,
+    .CT-E18P-215 {
+        bottom: -58.5%;
+    }
+
+    .CT-E18P-216,
+    .CT-E18P-217,
+    .CT-E18P-218,
+    .CT-E18P-219,
+    .CT-E18P-220 {
+        bottom: -66.5%;
+    }
+
+    .CT-E18P-221,
+    .CT-E18P-222,
+    .CT-E18P-223 {
+        bottom: -68%;
+    }
+
+    .CT-E18P-201 {
+        left: 19%;
+    }
+
+    .CT-E18P-202 {
+        left: 9%;
+    }
+
+    .CT-E18P-203 {
+        left: 14%;
+    }
+
+    .CT-E18P-204 {
+        left: 20%;
+    }
+
+    .CT-E18P-205 {
+        left: 26%;
+    }
+
+    .CT-E18P-206 {
+        left: 31.5%;
+    }
+
+    .CT-E18P-207 {
+        left: 37.5%;
+    }
+
+    .CT-E18P-208 {
+        left: 43%;
+    }
+
+    .CT-E18P-209 {
+        left: 48.5%;
+    }
+
+    .CT-E18P-210 {
+        left: 54%;
+    }
+
+    .CT-E18P-211 {
+        left: 60%;
+
+    }
+
+    .CT-E18P-212 {
+        left: 65%;
+    }
+
+    .CT-E18P-213 {
+        left: 72%;
+    }
+
+    .CT-E18P-214 {
+        left: 81%;
+    }
+
+    .CT-E18P-215 {
+        left: 90%;
+    }
+
+    .CT-E18P-216 {
+        left: 87%;
+    }
+
+    .CT-E18P-217 {
+        left: 75%;
+    }
+
+    .CT-E18P-218 {
+        left: 64%;
+    }
+
+    .CT-E18P-219 {
+        left: 55%;
+    }
+
+    .CT-E18P-220 {
+        left: 46%;
+    }
+
+    .CT-E18P-221 {
+        left: 37%;
+    }
+
+    .CT-E18P-222 {
+        left: 32%;
+    }
+
+    .CT-E18P-223 {
+        left: 26%;
+    }
 }
 
 
 
 /* iPad Air แนวตั้ง */
-@media (min-width: 820px) and (max-width: 1180.01px)  {
-    .ready2move,
-    .newproject {
-        width: 70%;
-    }
-
-    .box-facility {
-        padding-left: 0;
-    }
-
-    .img-floorplan {
-        width: 100%;
-    }
-
+@media (min-width: 820px) and (max-width: 1180px) and (orientation: portrait) {
     .box-booking {
-        width: 20px;
-        height: 20px;
+        width: 15px;
+        height: 15px;
     }
 
-    /****************** CT-E18P ******************/
-    .CT-E18P-201 {
-        bottom: -11.5%;
-        left: 20%;
-    }
-
+    .CT-E18P-201,
     .CT-E18P-202 {
         bottom: -11.5%;
-        left: 11%;
+    }
+
+    .CT-E18P-203,
+    .CT-E18P-204,
+    .CT-E18P-205,
+    .CT-E18P-206,
+    .CT-E18P-207,
+    .CT-E18P-208,
+    .CT-E18P-209,
+    .CT-E18P-210,
+    .CT-E18P-211,
+    .CT-E18P-212,
+    .CT-E18P-213,
+    .CT-E18P-214,
+    .CT-E18P-215 {
+        bottom: -2%;
+    }
+
+    .CT-E18P-216,
+    .CT-E18P-217,
+    .CT-E18P-218,
+    .CT-E18P-219,
+    .CT-E18P-220 {
+        bottom: -5.5%;
+    }
+
+    .CT-E18P-221,
+    .CT-E18P-222,
+    .CT-E18P-223 {
+        bottom: -6.5%;
     }
 
     .CT-E18P-203 {
-        bottom: -2%;
-        left: 16%;
+        left: 16.5%;
     }
 
     .CT-E18P-204 {
-        bottom: -2%;
-        left: 21%;
+        left: 22%;
     }
-
-    .CT-E18P-205 {
-        bottom: -2%;
-        left: 26.5%;
-    }
-
-    .CT-E18P-206 {
-        bottom: -2%;
-        left: 32.5%;
-    }
-
-    .CT-E18P-207 {
-        bottom: -2%;
-        left: 37.5%;
-    }
-
-    .CT-E18P-208 {
-        bottom: -2%;
-        left: 42.5%;
-    }
-
-    .CT-E18P-209 {
-        bottom: -2%;
-        left: 48.5%;
-    }
-
-    .CT-E18P-210 {
-        bottom: -2%;
-        left: 53%;
-    }
-
-    .CT-E18P-211 {
-        bottom: -2%;
-        left: 58.5%;
-    }
-
-    .CT-E18P-212 {
-        bottom: -2%;
-        left: 64%;
-    }
-
-    .CT-E18P-213 {
-        bottom: -2%;
-        left: 70.5%;
-    }
-
-    .CT-E18P-214 {
-        bottom: -2%;
-        left: 79%;
-    }
-
-    .CT-E18P-215 {
-        bottom: -2%;
-        left: 87%;
-    }
-
-    .CT-E18P-216 {
-        bottom: -6%;
-        left: 85%;
-    }
-
-    .CT-E18P-217 {
-        bottom: -6%;
-        left: 73%;
-    }
-
-    .CT-E18P-218 {
-        bottom: -6%;
-        left: 64%;
-    }
-
-    .CT-E18P-219 {
-        bottom: -6%;
-        left: 54.5%;
-    }
-
-    .CT-E18P-220 {
-        bottom: -6%;
-        left: 45%;
-    }
-
-    .CT-E18P-221 {
-        bottom: -6.5%;
-        left: 38%;
-    }
-
-    .CT-E18P-222 {
-        bottom: -6.5%;
-        left: 32.5%;
-    }
-
-    .CT-E18P-223 {
-        bottom: -6.5%;
-        left: 27%;
-    }
-    /****************** CT-E18P ******************/
 }
 
-
-
-/* iPad Mini แนวนอน */
-@media (min-width: 1024px) and (max-width: 1112px) {
-
-    .ready2move,
-    .newproject {
-        width: 70%;
-    }
-
-    .box-facility {
-        padding-left: 0;
-    }
-
+/* iPad Air แนวนอน */
+@media (min-width: 820px) and (max-width: 1180px) and (orientation: landscape) and (device-width: 1180px) and (device-height: 820px) {
     .img-floorplan {
         width: 100%;
+        height: auto;
     }
 
-    .box-booking {
-        width: 20px;
-        height: 20px;
-    }
-
-    /****************** CT-E18P ******************/
-    .CT-E18P-201 {
-        bottom: -90.5% !important;
-    }
-
+    .CT-E18P-201,
     .CT-E18P-202 {
-        bottom: -90.5% !important;
+        bottom: -68%;
     }
 
-    .CT-E18P-203 {
+    .CT-E18P-203,
+    .CT-E18P-204,
+    .CT-E18P-205,
+    .CT-E18P-206,
+    .CT-E18P-207,
+    .CT-E18P-208,
+    .CT-E18P-209,
+    .CT-E18P-210,
+    .CT-E18P-211,
+    .CT-E18P-212,
+    .CT-E18P-213,
+    .CT-E18P-214,
+    .CT-E18P-215 {
+        bottom: -48.5%;
+    }
+
+    .CT-E18P-216,
+    .CT-E18P-217,
+    .CT-E18P-218,
+    .CT-E18P-219,
+    .CT-E18P-220 {
+        bottom: -56%;
+    }
+
+    .CT-E18P-221,
+    .CT-E18P-222,
+    .CT-E18P-223 {
         bottom: -58%;
     }
 
-    .CT-E18P-204 {
-        bottom: -58% !important;;
-    }
-
-    .CT-E18P-205 {
-        bottom: -70% !important;
-    }
-
-    .CT-E18P-206 {
-        bottom: -70% !important;
-    }
-
-    .CT-E18P-207 {
-        bottom: -70% !important;
-    }
-
-    .CT-E18P-208 {
-        bottom: -70% !important;
-    }
-
-    .CT-E18P-209 {
-        bottom: -70% !important;
-    }
-
-    .CT-E18P-210 {
-        bottom: -70% !important;
-    }
-
-    .CT-E18P-211 {
-        bottom: -70% !important;
-    }
-
-    .CT-E18P-212 {
-        bottom: -70% !important;
-    }
-
-    .CT-E18P-213 {
-        bottom: -70% !important;
-    }
-
-    .CT-E18P-214 {
-        bottom: -70% !important;
-    }
-
-    .CT-E18P-215 {
-        bottom: -70% !important;
-    }
-
-    .CT-E18P-216 {
-        bottom: -78% !important;
-    }
-
-    .CT-E18P-217 {
-        bottom: -78% !important;
-    }
-
-    .CT-E18P-218 {
-        bottom: -78% !important;
-    }
-
-    .CT-E18P-219 {
-        bottom: -78% !important;
-    }
-
-    .CT-E18P-220 {
-        bottom: -78% !important;
-    }
-
-    .CT-E18P-221 {
-        bottom: -80% !important;
-    }
-
-    .CT-E18P-222 {
-        bottom: -80% !important;
-    }
-
-    .CT-E18P-223 {
-        bottom: -80% !important;
-    }
-    /****************** CT-E18P ******************/
-}
-
-
-
-/* iPad Pro แนวตั้ง*/
-@media (min-width: 1024px) and (max-width: 1365.98px) {
-    .ready2move,
-    .newproject {
-        width: 70%;
-    }
-
-    .box-facility {
-        padding-left: 0;
-    }
-
-    .img-floorplan {
-        width: 100%;
-    }
-
-    .box-booking {
-        width: 20px;
-        height: 20px;
-    }
-
-    /****************** CT-E18P ******************/
     .CT-E18P-201 {
-        bottom: 0% !important;
-        left: 18%!important;
-    }
-
-    .CT-E18P-202 {
-        bottom: 0% !important;
-        left: 8.5%!important;
-    }
-
-    .CT-E18P-203 {
-        bottom: 11%;
-        left: 14%;
-    }
-
-    .CT-E18P-204 {
-        bottom: 11% !important;
-        left: 20%;
-    }
-
-    .CT-E18P-205 {
-        bottom: 11% !important;
-        left: 25.5%;
-    }
-
-    .CT-E18P-206 {
-        bottom: 11% !important;
-        left: 31.5%;
-    }
-
-    .CT-E18P-207 {
-        bottom: 11% !important;
-        left: 37%;
-    }
-
-    .CT-E18P-208 {
-        bottom: 11% !important;
-        left: 42.5%;
-    }
-
-    .CT-E18P-209 {
-        bottom: 11% !important;
-        left: 48.5%;
-    }
-
-    .CT-E18P-210 {
-        bottom: 11% !important;
-        left: 54%;
-    }
-
-    .CT-E18P-211 {
-        bottom: 11% !important;
-        left: 59.5%;
-    }
-
-    .CT-E18P-212 {
-        bottom: 11% !important;
-        left: 65%;
-    }
-
-    .CT-E18P-213 {
-        bottom: 11% !important;
-        left: 73%;
-    }
-
-    .CT-E18P-214 {
-        bottom: 11% !important;
-        left: 81%;
-    }
-
-    .CT-E18P-215 {
-        bottom: 11% !important;
-        left: 90%;
-    }
-
-    .CT-E18P-216 {
-        bottom: 6.5% !important;
-        left: 88%;
-    }
-
-    .CT-E18P-217 {
-        bottom: 6.5% !important;
-        left: 75%;
-    }
-
-    .CT-E18P-218 {
-        bottom: 6.5% !important;
-    }
-
-    .CT-E18P-219 {
-        bottom: 6.5% !important;
-    }
-
-    .CT-E18P-220 {
-        bottom: 6.5% !important;
-    }
-
-    .CT-E18P-221 {
-        bottom: 5.5% !important;
-        left: 37%;
-    }
-
-    .CT-E18P-222 {
-        bottom: 5.5% !important;
-        left: 31.5%;
-    }
-
-    .CT-E18P-223 {
-        bottom: 5.5% !important;
-        left: 25.5%;
-    }
-    /****************** CT-E18P ******************/
-}
-
-
-
-/* iPad Air แนวนอน */
-@media (min-width: 1180px) and (max-width: 1359.99px) {
-    .ready2move,
-    .newproject {
-        width: 70%;
-    }
-
-    .box-facility {
-        padding-left: 0;
-    }
-
-    .img-floorplan {
-        width: 100%;
-    }
-
-    /****************** CT-E18P ******************/
-    .CT-E18P-201 {
-        bottom: -78% !important;
-        left: 22% !important;
-    }
-
-    .CT-E18P-202 {
-        bottom: -78% !important;
-        left: 14% !important;
-    }
-
-    .CT-E18P-203 {
-        bottom: -59.5% !important;
-        left: 19% !important;
-    }
-
-    .CT-E18P-204 {
-        bottom: -59.5% !important;
-        left: 23.5% !important;
-    }
-
-    .CT-E18P-205 {
-        bottom: -59.5% !important;
-        left: 29% !important;
-    }
-
-    .CT-E18P-206 {
-        bottom: -59.5% !important;
-        left: 33.5% !important;
-    }
-
-    .CT-E18P-207 {
-        bottom: -59.5% !important;
-        left: 39% !important;
-    }
-
-    .CT-E18P-208 {
-        bottom: -59.5% !important;
-        left: 43.5% !important;
-    }
-
-    .CT-E18P-209 {
-        bottom: -59.5% !important;
-        left: 48.5% !important;
-    }
-
-    .CT-E18P-210 {
-        bottom: -59.5% !important;
-        left: 53.5% !important;
-    }
-
-    .CT-E18P-211 {
-        bottom: -59.5% !important;
-        left: 58.5% !important;
-    }
-
-    .CT-E18P-212 {
-        bottom: -59.5% !important;
-        left: 63.5% !important;
-    }
-
-    .CT-E18P-213 {
-        bottom: -59.5% !important;
-        left: 69.5% !important;
-    }
-
-    .CT-E18P-214 {
-        bottom: -59.5% !important;
-        left: 77% !important;
-    }
-
-    .CT-E18P-215 {
-        bottom: -59.5% !important;
-        left: 84% !important;
-    }
-
-    .CT-E18P-216 {
-        bottom: -67% !important;
-        left: 83% !important;
-
-    }
-
-    .CT-E18P-217 {
-        bottom: -67% !important;
-        left: 72% !important;
-    }
-
-    .CT-E18P-218 {
-        bottom: -67% !important;
-        left: 63% !important;
-    }
-
-    .CT-E18P-219 {
-        bottom: -67% !important;
-        left: 54.5% !important;
-    }
-
-    .CT-E18P-220 {
-        bottom: -67% !important;
-        left: 45.5% !important;
-    }
-
-    .CT-E18P-221 {
-        bottom: -69% !important;
-        left: 39% !important;
-    }
-
-    .CT-E18P-222 {
-        bottom: -69% !important;
-        left: 33.5% !important;
-    }
-
-    .CT-E18P-223 {
-        bottom: -69% !important;
-        left: 28.5% !important;
-    }
-    /****************** CT-E18P ******************/
-}
-
-
-
-/* iPad Pro แนวนอน */
-@media (min-width: 1366.01px) {
-    .ready2move,
-    .newproject {
-        width: 70%;
-    }
-
-    .box-facility {
-        padding-left: 0;
-    }
-
-    .img-floorplan {
-        width: 100%;
-    }
-
-
-    /****************** CT-E18P ******************/
-    .CT-E18P-201 {
-        bottom: -40%;
         left: 22%;
     }
 
     .CT-E18P-202 {
-        bottom: -40%;
-        left: 13.5%;
+        left: 14%;
     }
 
     .CT-E18P-203 {
-        bottom: -22.5%;
-        left: 18%;
+        left: 19%;
     }
 
     .CT-E18P-204 {
-        bottom: -22.5%;
-        left: 23%;
+        left: 24%;
     }
 
     .CT-E18P-205 {
-        bottom: -22.5%;
-        left: 28%;
+        left: 29%;
     }
 
     .CT-E18P-206 {
-        bottom: -22.5%;
         left: 33.5%;
     }
 
     .CT-E18P-207 {
-        bottom: -22.5%;
         left: 38.5%;
     }
 
     .CT-E18P-208 {
-        bottom: -22.5%;
         left: 43.5%;
     }
 
     .CT-E18P-209 {
-        bottom: -22.5%;
-        left: 49.5%;
+        left: 48.5%;
     }
 
     .CT-E18P-210 {
-        bottom: -22.5%;
-        left: 54%;
+        left: 53.54%;
     }
 
     .CT-E18P-211 {
-        bottom: -22.5%;
         left: 59%;
+
     }
 
     .CT-E18P-212 {
-        bottom: -22.5%;
-        left: 64%;
+        left: 63.5%;
     }
 
     .CT-E18P-213 {
-        bottom: -22.5%;
-        left: 70.5%;
+        left: 70%;
     }
 
     .CT-E18P-214 {
-        bottom: -22.5%;
-        left: 78.5%;
+        left: 77%;
     }
 
     .CT-E18P-215 {
-        bottom: -22.5%;
-        left: 86%;
+        left: 85%;
     }
 
     .CT-E18P-216 {
-        bottom: -29.5%;
-        left: 84%;
+        left: 83%;
     }
 
     .CT-E18P-217 {
-        bottom: -29.5%;
-        left: 72%;
+        left: 75%;
     }
 
     .CT-E18P-218 {
-        bottom: -29.5%;
-        left: 63%;
+        left: 64%;
     }
 
     .CT-E18P-219 {
-        bottom: -29.5%;
-        left: 54.5%;
+        left: 55%;
     }
 
     .CT-E18P-220 {
-        bottom: -29.5%;
-        left: 45.5%;
+        left: 46%;
     }
 
     .CT-E18P-221 {
-        bottom: -31%;
         left: 39%;
     }
 
     .CT-E18P-222 {
-        bottom: -31%;
-        left: 33.5%;
+        left: 34%;
     }
 
     .CT-E18P-223 {
-        bottom: -31%;
-        left: 29.5%;
+        left: 29%;
     }
-    /****************** CT-E18P ******************/
 }
 
 
 
+/* iPad Pro 11 นิ้ว แนวตั้ง */
+@media (min-width: 834px) and (max-width: 1194px) and (orientation: portrait) {
+
+    .CT-E18P-201,
+    .CT-E18P-202 {
+        bottom: -10.5%;
+    }
+
+    .CT-E18P-203,
+    .CT-E18P-204,
+    .CT-E18P-205,
+    .CT-E18P-206,
+    .CT-E18P-207,
+    .CT-E18P-208,
+    .CT-E18P-209,
+    .CT-E18P-210,
+    .CT-E18P-211,
+    .CT-E18P-212,
+    .CT-E18P-213,
+    .CT-E18P-214,
+    .CT-E18P-215 {
+        bottom: -0.5%;
+    }
+
+    .CT-E18P-216,
+    .CT-E18P-217,
+    .CT-E18P-218,
+    .CT-E18P-219,
+    .CT-E18P-220 {
+        bottom: -4.3%;
+    }
+
+    .CT-E18P-221,
+    .CT-E18P-222,
+    .CT-E18P-223 {
+        bottom: -5.5%;
+    }
+
+    .CT-E18P-201 {
+        left: 21%;
+    }
+
+    .CT-E18P-202 {
+        left: 13%;
+    }
+
+    .CT-E18P-203 {
+        left: 18%;
+    }
+
+    .CT-E18P-204 {
+        left: 23%;
+    }
+
+    .CT-E18P-205 {
+        left: 28%;
+    }
+
+    .CT-E18P-206 {
+        left: 33%;
+    }
+
+    .CT-E18P-207 {
+        left: 38.5%;
+    }
+
+    .CT-E18P-208 {
+        left: 43.5%;
+    }
+
+    .CT-E18P-209 {
+        left: 48.5%;
+    }
+
+    .CT-E18P-210 {
+        left: 53.54%;
+    }
+
+    .CT-E18P-211 {
+        left: 59%;
+
+    }
+
+    .CT-E18P-212 {
+        left: 63.5%;
+    }
+
+    .CT-E18P-213 {
+        left: 70%;
+    }
+
+    .CT-E18P-214 {
+        left: 77%;
+    }
+
+    .CT-E18P-215 {
+        left: 85%;
+    }
+
+    .CT-E18P-216 {
+        left: 83%;
+    }
+
+    .CT-E18P-217 {
+        left: 75%;
+    }
+
+    .CT-E18P-218 {
+        left: 64%;
+    }
+
+    .CT-E18P-219 {
+        left: 55%;
+    }
+
+    .CT-E18P-220 {
+        left: 46%;
+    }
+
+    .CT-E18P-221 {
+        left: 39%;
+    }
+
+    .CT-E18P-222 {
+        left: 34%;
+    }
+
+    .CT-E18P-223 {
+        left: 29%;
+    }
+}
+
+/* iPad Pro 11 นิ้ว - แนวนอน */
+@media (min-width: 1194px) and (max-width: 1668px) and (orientation: landscape) {
+    .img-floorplan {
+        width: 100%;
+        height: auto;
+    }
+
+    .CT-E18P-201,
+    .CT-E18P-202 {
+        bottom: -65%;
+    }
+
+    .CT-E18P-203,
+    .CT-E18P-204,
+    .CT-E18P-205,
+    .CT-E18P-206,
+    .CT-E18P-207,
+    .CT-E18P-208,
+    .CT-E18P-209,
+    .CT-E18P-210,
+    .CT-E18P-211,
+    .CT-E18P-212,
+    .CT-E18P-213,
+    .CT-E18P-214,
+    .CT-E18P-215 {
+        bottom: -46%;
+    }
+
+    .CT-E18P-216,
+    .CT-E18P-217,
+    .CT-E18P-218,
+    .CT-E18P-219,
+    .CT-E18P-220 {
+        bottom: -53.5%;
+    }
+
+    .CT-E18P-221,
+    .CT-E18P-222,
+    .CT-E18P-223 {
+        bottom: -55%;
+    }
+
+    .CT-E18P-201 {
+        left: 22%;
+    }
+
+    .CT-E18P-202 {
+        left: 14%;
+    }
+
+    .CT-E18P-203 {
+        left: 19%;
+    }
+
+    .CT-E18P-204 {
+        left: 24%;
+    }
+
+    .CT-E18P-205 {
+        left: 29%;
+    }
+
+    .CT-E18P-206 {
+        left: 33.5%;
+    }
+
+    .CT-E18P-207 {
+        left: 38.5%;
+    }
+
+    .CT-E18P-208 {
+        left: 43.5%;
+    }
+
+    .CT-E18P-209 {
+        left: 48.5%;
+    }
+
+    .CT-E18P-210 {
+        left: 53.54%;
+    }
+
+    .CT-E18P-211 {
+        left: 59%;
+
+    }
+
+    .CT-E18P-212 {
+        left: 63.5%;
+    }
+
+    .CT-E18P-213 {
+        left: 70%;
+    }
+
+    .CT-E18P-214 {
+        left: 77%;
+    }
+
+    .CT-E18P-215 {
+        left: 85%;
+    }
+
+    .CT-E18P-216 {
+        left: 83%;
+    }
+
+    .CT-E18P-217 {
+        left: 75%;
+    }
+
+    .CT-E18P-218 {
+        left: 64%;
+    }
+
+    .CT-E18P-219 {
+        left: 55%;
+    }
+
+    .CT-E18P-220 {
+        left: 46%;
+    }
+
+    .CT-E18P-221 {
+        left: 39%;
+    }
+
+    .CT-E18P-222 {
+        left: 34%;
+    }
+
+    .CT-E18P-223 {
+        left: 29%;
+    }
+}
 
 
+
+/* iPad Pro 12.9 นิ้ว - แนวตั้ง */
+@media (min-width: 1024px) and (max-width: 1366px) and (orientation: portrait) {
+    .img-floorplan {
+        width: 100%;
+        height: auto;
+    }
+
+    .box-booking {
+        width: 20px;
+        height: 20px;
+    }
+
+    .CT-E18P-201,
+    .CT-E18P-202 {
+        bottom: 0;
+    }
+
+    .CT-E18P-203,
+    .CT-E18P-204,
+    .CT-E18P-205,
+    .CT-E18P-206,
+    .CT-E18P-207,
+    .CT-E18P-208,
+    .CT-E18P-209,
+    .CT-E18P-210,
+    .CT-E18P-211,
+    .CT-E18P-212,
+    .CT-E18P-213,
+    .CT-E18P-214,
+    .CT-E18P-215 {
+        bottom: 11%;
+    }
+
+    .CT-E18P-216,
+    .CT-E18P-217,
+    .CT-E18P-218,
+    .CT-E18P-219,
+    .CT-E18P-220 {
+        bottom: 6.5%;
+    }
+
+    .CT-E18P-221,
+    .CT-E18P-222,
+    .CT-E18P-223 {
+        bottom: 5.5%;
+    }
+
+    .CT-E18P-201 {
+        left: 18%;
+    }
+
+    .CT-E18P-202 {
+        left: 8%;
+    }
+
+    .CT-E18P-203 {
+        left: 14%;
+    }
+
+    .CT-E18P-204 {
+        left: 19.5%;
+    }
+
+    .CT-E18P-205 {
+        left: 25%;
+    }
+
+    .CT-E18P-206 {
+        left: 31%;
+    }
+
+    .CT-E18P-207 {
+        left: 37%;
+    }
+
+    .CT-E18P-208 {
+        left: 43%;
+    }
+
+    .CT-E18P-209 {
+        left: 48.5%;
+    }
+
+    .CT-E18P-210 {
+        left: 54%;
+    }
+
+    .CT-E18P-211 {
+        left: 60%;
+
+    }
+
+    .CT-E18P-212 {
+        left: 65.5%;
+    }
+
+    .CT-E18P-213 {
+        left: 72.5%;
+    }
+
+    .CT-E18P-214 {
+        left: 81%;
+    }
+
+    .CT-E18P-215 {
+        left: 90%;
+    }
+
+    .CT-E18P-216 {
+        left: 87%;
+    }
+
+    .CT-E18P-217 {
+        left: 76%;
+    }
+
+    .CT-E18P-218 {
+        left: 64%;
+    }
+
+    .CT-E18P-219 {
+        left: 55%;
+    }
+
+    .CT-E18P-220 {
+        left: 45%;
+    }
+
+    .CT-E18P-221 {
+        left: 37%;
+    }
+
+    .CT-E18P-222 {
+        left: 32%;
+    }
+
+    .CT-E18P-223 {
+        left: 26%;
+    }
+
+    .CT-E18P-301,
+    .CT-E18P-302 {
+        bottom: 1%;
+    }
+
+    .CT-E18P-303 {
+        bottom: 6.5%
+    }
+
+    .CT-E18P-304,
+    .CT-E18P-305,
+    .CT-E18P-306,
+    .CT-E18P-307,
+    .CT-E18P-308,
+    .CT-E18P-309,
+    .CT-E18P-310,
+    .CT-E18P-311,
+    .CT-E18P-312,
+    .CT-E18P-313,
+    .CT-E18P-314,
+    .CT-E18P-315,
+    .CT-E18P-316,
+    .CT-E18P-317 {
+        bottom: 12.5%;
+    }
+
+    .CT-E18P-318,
+    .CT-E18P-319,
+    .CT-E18P-320,
+    .CT-E18P-321,
+    .CT-E18P-322 {
+        bottom: 8%;
+    }
+
+    .CT-E18P-323,
+    .CT-E18P-324,
+    .CT-E18P-325 {
+        bottom: 7%;
+    }
+
+    .CT-E18P-301 {
+        left: 19%;
+    }
+
+    .CT-E18P-302,
+    .CT-E18P-303,
+    .CT-E18P-304 {
+        left: 10%;
+    }
+
+    .CT-E18P-305 {
+        left: 15%;
+    }
+
+    .CT-E18P-306 {
+        left: 21%;
+    }
+
+    .CT-E18P-307 {
+        left: 26.5%;
+    }
+
+    .CT-E18P-308 {
+        left: 32%;
+
+    }
+
+    .CT-E18P-309 {
+        left: 37.5%;
+    }
+
+    .CT-E18P-310 {
+        left: 43.5%;
+    }
+
+    .CT-E18P-311 {
+        left: 49.5%;
+    }
+
+    .CT-E18P-312 {
+        left: 54.5%;
+    }
+
+    .CT-E18P-313 {
+        left: 60.5%;
+    }
+
+    .CT-E18P-314 {
+        left: 66.5%;
+    }
+
+    .CT-E18P-315 {
+        left: 73.5%;
+    }
+
+    .CT-E18P-316 {
+        left: 81.5%;
+    }
+
+    .CT-E18P-317 {
+        left: 90.5%;
+    }
+
+    .CT-E18P-318 {
+        left: 88%;
+    }
+
+    .CT-E18P-319 {
+        left: 75%;
+    }
+
+    .CT-E18P-320 {
+        left: 65.5%;
+    }
+
+    .CT-E18P-321 {
+        left: 55.5%;
+    }
+
+    .CT-E18P-322 {
+        left: 45.5%;
+    }
+
+    .CT-E18P-323 {
+        left: 37.5%;
+    }
+
+    .CT-E18P-324 {
+        left: 32.5%;
+    }
+
+    .CT-E18P-325 {
+        left: 27.5%;
+    }
+
+}
+
+/* iPad Pro 12.9 นิ้ว - แนวนอน */
+@media (min-width: 1366px) and (max-width: 2048px) and (orientation: landscape) {
+    .img-floorplan {
+        width: 100%;
+        height: auto;
+    }
+
+    .box-booking {
+        width: 20px;
+        height: 20px;
+    }
+
+    .CT-E18P-201,
+    .CT-E18P-202 {
+        bottom: -34%;
+    }
+
+    .CT-E18P-203,
+    .CT-E18P-204,
+    .CT-E18P-205,
+    .CT-E18P-206,
+    .CT-E18P-207,
+    .CT-E18P-208,
+    .CT-E18P-209,
+    .CT-E18P-210,
+    .CT-E18P-211,
+    .CT-E18P-212,
+    .CT-E18P-213,
+    .CT-E18P-214,
+    .CT-E18P-215 {
+        bottom: -16%;
+    }
+
+    .CT-E18P-216,
+    .CT-E18P-217,
+    .CT-E18P-218,
+    .CT-E18P-219,
+    .CT-E18P-220 {
+        bottom: -23.5%;
+    }
+
+    .CT-E18P-221,
+    .CT-E18P-222,
+    .CT-E18P-223 {
+        bottom: -25.5%;
+    }
+
+    .CT-E18P-201 {
+        left: 22%;
+    }
+
+    .CT-E18P-202 {
+        left: 13%;
+    }
+
+    .CT-E18P-203 {
+        left: 18%;
+    }
+
+    .CT-E18P-204 {
+        left: 23%;
+    }
+
+    .CT-E18P-205 {
+        left: 28%;
+    }
+
+    .CT-E18P-206 {
+        left: 33%;
+    }
+
+    .CT-E18P-207 {
+        left: 38.5%;
+    }
+
+    .CT-E18P-208 {
+        left: 43.5%;
+    }
+
+    .CT-E18P-209 {
+        left: 48.5%;
+    }
+
+    .CT-E18P-210 {
+        left: 54%;
+    }
+
+    .CT-E18P-211 {
+        left: 59%;
+
+    }
+
+    .CT-E18P-212 {
+        left: 64%;
+    }
+
+    .CT-E18P-213 {
+        left: 70.5%;
+    }
+
+    .CT-E18P-214 {
+        left: 78%;
+    }
+
+    .CT-E18P-215 {
+        left: 86%;
+    }
+
+    .CT-E18P-216 {
+        left: 84%;
+    }
+
+    .CT-E18P-217 {
+        left: 73%;
+    }
+
+    .CT-E18P-218 {
+        left: 63%;
+    }
+
+    .CT-E18P-219 {
+        left: 55%;
+    }
+
+    .CT-E18P-220 {
+        left: 45%;
+    }
+
+    .CT-E18P-221 {
+        left: 39%;
+    }
+
+    .CT-E18P-222 {
+        left: 33.5%;
+    }
+
+    .CT-E18P-223 {
+        left: 29%;
+    }
+
+    .CT-E18P-301,
+    .CT-E18P-302 {
+        bottom: -32%;
+    }
+
+    .CT-E18P-303 {
+        bottom: -23.5%;
+    }
+
+    .CT-E18P-304,
+    .CT-E18P-305,
+    .CT-E18P-306,
+    .CT-E18P-307,
+    .CT-E18P-308,
+    .CT-E18P-309,
+    .CT-E18P-310,
+    .CT-E18P-311,
+    .CT-E18P-312,
+    .CT-E18P-313,
+    .CT-E18P-314,
+    .CT-E18P-315,
+    .CT-E18P-316,
+    .CT-E18P-317 {
+        bottom: -14.5%;
+    }
+
+    .CT-E18P-318,
+    .CT-E18P-319,
+    .CT-E18P-320,
+    .CT-E18P-321,
+    .CT-E18P-322 {
+        bottom: -21%;
+    }
+
+    .CT-E18P-323,
+    .CT-E18P-324,
+    .CT-E18P-325 {
+        bottom: -22%;
+    }
+
+    .CT-E18P-301 {
+        left: 23%;
+    }
+
+    .CT-E18P-302,
+    .CT-E18P-303,
+    .CT-E18P-304 {
+        left: 15%;
+    }
+
+    .CT-E18P-305 {
+        left: 19%;
+    }
+
+    .CT-E18P-306 {
+        left: 24.5%;
+    }
+
+    .CT-E18P-307 {
+        left: 29%;
+    }
+
+    .CT-E18P-308 {
+        left: 34.5%;
+
+    }
+
+    .CT-E18P-309 {
+        left: 39.5%;
+    }
+
+    .CT-E18P-310 {
+        left: 44.5%;
+    }
+
+    .CT-E18P-311 {
+        left: 49.5%;
+    }
+
+    .CT-E18P-312 {
+        left: 54.5%;
+    }
+
+    .CT-E18P-313 {
+        left: 59.5%;
+    }
+
+    .CT-E18P-314 {
+        left: 64.5%;
+    }
+
+    .CT-E18P-315 {
+        left: 70.5%;
+    }
+
+    .CT-E18P-316 {
+        left: 78.5%;
+    }
+
+    .CT-E18P-317 {
+        left: 86.5%;
+    }
+
+    .CT-E18P-318 {
+        left: 88%;
+    }
+
+    .CT-E18P-319 {
+        left: 75%;
+    }
+
+    .CT-E18P-320 {
+        left: 65.5%;
+    }
+
+    .CT-E18P-321 {
+        left: 55.5%;
+    }
+
+    .CT-E18P-322 {
+        left: 45.5%;
+    }
+
+    .CT-E18P-323 {
+        left: 37.5%;
+    }
+
+    .CT-E18P-324 {
+        left: 32.5%;
+    }
+
+    .CT-E18P-325 {
+        left: 27.5%;
+    }
+}
+
+
+
+@media (min-width: 1400px) {
+
+    .img-floorplan {
+        padding-top: 20px;
+        width: 80%;
+        height: auto;
+    }
+
+    .CT-E18P-201,
+    .CT-E18P-202 {
+        bottom: -80%;
+    }
+
+    .CT-E18P-203,
+    .CT-E18P-204,
+    .CT-E18P-205,
+    .CT-E18P-206,
+    .CT-E18P-207,
+    .CT-E18P-208,
+    .CT-E18P-209,
+    .CT-E18P-210,
+    .CT-E18P-211,
+    .CT-E18P-212,
+    .CT-E18P-213,
+    .CT-E18P-214,
+    .CT-E18P-215 {
+        bottom: -57%;
+    }
+
+    .CT-E18P-216,
+    .CT-E18P-217,
+    .CT-E18P-218,
+    .CT-E18P-219,
+    .CT-E18P-220 {
+        bottom: -66%;
+    }
+
+    .CT-E18P-221,
+    .CT-E18P-222,
+    .CT-E18P-223 {
+        bottom: -68%;
+    }
+
+    .CT-E18P-201 {
+        left: 28%;
+    }
+
+    .CT-E18P-202 {
+        left: 21%;
+    }
+
+    .CT-E18P-203 {
+        left: 24.5%;
+    }
+
+    .CT-E18P-204 {
+        left: 28.5%;
+    }
+
+    .CT-E18P-205 {
+        left: 33%;
+    }
+
+    .CT-E18P-206 {
+        left: 36.5%;
+    }
+
+    .CT-E18P-207 {
+        left: 41%;
+    }
+
+    .CT-E18P-208 {
+        left: 45%;
+    }
+
+    .CT-E18P-209 {
+        left: 49%;
+    }
+
+    .CT-E18P-210 {
+        left: 53%;
+    }
+
+    .CT-E18P-211 {
+        left: 57%;
+
+    }
+
+    .CT-E18P-212 {
+        left: 61%;
+    }
+
+    .CT-E18P-213 {
+        left: 66%;
+    }
+
+    .CT-E18P-214 {
+        left: 72%;
+    }
+
+    .CT-E18P-215 {
+        left: 78%;
+    }
+
+    .CT-E18P-216 {
+        left: 77%;
+    }
+
+    .CT-E18P-217 {
+        left: 68%;
+    }
+
+    .CT-E18P-218 {
+        left: 60%;
+    }
+
+    .CT-E18P-219 {
+        left: 54%;
+    }
+
+    .CT-E18P-220 {
+        left: 46%;
+    }
+
+    .CT-E18P-221 {
+        left: 41%;
+    }
+
+    .CT-E18P-222 {
+        left: 37%;
+    }
+
+    .CT-E18P-223 {
+        left: 33%;
+    }
+
+    .CT-E18P-301,
+    .CT-E18P-302 {
+        bottom: -76%;
+    }
+
+    .CT-E18P-303 {
+        bottom: -66%
+    }
+
+    .CT-E18P-304,
+    .CT-E18P-305,
+    .CT-E18P-306,
+    .CT-E18P-307,
+    .CT-E18P-308,
+    .CT-E18P-309,
+    .CT-E18P-310,
+    .CT-E18P-311,
+    .CT-E18P-312,
+    .CT-E18P-313,
+    .CT-E18P-314,
+    .CT-E18P-315,
+    .CT-E18P-316,
+    .CT-E18P-317 {
+        bottom: -54%;
+    }
+
+    .CT-E18P-318,
+    .CT-E18P-319,
+    .CT-E18P-320,
+    .CT-E18P-321,
+    .CT-E18P-322 {
+        bottom: -63%;
+    }
+
+    .CT-E18P-323,
+    .CT-E18P-324,
+    .CT-E18P-325 {
+        bottom: -65%;
+    }
+
+    .CT-E18P-301 {
+        left: 29%;
+    }
+
+    .CT-E18P-302,
+    .CT-E18P-303,
+    .CT-E18P-304 {
+        left: 22%;
+    }
+
+    .CT-E18P-305 {
+        left: 25.5%;
+    }
+
+    .CT-E18P-306 {
+        left: 29.5%;
+    }
+
+    .CT-E18P-307 {
+        left: 33.5%;
+    }
+
+    .CT-E18P-308 {
+        left: 37.5%;
+
+    }
+
+    .CT-E18P-309 {
+        left: 41.5%;
+    }
+
+    .CT-E18P-310 {
+        left: 45.5%;
+    }
+
+    .CT-E18P-311 {
+        left: 49.5%;
+    }
+
+    .CT-E18P-312 {
+        left: 53.5%;
+    }
+
+    .CT-E18P-313 {
+        left: 57.5%;
+    }
+
+    .CT-E18P-314 {
+        left: 61.5%;
+    }
+
+    .CT-E18P-315 {
+        left: 66.5%;
+    }
+
+    .CT-E18P-316 {
+        left: 72.5%;
+    }
+
+    .CT-E18P-317 {
+        left: 78.5%;
+    }
+
+    .CT-E18P-318 {
+        left: 77%;
+    }
+
+    .CT-E18P-319 {
+        left: 68%;
+    }
+
+    .CT-E18P-320 {
+        left: 60.5%;
+    }
+
+    .CT-E18P-321 {
+        left: 54.5%;
+    }
+
+    .CT-E18P-322 {
+        left: 47.5%;
+    }
+
+    .CT-E18P-323 {
+        left: 41.5%;
+    }
+
+    .CT-E18P-324 {
+        left: 37.5%;
+    }
+
+    .CT-E18P-325 {
+        left: 33.5%;
+    }
+}

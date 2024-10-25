@@ -5,7 +5,7 @@ import { Row, Col, Button } from "react-bootstrap";
 
 import DefaultImage from "../assert/images/default.jpg";
 import Pin from "../assert/images/pin.png";
-import ProjectInfo from "../data/projectinfo"; // ข้อมูลโปรเจคจากไฟล์
+import ProjectInfo from "../data/projectinfo";
 
 const ProjectCard = () => {
   const [projects, setProjects] = useState([]);

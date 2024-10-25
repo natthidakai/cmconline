@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Pin from "../assert/images/pin.png";
 import Call from "../assert/images/phone-call.png";
 
-const UnitDetailsBooking = ({ 
+const UnitDetailsBooking = ({
     projectID,
     selectedFloor,
     selectedTower,
@@ -11,7 +11,7 @@ const UnitDetailsBooking = ({
     unitPlanImagePath,
     floorName,
     projectInfo,
-    unitDetails 
+    unitDetails
 }) => {
     return (
         <Col>
@@ -58,19 +58,31 @@ const UnitDetailsBooking = ({
                                         <h5 className='th'>ราคา (บาท)</h5>
                                         <Row>
                                             <Col className='th'>ราคาต่อ ตร.ม.</Col>
-                                            <Col className='th'> {detail.PricePerArea.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} บาท</Col>
+                                            <Col className='th'>
+                                                {detail.PricePerArea !== null && detail.PricePerArea !== undefined
+                                                    ? `${detail.PricePerArea.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} บาท`
+                                                    : 'ข้อมูลไม่พร้อมใช้งาน'}
+                                            </Col>
                                         </Row>
 
                                         <Row className='mb-4'>
                                             <Col className='th'>ราคาสุทธิ</Col>
-                                            <Col className='th'> {detail.SellingPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} บาท</Col>
+                                            <Col className='th'>
+                                                {detail.SellingPrice !== null && detail.SellingPrice !== undefined
+                                                    ? `${detail.SellingPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} บาท`
+                                                    : 'ข้อมูลไม่พร้อมใช้งาน'}
+                                            </Col>
                                         </Row>
 
                                         <h5 className='th'>รายละเอียดการจ่ายเงิน (บาท)</h5>
 
                                         <Row className='mb-4'>
                                             <Col className='th'>ราคาจอง</Col>
-                                            <Col className='th'> {detail.BookAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} บาท</Col>
+                                            <Col className='th'>
+                                                {detail.BookAmount !== null && detail.BookAmount !== undefined
+                                                    ? `${detail.BookAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} บาท`
+                                                    : 'ข้อมูลไม่พร้อมใช้งาน'}
+                                            </Col>
                                         </Row>
 
                                         {/* Corrected the Button and unitNumber reference */}

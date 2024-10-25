@@ -11,7 +11,6 @@ import Condo from "./assert/images/condominium.png";
 const Homepage = () => {
   const [loading, setLoading] = useState(true);
 
-  // ใช้ useEffect เพื่อตั้งค่า loading หลังจากข้อมูลโหลดเสร็จ
   useEffect(() => {
     setLoading(false);
   }, []);
