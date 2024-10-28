@@ -16,8 +16,6 @@ const callStatus = async (req, res) => {
             FROM [CRMRE_Production].[dbo].[cmc_vw_AllUnitStatus_forWeb] 
             WHERE ProjectID = ${projectID}
             AND UnitStatus = 'Available'
-            AND FloorName != '01'
-            AND FloorName != '1'
             ORDER BY UnitNumber ASC`;
 
         // console.log('Query result:', result);
