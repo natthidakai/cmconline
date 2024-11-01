@@ -84,6 +84,9 @@ const FloorPlanAndUnits = () => {
             ) : (
                 <>
                     <h3 className="th px-3 mb-4">แบบแปลน</h3>
+                    <Col>
+                        
+                    </Col>
                     <Row className="plan-box p-4">
                         <Col>
                             <label htmlFor="building" className="form-label th">อาคาร</label>

@@ -1,8 +1,20 @@
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+
 import { Col, Row } from 'react-bootstrap';
 import Image from 'next/image';
-import Check from "../assert/images/check.png";
+import Check from "../../assert/images/check.png";
+import ProjectInfo from "../../data/projectinfo";
 
-const UnitDetails = ({ unitDetails, projectInfo }) => {
+const UnitDetails = () => {
+
+    const router = useRouter();
+    const { projectID } = router.query;
+
+    const projectInfo = ProjectInfo.find((s) => s.id === projectID);
+    const [unitDetails, setUnitDetails] = useState([]);
+
+
     return (
         <Row className='justify-content-center-m'>
             <Col xxl="12" xl="12" lg="12" md="12" sm="10" xs="10">

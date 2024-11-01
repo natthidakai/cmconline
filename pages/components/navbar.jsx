@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react';
 import { useAuth } from '../api/auth/useAuth';
 
 import Image from 'next/image';
-import User from '../assert/images/profile-user.png';
+import User from '../../assert/images/profile-user.png';
 import Link from 'next/link';
 
 const Menubar = () => {
@@ -47,22 +47,12 @@ const Menubar = () => {
 
                     <Offcanvas.Body className="p-3 font-18">
                         <Nav className="mb-0">
-                            <Nav.Link href="#" className="th" onClick={handleLinkClick}>
+                            <Nav.Link href="/bookingstep" className="th" onClick={handleLinkClick}>
                                 ขั้นตอนการจอง
                             </Nav.Link>
                         </Nav>
 
                         {session ? (
-                            //      <NavDropdown 
-                            //      title={
-                            //          <div className="d-flex align-items-center nav-dropdown-title">
-                            //              <Image src={User} alt="User Icon" width={20} height={20} />
-                            //              <span className="ms-2">ข้อมูลของฉัน</span>
-                            //          </div>
-                            //      } 
-                            //      id="basic-nav-dropdown" 
-                            //      className="th font-18 mb-0 box-profile-menu ms-3"
-                            //  >
                             <NavDropdown
                                 title={
                                     <span className="align-items-center nav-dropdown-title">

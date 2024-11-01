@@ -1,8 +1,8 @@
 import React from "react";
 import { Container, Row } from "react-bootstrap";
 
-import ProjectDetails from "../components/ProjectDetails";
-import FloorPlanAndUnits from "../components/FloorPlanAndUnits";
+import ProjectDetails from "./ProjectDetails";
+import FloorPlanAndUnits from "./FloorPlanAndUnits";
 
 const Step1 = () => {
     return (

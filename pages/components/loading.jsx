@@ -1,6 +1,6 @@
 import React from 'react';
 import Lottie from 'react-lottie';
-import animationData from '../assert/animations/Animation.json';
+import animationData from '../../assert/animations/Animation.json';
 
 const Loading = () => {
     // กำหนดค่าเริ่มต้นสำหรับแอนิเมชัน

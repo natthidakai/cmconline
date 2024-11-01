@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from "next-auth/react";
-import ProjectInfo from "./data/projectinfo";
+import ProjectInfo from "../data/projectinfo";
 import { Container, Row, Col } from "react-bootstrap";
 import Image from 'next/image';
-import Default from "./assert/images/default.jpg";
+import Default from "../assert/images/default.jpg";
 import Loading from "./components/loading";
 
 const BookingList = () => {

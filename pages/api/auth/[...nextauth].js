@@ -15,14 +15,14 @@ export default NextAuth({
                 try {
                     // ดึงข้อมูลผู้ใช้จากฐานข้อมูล
                     const [rows] = await Mysql.query('SELECT * FROM members WHERE email = ?', [credentials.email]);
-                    if (rows.length === 0) throw new Error("ไม่พบผู้ใช้ที่มีอีเมลนี้");
+                    if (rows.length === 0) throw new Error("ไม่พบข้อมูลผู้ใช้งาน");
 
                     const user = rows[0];
                     // console.log("User from DB:", user);
                     
                     // ตรวจสอบรหัสผ่าน
                     if (!await bcrypt.compare(credentials.password, user.password)) {
-                        throw new Error("รหัสผ่านไม่ถูกต้อง");
+                        throw new Error("รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง");
                     }
 
                     // คืนค่าข้อมูลผู้ใช้

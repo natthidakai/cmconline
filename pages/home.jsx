@@ -5,8 +5,8 @@ import Image from "next/image";
 
 import Loading from './components/loading';
 
-import Banner from "./assert/images/banner.jpg";
-import Condo from "./assert/images/condominium.png";
+import Banner from "../assert/images/banner.jpg";
+import Condo from "../assert/images/condominium.png";
 
 const Homepage = () => {
   const [loading, setLoading] = useState(true);

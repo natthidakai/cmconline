@@ -3,12 +3,12 @@ import { useRouter } from "next/router";
 import { Row, Col, Button } from "react-bootstrap";
 
 import Image from "next/image";
-import Pin from "../assert/images/pin.png";
-import Map from "../assert/images/map.png";
-import Check from "../assert/images/check.png";
-import Default from "../assert/images/default.jpg";
+import Pin from "../../assert/images/pin.png";
+import Map from "../../assert/images/map.png";
+import Check from "../../assert/images/check.png";
+import Default from "../../assert/images/default.jpg";
 
-import ProjectInfo from "../data/projectinfo";
+import ProjectInfo from "../../data/projectinfo";
 import Loading from "../components/loading";
 
 

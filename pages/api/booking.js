@@ -2,7 +2,7 @@
 import Mysql from '../../connect/mysql';
 import nodemailer from 'nodemailer';
 import { sqlConfig } from '../../connect/sql';
-import ProjectPayment from "../data/payment";
+import ProjectPayment from "../../data/payment";
 import sql from 'mssql';
 
 export default async function handler(req, res) {

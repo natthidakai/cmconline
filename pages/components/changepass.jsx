@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from 'next/router';
 
 import Image from "next/image";
-import LOGO from "../assert/images/logo.jpg";
+import LOGO from "../../assert/images/logo.jpg";
 
 const ChangePass = () => {
     const router = useRouter();

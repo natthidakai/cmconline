@@ -1,15 +1,15 @@
 import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import { useSession } from "next-auth/react";
-import { getBooking } from "../hooks/userBooking";
-import { useSignUp } from "../hooks/useSignUp"
+import { getBooking } from "../../hooks/userBooking";
+import { useSignUp } from "../../hooks/useSignUp"
 
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Image from "next/image";
 import Loading from './loading';
-import LOGO from "../assert/images/logo.jpg";
-import ProjectPayment from "../data/payment";
-import ProjectInfo from "../data/projectinfo";
+import LOGO from "../../assert/images/logo.jpg";
+import ProjectPayment from "../../data/payment";
+import ProjectInfo from "../../data/projectinfo";
 
 const Step4 = () => {
     const { data: session, status } = useSession();

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 import { useAuth } from '../api/auth/useAuth';
-import { validationForm } from "../hooks/validationForm";
+import { validationForm } from "../../hooks/validationForm";
 import Image from "next/image";
-import LOGO from "../assert/images/logo.jpg";
+import LOGO from "../../assert/images/logo.jpg";
 
 const ForgotPassword = () => {
     const {

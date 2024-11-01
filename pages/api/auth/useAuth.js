@@ -22,14 +22,29 @@ export const useAuth = () => {
         e.preventDefault();
         setIsLoading(true);
         setErrorsSignIn({}); // ล้างข้อผิดพลาดก่อน
-    
-        // ตรวจสอบว่าอีเมลและรหัสผ่านไม่เป็นค่าว่าง
-        if (!signInData.email || !signInData.password) {
-            setErrorsSignIn({ message: "กรุณาระบุอีเมลและรหัสผ่าน" });
+
+        // ตรวจสอบว่าอีเมลไม่เป็นค่าว่าง
+        if (!signInData.email) {
+            setErrorsSignIn({ message: "กรุณาระบุอีเมล" });
             setIsLoading(false);
-            return; // หยุดการทำงานถ้าข้อมูลไม่ครบ
+            return; // หยุดการทำงานถ้าอีเมลไม่มีค่า
         }
-    
+
+        // ตรวจสอบรูปแบบอีเมล
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(signInData.email)) {
+            setErrorsSignIn({ message: "รูปแบบอีเมลไม่ถูกต้อง โปรดลองอีกครั้ง" });
+            setIsLoading(false);
+            return; // หยุดการทำงานถ้าอีเมลไม่ถูกต้องตามรูปแบบ
+        }
+
+        // ตรวจสอบว่ารหัสผ่านไม่เป็นค่าว่าง
+        if (!signInData.password) {
+            setErrorsSignIn({ message: "กรุณาระบุรหัสผ่าน" });
+            setIsLoading(false);
+            return; // หยุดการทำงานถ้ารหัสผ่านไม่มีค่า
+        }
+
         try {
             // ลองเข้าสู่ระบบ
             const result = await signIn("credentials", {
@@ -37,7 +52,7 @@ export const useAuth = () => {
                 email: signInData.email,
                 password: signInData.password,
             });
-    
+
             // ตรวจสอบผลการเข้าสู่ระบบ
             if (result.error) {
                 setErrorsSignIn({ message: result.error });
@@ -52,7 +67,7 @@ export const useAuth = () => {
             setIsLoading(false); // กำหนดเป็น false ในทุกกรณี
         }
     };
-    
+
     const handleSignOut = () => {
         signOut({ callbackUrl: '/' });
     };
@@ -60,8 +75,8 @@ export const useAuth = () => {
     const handleSignInChange = (e) => {
         const { id, value } = e.target;
         setSignInData((prevData) => ({
-          ...prevData,
-          [id]: value, // Update the specific input's value
+            ...prevData,
+            [id]: value, // Update the specific input's value
         }));
         if (errorsSignIn.message) {
             setErrorsSignIn({}); // Clear errors if any
@@ -146,7 +161,7 @@ export const useAuth = () => {
     };
 
     const checkEmail = async (e) => {
-        e.preventDefault(); 
+        e.preventDefault();
 
         if (!resetPsw.email) {
             setErrorsSignIn({ message: 'กรุณาระบุอีเมล' });
@@ -188,31 +203,31 @@ export const useAuth = () => {
 
     const resetPassword = async (e) => {
         e.preventDefault();
-    
+
         // Validate email
         if (!resetPsw.email) {
             setErrorsSignIn({ message: 'กรุณาระบุอีเมล' });
             return;
         }
-    
+
         // Validate OTP
         if (!resetPsw.otp) {
             setErrorsSignIn({ message: 'กรุณาระบุ OTP' });
             return;
         }
-    
+
         // Validate new password
         if (!resetPsw.newPassword) {
             setErrorsSignIn({ message: 'กรุณากรอกรหัสผ่านใหม่' });
             return;
         }
-    
+
         // Validate confirm password
         if (!resetPsw.confirmPassword) {
             setErrorsSignIn({ message: 'กรุณายืนยันรหัสผ่านใหม่' });
             return;
         }
-    
+
         // Check if new password and confirm password match
         if (resetPsw.newPassword !== resetPsw.confirmPassword) {
             setErrorsSignIn({ message: 'การยืนยันรหัสผ่านไม่สำเร็จ' });
@@ -220,7 +235,7 @@ export const useAuth = () => {
         }
 
         setIsLoading(true);
-    
+
         try {
             // Send data to API
             const response = await fetch('/api/resetPassword', {
@@ -228,15 +243,15 @@ export const useAuth = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ 
-                    email: resetPsw.email, 
-                    otp: resetPsw.otp, 
-                    newPassword: resetPsw.newPassword 
+                body: JSON.stringify({
+                    email: resetPsw.email,
+                    otp: resetPsw.otp,
+                    newPassword: resetPsw.newPassword
                 }),
             });
-    
+
             const data = await response.json();
-    
+
             // Check the result from API
             if (response.ok) {
                 alert('รีเซ็ตรหัสผ่านสำเร็จ');
@@ -250,8 +265,8 @@ export const useAuth = () => {
         } finally {
             setIsLoading(false); // Stop loading
         }
-    };   
-    
+    };
+
     const requestNewOTP = () => {
         // Call the API to request a new OTP
         fetch('/api/resetPassword', {
@@ -261,18 +276,18 @@ export const useAuth = () => {
             },
             body: JSON.stringify({ email: resetPsw.email }), // Send email to request new OTP
         })
-        .then(response => response.json())
-        .then(data => {
-            // Handle response, e.g. show success message
-            if (data.message) {
-                console.log(data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error requesting new OTP:', error);
-        });
+            .then(response => response.json())
+            .then(data => {
+                // Handle response, e.g. show success message
+                if (data.message) {
+                    console.log(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error requesting new OTP:', error);
+            });
     };
-    
+
     return {
         signInData,
         setSignInData,
