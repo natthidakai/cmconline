@@ -9,7 +9,7 @@ import Check from "../../assert/images/check.png";
 import Default from "../../assert/images/default.jpg";
 
 import ProjectInfo from "../../data/projectinfo";
-import Loading from "../components/loading";
+import Loading from "./loading";
 
 
 const ProjectDetails = () => {

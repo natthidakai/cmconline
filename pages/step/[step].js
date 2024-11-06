@@ -6,39 +6,35 @@ import Step3 from '../components/step3';
 import Step4 from '../components/step4';
 import StepBar from '../components/stepbar';
 
-const StepPage = () => {
+const StepPage = ({ projectID }) => {
     const router = useRouter();
     const [currentStep, setCurrentStep] = useState(1);
-    const [projectID, setProjectID] = useState(null); // เพิ่ม state สำหรับ projectID
     const [isReady, setIsReady] = useState(false);
 
-    const { step, stepId } = router.query;
+    const { step } = router.query;
 
-    // รายการของขั้นตอนที่มี
     const totalSteps = 4;
 
     useEffect(() => {
         if (router.isReady) {
             const stepFromQuery = parseInt(step, 10);
-            const projectIDFromQuery = router.query.projectID; // ดึง projectID จาก query
             if (!isNaN(stepFromQuery) && stepFromQuery > 0 && stepFromQuery <= totalSteps) {
                 setCurrentStep(stepFromQuery);
-                setProjectID(projectIDFromQuery); // ตั้งค่า projectID
             } else {
-                setCurrentStep(1); // ตั้งค่าขั้นตอนเริ่มต้นเป็น 1 ถ้าข้อมูล query ไม่ถูกต้อง
+                setCurrentStep(1);
             }
             setIsReady(true);
         }
-    }, [router.isReady, step, router.query.projectID]);
+    }, [router.isReady, step]);
 
     const handleStepClick = (step) => {
         if (step <= currentStep) {
-            router.push(`/step/${step}?projectID=${projectID}`); // ส่ง projectID ไปพร้อมกับ query
+            router.push(`/step/${step}?projectID=${projectID}`);
         }
     };
 
     if (!isReady) {
-        return null; // รอจนกว่า router จะพร้อม
+        return null;
     }
 
     const renderContent = () => {
@@ -52,7 +48,7 @@ const StepPage = () => {
             case 4:
                 return <Step4 currentStep={currentStep} projectID={projectID} />;
             default:
-                return <div>ไม่พบขั้นตอนที่คุณกำลังค้นหา</div>; // แสดงข้อผิดพลาดหากไม่พบขั้นตอน
+                return <div>ไม่พบขั้นตอนที่คุณกำลังค้นหา</div>;
         }
     };
 
@@ -60,10 +56,29 @@ const StepPage = () => {
         <>
             <StepBar currentStep={currentStep} handleStepClick={handleStepClick} />
             <div className="step-content">
-                {renderContent()} {/* แสดงเนื้อหาตาม currentStep */}
+                {renderContent()}
             </div>
         </>
     );
 };
+
+export async function getStaticPaths() {
+    return {
+        paths: [
+            { params: { step: '1' } },
+            { params: { step: '2' } },
+            { params: { step: '3' } },
+            { params: { step: '4' } },
+        ],
+        fallback: false,
+    };
+}
+
+export async function getStaticProps({ params }) {
+    const projectID = params.projectID || null;
+    return {
+        props: { projectID },
+    };
+}
 
 export default StepPage;

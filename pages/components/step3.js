@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import Loading from "../components/loading";
+import Loading from "./loading";
 import SignINform  from "./formsignin";
 
 import { useSignUp } from "../../hooks/useSignUp";

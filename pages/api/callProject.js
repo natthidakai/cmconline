@@ -23,12 +23,9 @@ const callProject = async (req, res) => {
 
         const result = await sql.query`
         SELECT 
-            [ProjectID]
-            ,[BrandName]
-            ,[Location]
+            [ProjectID] 
             ,[ProjectType]
             ,[ProjectStatus]
-            ,[MINPrice] 
                 FROM [CRMRE_Production].[dbo].[vw_ITF_ProjectInfo] 
                 WHERE ProjectID = 'CT-E18P'
         `;

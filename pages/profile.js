@@ -1,7 +1,7 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from "next/router";
 import React, {  useEffect } from "react";
-import { useSignUp } from "../hooks//useSignUp";
+import { useSignUp } from "../hooks/useSignUp";
 import { Container, Row, Col, Button } from "react-bootstrap";
 
 const Profile = () => {

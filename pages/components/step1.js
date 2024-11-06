@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
 import ProjectDetails from "./ProjectDetails";
 import FloorPlanAndUnits from "./FloorPlanAndUnits";

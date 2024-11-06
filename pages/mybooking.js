@@ -66,6 +66,7 @@ const BookingList = () => {
             <Row className="justify-content-center">
                 <Col xs={12} className="text-center mb-4">
                     <h3 className="th px-3">รายการจองของฉัน</h3>
+                    <Col className='th'>เลือกรายการที่ต้องการแจ้งชำระ และยืนยันสิทธิ์ <span className='text-red'>(ยกเว้นรายการที่ถูกยกเลิก และรายการที่จองสำเร็จ)</span></Col>
                 </Col>
                 <Col xx="12" xl="12" lg="11" md="11" sm="10" xs="10">
                     {bookings.length === 0 ? (

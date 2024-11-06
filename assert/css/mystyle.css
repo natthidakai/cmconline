@@ -158,6 +158,92 @@ a:active {
     transform: scale(1.1);
 }
 
+.steps-container {
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+}
+
+.steps-container::before,
+.steps-container::after {
+    content: "";
+    position: absolute;
+    height: 4px;
+    background-color: #E0E0E0;
+    z-index: -99;
+}
+
+.steps-container::before {
+    top: 5%;
+    left: 0;
+    width: 100%;
+}
+
+/* เส้นด้านล่าง */
+.steps-container::after {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: none;
+}
+
+.box-steps-dec {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.box-step-text {
+    margin-bottom: 5em;;
+}
+
+.box-steps-dec:hover {
+    transition: transform 0.3s ease;
+    transform: scale(1.1);
+    /*  */
+}
+
+.btn-steps {
+    width: 50px;
+    height: 50px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+    line-height: 50px;
+    /* จัดกึ่งกลางข้อความในแนวตั้ง */
+    border-radius: 50%;
+    /* ทำให้ปุ่มเป็นวงกลม */
+    background-color: #034078;
+    /* สีพื้นหลังของปุ่ม */
+    font-size: 20px;
+    font-weight: bold;
+    box-shadow: 0 0 0 6px #c8e3f7;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+}
+
+.img-step {
+    width: 75%;
+    height: auto;
+}
+
+h5 {
+    font-size: 1.2rem;
+}
+
+.btn-steps:hover {
+    box-shadow: 0 0 0 8px #97c4e4;
+    text-align: center;
+    padding: 10px;
+    transition: transform 0.3s ease;
+    transform: scale(1.1);
+}
+
+.justify-items-center {
+    justify-items: center;
+}
+
 .btn-xl {
     padding: .6rem 2.5rem;
     border-radius: 2em;
@@ -265,12 +351,6 @@ a.btn-xl.th.btn.btn-primary:hover {
     border: none !important;
 }
 
-/* .box-step:hover {
-    border: 3px solid #034078;
-    background-color: #034078 !important;
-} */
-
-/* สำหรับเส้นเชื่อมระหว่างปุ่ม */
 .step-row {
     position: relative;
     display: flex;
@@ -474,7 +554,7 @@ select,
 }
 
 .sameAddressCheckbox {
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
     display: flex;
 }
@@ -781,8 +861,7 @@ select,
     .CT-E18P-403,
     .CT-E18P-503,
     .CT-E18P-603,
-    .CT-E18P-703
-     {
+    .CT-E18P-703 {
         bottom: -136%;
     }
 
@@ -1124,7 +1203,7 @@ select,
 
     .CT-E18P-816,
     .CT-E18P-817 {
-        bottom: -135.4%; 
+        bottom: -135.4%;
     }
 
     .CT-E18P-801 {
@@ -1168,31 +1247,31 @@ select,
     }
 
     .CT-E18P-811 {
-        left: 84%; 
+        left: 84%;
     }
 
     .CT-E18P-812 {
-        left: 73%; 
+        left: 73%;
     }
 
     .CT-E18P-813 {
-        left: 64%; 
+        left: 64%;
     }
 
     .CT-E18P-814 {
-        left: 54%; 
+        left: 54%;
     }
 
     .CT-E18P-815 {
-        left: 45%; 
+        left: 45%;
     }
 
     .CT-E18P-816 {
-        left: 37%; 
+        left: 37%;
     }
 
     .CT-E18P-817 {
-        left: 32%; 
+        left: 32%;
     }
 }
 
@@ -1738,7 +1817,7 @@ select,
 
     .CT-E18P-816,
     .CT-E18P-817 {
-        bottom: -367%; 
+        bottom: -367%;
     }
 
     .CT-E18P-801 {
@@ -1782,31 +1861,31 @@ select,
     }
 
     .CT-E18P-811 {
-        left: 78.5%; 
+        left: 78.5%;
     }
 
     .CT-E18P-812 {
-        left: 69%; 
+        left: 69%;
     }
 
     .CT-E18P-813 {
-        left: 61%; 
+        left: 61%;
     }
 
     .CT-E18P-814 {
-        left: 54%; 
+        left: 54%;
     }
 
     .CT-E18P-815 {
-        left: 46%; 
+        left: 46%;
     }
 
     .CT-E18P-816 {
-        left: 40%; 
+        left: 40%;
     }
 
     .CT-E18P-817 {
-        left: 36%; 
+        left: 36%;
     }
 }
 
@@ -2355,7 +2434,7 @@ select,
 
     .CT-E18P-816,
     .CT-E18P-817 {
-        bottom: -93.2%; 
+        bottom: -93.2%;
     }
 
     .CT-E18P-801 {
@@ -2399,31 +2478,31 @@ select,
     }
 
     .CT-E18P-811 {
-        left: 84%; 
+        left: 84%;
     }
 
     .CT-E18P-812 {
-        left: 72.5%; 
+        left: 72.5%;
     }
 
     .CT-E18P-813 {
-        left: 63%; 
+        left: 63%;
     }
 
     .CT-E18P-814 {
-        left: 54%; 
+        left: 54%;
     }
 
     .CT-E18P-815 {
-        left: 45%; 
+        left: 45%;
     }
 
     .CT-E18P-816 {
-        left: 38%; 
+        left: 38%;
     }
 
     .CT-E18P-817 {
-        left: 32%; 
+        left: 32%;
     }
 }
 
@@ -2865,7 +2944,7 @@ select,
     .CT-E18P-415,
     .CT-E18P-515,
     .CT-E18P-615,
-    .CT-E18P-715  {
+    .CT-E18P-715 {
         left: 72%;
     }
 
@@ -2972,7 +3051,7 @@ select,
 
     .CT-E18P-816,
     .CT-E18P-817 {
-        bottom: -231%; 
+        bottom: -231%;
     }
 
     .CT-E18P-801 {
@@ -3016,31 +3095,31 @@ select,
     }
 
     .CT-E18P-811 {
-        left: 85%; 
+        left: 85%;
     }
 
     .CT-E18P-812 {
-        left: 72.5%; 
+        left: 72.5%;
     }
 
     .CT-E18P-813 {
-        left: 63%; 
+        left: 63%;
     }
 
     .CT-E18P-814 {
-        left: 54%; 
+        left: 54%;
     }
 
     .CT-E18P-815 {
-        left: 46%; 
+        left: 46%;
     }
 
     .CT-E18P-816 {
-        left: 38%; 
+        left: 38%;
     }
 
     .CT-E18P-817 {
-        left: 33%; 
+        left: 33%;
     }
 }
 
@@ -3591,7 +3670,7 @@ select,
 
     .CT-E18P-816,
     .CT-E18P-817 {
-        bottom: -88.2%; 
+        bottom: -88.2%;
     }
 
     .CT-E18P-801 {
@@ -3635,31 +3714,31 @@ select,
     }
 
     .CT-E18P-811 {
-        left: 84%; 
+        left: 84%;
     }
 
     .CT-E18P-812 {
-        left: 72.5%; 
+        left: 72.5%;
     }
 
     .CT-E18P-813 {
-        left: 63%; 
+        left: 63%;
     }
 
     .CT-E18P-814 {
-        left: 54%; 
+        left: 54%;
     }
 
     .CT-E18P-815 {
-        left: 46%; 
+        left: 46%;
     }
 
     .CT-E18P-816 {
-        left: 38%; 
+        left: 38%;
     }
 
     .CT-E18P-817 {
-        left: 32%; 
+        left: 32%;
     }
 }
 
@@ -4205,7 +4284,7 @@ select,
 
     .CT-E18P-816,
     .CT-E18P-817 {
-        bottom: -218.5%; 
+        bottom: -218.5%;
     }
 
     .CT-E18P-801 {
@@ -4249,31 +4328,31 @@ select,
     }
 
     .CT-E18P-811 {
-        left: 83%; 
+        left: 83%;
     }
 
     .CT-E18P-812 {
-        left: 72.5%; 
+        left: 72.5%;
     }
 
     .CT-E18P-813 {
-        left: 63%; 
+        left: 63%;
     }
 
     .CT-E18P-814 {
-        left: 54%; 
+        left: 54%;
     }
 
     .CT-E18P-815 {
-        left: 46%; 
+        left: 46%;
     }
 
     .CT-E18P-816 {
-        left: 39%; 
+        left: 39%;
     }
 
     .CT-E18P-817 {
-        left: 33.5%; 
+        left: 33.5%;
     }
 }
 
@@ -4304,7 +4383,7 @@ select,
     .CT-E18P-106,
     .CT-E18P-107,
     .CT-E18P-108 {
-        bottom:-114.2%;
+        bottom: -114.2%;
     }
 
     .CT-E18P-102 {
@@ -4821,7 +4900,7 @@ select,
 
     .CT-E18P-816,
     .CT-E18P-817 {
-        bottom: -116.5%; 
+        bottom: -116.5%;
     }
 
     .CT-E18P-801 {
@@ -4865,31 +4944,31 @@ select,
     }
 
     .CT-E18P-811 {
-        left: 84.5%; 
+        left: 84.5%;
     }
 
     .CT-E18P-812 {
-        left: 72.5%; 
+        left: 72.5%;
     }
 
     .CT-E18P-813 {
-        left: 65%; 
+        left: 65%;
     }
 
     .CT-E18P-814 {
-        left: 54%; 
+        left: 54%;
     }
 
     .CT-E18P-815 {
-        left: 46%; 
+        left: 46%;
     }
 
     .CT-E18P-816 {
-        left: 37%; 
+        left: 37%;
     }
 
     .CT-E18P-817 {
-        left: 32.5%; 
+        left: 32.5%;
     }
 }
 
@@ -4918,7 +4997,7 @@ select,
     .CT-E18P-106,
     .CT-E18P-107,
     .CT-E18P-108 {
-        bottom:-318.5%;
+        bottom: -318.5%;
     }
 
     .CT-E18P-102 {
@@ -5435,7 +5514,7 @@ select,
 
     .CT-E18P-816,
     .CT-E18P-817 {
-        bottom: -323%; 
+        bottom: -323%;
     }
 
     .CT-E18P-801 {
@@ -5479,31 +5558,31 @@ select,
     }
 
     .CT-E18P-811 {
-        left: 76%; 
+        left: 76%;
     }
 
     .CT-E18P-812 {
-        left: 67%; 
+        left: 67%;
     }
 
     .CT-E18P-813 {
-        left: 60%; 
+        left: 60%;
     }
 
     .CT-E18P-814 {
-        left: 54%; 
+        left: 54%;
     }
 
     .CT-E18P-815 {
-        left: 46%; 
+        left: 46%;
     }
 
     .CT-E18P-816 {
-        left: 41%; 
+        left: 41%;
     }
 
     .CT-E18P-817 {
-        left: 37%; 
+        left: 37%;
     }
 }
 
@@ -6046,7 +6125,7 @@ select,
 
     .CT-E18P-816,
     .CT-E18P-817 {
-        bottom: -77.5%; 
+        bottom: -77.5%;
     }
 
     .CT-E18P-801 {
@@ -6090,31 +6169,31 @@ select,
     }
 
     .CT-E18P-811 {
-        left: 85%; 
+        left: 85%;
     }
 
     .CT-E18P-812 {
-        left: 72%; 
+        left: 72%;
     }
 
     .CT-E18P-813 {
-        left: 63%; 
+        left: 63%;
     }
 
     .CT-E18P-814 {
-        left: 54%; 
+        left: 54%;
     }
 
     .CT-E18P-815 {
-        left: 45.5%; 
+        left: 45.5%;
     }
 
     .CT-E18P-816 {
-        left: 38%; 
+        left: 38%;
     }
 
     .CT-E18P-817 {
-        left: 32%; 
+        left: 32%;
     }
 }
 
@@ -6659,7 +6738,7 @@ select,
 
     .CT-E18P-816,
     .CT-E18P-817 {
-        bottom: -200%; 
+        bottom: -200%;
     }
 
     .CT-E18P-801 {
@@ -6703,31 +6782,31 @@ select,
     }
 
     .CT-E18P-811 {
-        left: 82%; 
+        left: 82%;
     }
 
     .CT-E18P-812 {
-        left: 71%; 
+        left: 71%;
     }
 
     .CT-E18P-813 {
-        left: 62%; 
+        left: 62%;
     }
 
     .CT-E18P-814 {
-        left: 55%; 
+        left: 55%;
     }
 
     .CT-E18P-815 {
-        left: 45.5%; 
+        left: 45.5%;
     }
 
     .CT-E18P-816 {
-        left: 40%; 
+        left: 40%;
     }
 
     .CT-E18P-817 {
-        left: 35%; 
+        left: 35%;
     }
 }
 
@@ -7182,7 +7261,7 @@ select,
 
     .CT-E18P-816,
     .CT-E18P-817 {
-        bottom: -87%; 
+        bottom: -87%;
     }
 
     .CT-E18P-801 {
@@ -7226,31 +7305,31 @@ select,
     }
 
     .CT-E18P-811 {
-        left: 85%; 
+        left: 85%;
     }
 
     .CT-E18P-812 {
-        left: 73%; 
+        left: 73%;
     }
 
     .CT-E18P-813 {
-        left: 63%; 
+        left: 63%;
     }
 
     .CT-E18P-814 {
-        left: 55%; 
+        left: 55%;
     }
 
     .CT-E18P-815 {
-        left: 45.5%; 
+        left: 45.5%;
     }
 
     .CT-E18P-816 {
-        left: 38%; 
+        left: 38%;
     }
 
     .CT-E18P-817 {
-        left: 33%; 
+        left: 33%;
     }
 }
 
@@ -7577,7 +7656,7 @@ select,
         bottom: -216%;
     }
 
-    .CT-E18P-301, 
+    .CT-E18P-301,
     .CT-E18P-401,
     .CT-E18P-501,
     .CT-E18P-601,
@@ -7760,8 +7839,7 @@ select,
     .CT-E18P-424,
     .CT-E18P-524,
     .CT-E18P-624,
-    .CT-E18P-724
- {
+    .CT-E18P-724 {
         left: 34%;
     }
 
@@ -7796,7 +7874,7 @@ select,
 
     .CT-E18P-816,
     .CT-E18P-817 {
-        bottom: -216%; 
+        bottom: -216%;
     }
 
     .CT-E18P-801 {
@@ -7840,31 +7918,31 @@ select,
     }
 
     .CT-E18P-811 {
-        left: 83%; 
+        left: 83%;
     }
 
     .CT-E18P-812 {
-        left: 72%; 
+        left: 72%;
     }
 
     .CT-E18P-813 {
-        left: 63%; 
+        left: 63%;
     }
 
     .CT-E18P-814 {
-        left: 55%; 
+        left: 55%;
     }
 
     .CT-E18P-815 {
-        left: 45.5%; 
+        left: 45.5%;
     }
 
     .CT-E18P-816 {
-        left: 39%; 
+        left: 39%;
     }
 
     .CT-E18P-817 {
-        left: 34%; 
+        left: 34%;
     }
 }
 
@@ -8319,7 +8397,7 @@ select,
 
     .CT-E18P-816,
     .CT-E18P-817 {
-        bottom: -74%; 
+        bottom: -74%;
     }
 
     .CT-E18P-801 {
@@ -8363,31 +8441,31 @@ select,
     }
 
     .CT-E18P-811 {
-        left: 85%; 
+        left: 85%;
     }
 
     .CT-E18P-812 {
-        left: 73%; 
+        left: 73%;
     }
 
     .CT-E18P-813 {
-        left: 64%; 
+        left: 64%;
     }
 
     .CT-E18P-814 {
-        left: 54%; 
+        left: 54%;
     }
 
     .CT-E18P-815 {
-        left: 45.5%; 
+        left: 45.5%;
     }
 
     .CT-E18P-816 {
-        left: 38%; 
+        left: 38%;
     }
 
     .CT-E18P-817 {
-        left: 33%; 
+        left: 33%;
     }
 }
 
@@ -8817,7 +8895,7 @@ select,
     .CT-E18P-414,
     .CT-E18P-514,
     .CT-E18P-614,
-    .CT-E18P-714{
+    .CT-E18P-714 {
         left: 63%;
     }
 
@@ -8932,7 +9010,7 @@ select,
 
     .CT-E18P-816,
     .CT-E18P-817 {
-        bottom: -189%; 
+        bottom: -189%;
     }
 
     .CT-E18P-801 {
@@ -8976,31 +9054,31 @@ select,
     }
 
     .CT-E18P-811 {
-        left: 81%; 
+        left: 81%;
     }
 
     .CT-E18P-812 {
-        left: 70%; 
+        left: 70%;
     }
 
     .CT-E18P-813 {
-        left: 62%; 
+        left: 62%;
     }
 
     .CT-E18P-814 {
-        left: 54%; 
+        left: 54%;
     }
 
     .CT-E18P-815 {
-        left: 45.5%; 
+        left: 45.5%;
     }
 
     .CT-E18P-816 {
-        left: 40%; 
+        left: 40%;
     }
 
     .CT-E18P-817 {
-        left: 35%; 
+        left: 35%;
     }
 
 }
@@ -9445,7 +9523,7 @@ select,
 
     .CT-E18P-816,
     .CT-E18P-817 {
-        bottom: -73%; 
+        bottom: -73%;
     }
 
     .CT-E18P-801 {
@@ -9489,31 +9567,31 @@ select,
     }
 
     .CT-E18P-811 {
-        left: 84.5%; 
+        left: 84.5%;
     }
 
     .CT-E18P-812 {
-        left: 73%; 
+        left: 73%;
     }
 
     .CT-E18P-813 {
-        left: 64%; 
+        left: 64%;
     }
 
     .CT-E18P-814 {
-        left: 55%; 
+        left: 55%;
     }
 
     .CT-E18P-815 {
-        left: 45.5%; 
+        left: 45.5%;
     }
 
     .CT-E18P-816 {
-        left: 38%; 
+        left: 38%;
     }
 
     .CT-E18P-817 {
-        left: 33%; 
+        left: 33%;
     }
 }
 
@@ -10058,7 +10136,7 @@ select,
 
     .CT-E18P-816,
     .CT-E18P-817 {
-        bottom: -189%; 
+        bottom: -189%;
     }
 
     .CT-E18P-801 {
@@ -10102,34 +10180,67 @@ select,
     }
 
     .CT-E18P-811 {
-        left: 80%; 
+        left: 80%;
     }
 
     .CT-E18P-812 {
-        left: 70%; 
+        left: 70%;
     }
 
     .CT-E18P-813 {
-        left: 62%; 
+        left: 62%;
     }
 
     .CT-E18P-814 {
-        left: 55%; 
+        left: 55%;
     }
 
     .CT-E18P-815 {
-        left: 45.5%; 
+        left: 45.5%;
     }
 
     .CT-E18P-816 {
-        left: 40%; 
+        left: 40%;
     }
 
     .CT-E18P-817 {
-        left: 35%; 
+        left: 35%;
     }
 
-    
+
+}
+
+
+
+@media (max-width: 767.98px) {
+    .steps-container {
+        flex-direction: column; /* เปลี่ยนการเรียงปุ่มเป็นแนวตั้ง */
+        align-items: center;
+    }
+
+    .steps-container::before {
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        width: 4px; /* ความหนาของเส้น */
+        height: 90%;
+        background-color: #E0E0E0;
+    }
+
+    .btn-steps {
+        margin-top: -30px;
+        width: 80px;
+        height: 80px;
+        font-size: 35px;
+    }
+
+
+    .box-steps-dec {
+        background-color: #fff;
+        padding: 0 30px 50px;
+        box-shadow: 10px 10px 10px 10px rgb(221 221 221 / 75%);
+        border-radius: 30px;
+    }
 }
 
 
@@ -10670,7 +10781,7 @@ select,
 
     .CT-E18P-816,
     .CT-E18P-817 {
-        bottom: -15%; 
+        bottom: -15%;
     }
 
     .CT-E18P-801 {
@@ -10714,31 +10825,31 @@ select,
     }
 
     .CT-E18P-811 {
-        left: 86.5%; 
+        left: 86.5%;
     }
 
     .CT-E18P-812 {
-        left: 73%; 
+        left: 73%;
     }
 
     .CT-E18P-813 {
-        left: 64%; 
+        left: 64%;
     }
 
     .CT-E18P-814 {
-        left: 55%; 
+        left: 55%;
     }
 
     .CT-E18P-815 {
-        left: 45.5%; 
+        left: 45.5%;
     }
 
     .CT-E18P-816 {
-        left: 37%; 
+        left: 37%;
     }
 
     .CT-E18P-817 {
-        left: 32%; 
+        left: 32%;
     }
 }
 
@@ -11278,7 +11389,7 @@ select,
 
     .CT-E18P-816,
     .CT-E18P-817 {
-        bottom: -66%; 
+        bottom: -66%;
     }
 
     .CT-E18P-801 {
@@ -11322,31 +11433,31 @@ select,
     }
 
     .CT-E18P-811 {
-        left: 85%; 
+        left: 85%;
     }
 
     .CT-E18P-812 {
-        left: 73%; 
+        left: 73%;
     }
 
     .CT-E18P-813 {
-        left: 64%; 
+        left: 64%;
     }
 
     .CT-E18P-814 {
-        left: 55%; 
+        left: 55%;
     }
 
     .CT-E18P-815 {
-        left: 45.5%; 
+        left: 45.5%;
     }
 
     .CT-E18P-816 {
-        left: 38%; 
+        left: 38%;
     }
 
     .CT-E18P-817 {
-        left: 33%; 
+        left: 33%;
     }
 }
 
@@ -11535,8 +11646,7 @@ select,
     .CT-E18P-714,
     .CT-E18P-715,
     .CT-E18P-716,
-    .CT-E18P-717
- {
+    .CT-E18P-717 {
         bottom: -0.5%;
     }
 
@@ -11804,7 +11914,7 @@ select,
 
     .CT-E18P-816,
     .CT-E18P-817 {
-        bottom: -5%; 
+        bottom: -5%;
     }
 
     .CT-E18P-801 {
@@ -11848,31 +11958,31 @@ select,
     }
 
     .CT-E18P-811 {
-        left: 85%; 
+        left: 85%;
     }
 
     .CT-E18P-812 {
-        left: 73%; 
+        left: 73%;
     }
 
     .CT-E18P-813 {
-        left: 64%; 
+        left: 64%;
     }
 
     .CT-E18P-814 {
-        left: 55%; 
+        left: 55%;
     }
 
     .CT-E18P-815 {
-        left: 45.5%; 
+        left: 45.5%;
     }
 
     .CT-E18P-816 {
-        left: 39%; 
+        left: 39%;
     }
 
     .CT-E18P-817 {
-        left: 34%; 
+        left: 34%;
     }
 }
 
@@ -12412,7 +12522,7 @@ select,
 
     .CT-E18P-816,
     .CT-E18P-817 {
-        bottom: -55%; 
+        bottom: -55%;
     }
 
     .CT-E18P-801 {
@@ -12456,31 +12566,31 @@ select,
     }
 
     .CT-E18P-811 {
-        left: 83%; 
+        left: 83%;
     }
 
     .CT-E18P-812 {
-        left: 72%; 
+        left: 72%;
     }
 
     .CT-E18P-813 {
-        left: 63%; 
+        left: 63%;
     }
 
     .CT-E18P-814 {
-        left: 55%; 
+        left: 55%;
     }
 
     .CT-E18P-815 {
-        left: 45.5%; 
+        left: 45.5%;
     }
 
     .CT-E18P-816 {
-        left: 39%; 
+        left: 39%;
     }
 
     .CT-E18P-817 {
-        left: 34%; 
+        left: 34%;
     }
 }
 
@@ -13022,7 +13132,7 @@ select,
 
     .CT-E18P-816,
     .CT-E18P-817 {
-        bottom: -21%; 
+        bottom: -21%;
     }
 
     .CT-E18P-801 {
@@ -13066,31 +13176,31 @@ select,
     }
 
     .CT-E18P-811 {
-        left: 87%; 
+        left: 87%;
     }
 
     .CT-E18P-812 {
-        left: 74%; 
+        left: 74%;
     }
 
     .CT-E18P-813 {
-        left: 64%; 
+        left: 64%;
     }
 
     .CT-E18P-814 {
-        left: 55%; 
+        left: 55%;
     }
 
     .CT-E18P-815 {
-        left: 44.5%; 
+        left: 44.5%;
     }
 
     .CT-E18P-816 {
-        left: 38%; 
+        left: 38%;
     }
 
     .CT-E18P-817 {
-        left: 33%; 
+        left: 33%;
     }
 }
 
@@ -13275,7 +13385,7 @@ select,
     .CT-E18P-301,
     .CT-E18P-302,
     .CT-E18P-401,
-    .CT-E18P-402, 
+    .CT-E18P-402,
     .CT-E18P-501,
     .CT-E18P-502,
     .CT-E18P-601,
@@ -13630,7 +13740,7 @@ select,
 
     .CT-E18P-816,
     .CT-E18P-817 {
-        bottom: -65.5%; 
+        bottom: -65.5%;
     }
 
     .CT-E18P-801 {
@@ -13674,31 +13784,31 @@ select,
     }
 
     .CT-E18P-811 {
-        left: 87%; 
+        left: 87%;
     }
 
     .CT-E18P-812 {
-        left: 74%; 
+        left: 74%;
     }
 
     .CT-E18P-813 {
-        left: 64%; 
+        left: 64%;
     }
 
     .CT-E18P-814 {
-        left: 55%; 
+        left: 55%;
     }
 
     .CT-E18P-815 {
-        left: 44.5%; 
+        left: 44.5%;
     }
 
     .CT-E18P-816 {
-        left: 38%; 
+        left: 38%;
     }
 
     .CT-E18P-817 {
-        left: 33%; 
+        left: 33%;
     }
 }
 
@@ -14237,7 +14347,7 @@ select,
 
     .CT-E18P-816,
     .CT-E18P-817 {
-        bottom: -4%; 
+        bottom: -4%;
     }
 
     .CT-E18P-801 {
@@ -14281,31 +14391,31 @@ select,
     }
 
     .CT-E18P-811 {
-        left: 84.5%; 
+        left: 84.5%;
     }
 
     .CT-E18P-812 {
-        left: 72%; 
+        left: 72%;
     }
 
     .CT-E18P-813 {
-        left: 64%; 
+        left: 64%;
     }
 
     .CT-E18P-814 {
-        left: 55%; 
+        left: 55%;
     }
 
     .CT-E18P-815 {
-        left: 44.5%; 
+        left: 44.5%;
     }
 
     .CT-E18P-816 {
-        left: 38%; 
+        left: 38%;
     }
 
     .CT-E18P-817 {
-        left: 33%; 
+        left: 33%;
     }
 }
 
@@ -14845,7 +14955,7 @@ select,
 
     .CT-E18P-816,
     .CT-E18P-817 {
-        bottom: -52.5%; 
+        bottom: -52.5%;
     }
 
     .CT-E18P-801 {
@@ -14889,31 +14999,31 @@ select,
     }
 
     .CT-E18P-811 {
-        left: 82%; 
+        left: 82%;
     }
 
     .CT-E18P-812 {
-        left: 71%; 
+        left: 71%;
     }
 
     .CT-E18P-813 {
-        left: 63%; 
+        left: 63%;
     }
 
     .CT-E18P-814 {
-        left: 55%; 
+        left: 55%;
     }
 
     .CT-E18P-815 {
-        left: 46%; 
+        left: 46%;
     }
 
     .CT-E18P-816 {
-        left: 39.5%; 
+        left: 39.5%;
     }
 
     .CT-E18P-817 {
-        left: 34.5%; 
+        left: 34.5%;
     }
 }
 
@@ -15460,7 +15570,7 @@ select,
 
     .CT-E18P-816,
     .CT-E18P-817 {
-        bottom: 6.5%; 
+        bottom: 6.5%;
     }
 
     .CT-E18P-801 {
@@ -15504,31 +15614,31 @@ select,
     }
 
     .CT-E18P-811 {
-        left: 87%; 
+        left: 87%;
     }
 
     .CT-E18P-812 {
-        left: 75%; 
+        left: 75%;
     }
 
     .CT-E18P-813 {
-        left: 65.5%; 
+        left: 65.5%;
     }
 
     .CT-E18P-814 {
-        left: 55%; 
+        left: 55%;
     }
 
     .CT-E18P-815 {
-        left: 44.5%; 
+        left: 44.5%;
     }
 
     .CT-E18P-816 {
-        left: 37.5%; 
+        left: 37.5%;
     }
 
     .CT-E18P-817 {
-        left: 32%; 
+        left: 32%;
     }
 
 }
@@ -16074,7 +16184,7 @@ select,
 
     .CT-E18P-816,
     .CT-E18P-817 {
-        bottom: -23%; 
+        bottom: -23%;
     }
 
     .CT-E18P-801 {
@@ -16118,31 +16228,31 @@ select,
     }
 
     .CT-E18P-811 {
-        left: 84%; 
+        left: 84%;
     }
 
     .CT-E18P-812 {
-        left: 72%; 
+        left: 72%;
     }
 
     .CT-E18P-813 {
-        left: 63.5%; 
+        left: 63.5%;
     }
 
     .CT-E18P-814 {
-        left: 55%; 
+        left: 55%;
     }
 
     .CT-E18P-815 {
-        left: 45%; 
+        left: 45%;
     }
 
     .CT-E18P-816 {
-        left: 39%; 
+        left: 39%;
     }
 
     .CT-E18P-817 {
-        left: 34%; 
+        left: 34%;
     }
 }
 
@@ -16554,8 +16664,7 @@ select,
     .CT-E18P-412,
     .CT-E18P-512,
     .CT-E18P-612,
-    .CT-E18P-712
- {
+    .CT-E18P-712 {
         left: 53.5%;
     }
 
@@ -16686,7 +16795,7 @@ select,
 
     .CT-E18P-816,
     .CT-E18P-817 {
-        bottom: -65%; 
+        bottom: -65%;
     }
 
     .CT-E18P-801 {
@@ -16730,30 +16839,30 @@ select,
     }
 
     .CT-E18P-811 {
-        left: 76.5%; 
+        left: 76.5%;
     }
 
     .CT-E18P-812 {
-        left: 68%; 
+        left: 68%;
     }
 
     .CT-E18P-813 {
-        left: 61%; 
+        left: 61%;
     }
 
     .CT-E18P-814 {
-        left: 54%; 
+        left: 54%;
     }
 
     .CT-E18P-815 {
-        left: 46.5%; 
+        left: 46.5%;
     }
 
     .CT-E18P-816 {
-        left: 41%; 
+        left: 41%;
     }
 
     .CT-E18P-817 {
-        left: 37%; 
+        left: 37%;
     }
 }

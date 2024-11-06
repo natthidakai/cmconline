@@ -1,9 +1,4 @@
-import BHTWN1 from "../assert/images/BH-TWN1.jpg";
-import CTKSCP from "../assert/images/CT-KSCP.jpg";
 import BHBN36 from "../assert/images/BH-BN36.jpg";
-import CTR362 from "../assert/images/CT-R362.jpg";
-import BHSUKS from "../assert/images/BH-SUKS.jpg";
-import BHNWSR from "../assert/images/BH-NWSR.jpg";
 import CTE18P from "../assert/images/CT-E18P.jpg";
 
 const ProjectInfo = [

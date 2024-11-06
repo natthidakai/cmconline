@@ -50,6 +50,9 @@ const Menubar = () => {
                             <Nav.Link href="/bookingstep" className="th" onClick={handleLinkClick}>
                                 ขั้นตอนการจอง
                             </Nav.Link>
+                            <Nav.Link href="/mybooking" className="th" onClick={handleLinkClick}>
+                                แจ้งชำระเงิน
+                            </Nav.Link>
                         </Nav>
 
                         {session ? (

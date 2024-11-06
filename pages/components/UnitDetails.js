@@ -11,9 +11,14 @@ const UnitDetails = () => {
     const router = useRouter();
     const { projectID } = router.query;
 
+    // ค้นหา projectInfo ตาม projectID ที่ได้จาก query
     const projectInfo = ProjectInfo.find((s) => s.id === projectID);
     const [unitDetails, setUnitDetails] = useState([]);
 
+    if (!projectInfo) {
+        // กรณีที่ไม่พบ projectInfo ตาม projectID ที่ระบุ
+        return <div>ไม่พบข้อมูลโปรเจกต์ที่คุณค้นหา</div>;
+    }
 
     return (
         <Row className='justify-content-center-m'>
@@ -50,16 +55,7 @@ const UnitDetails = () => {
                         <h6 className='th'>สิ่งอำนวยความสะดวก</h6>
                         <Row>
                             {projectInfo.facilities.map((facility, index) => (
-                                <Col
-                                    key={index}
-                                    className="font-16 font-300 pb-2 th"
-                                    xxl="6"
-                                    xl="6"
-                                    lg="6"
-                                    md="6"
-                                    sm="6"
-                                    xs="6"
-                                >
+                                <Col key={index} className="font-16 font-300 pb-2 th" xxl="6" xl="6" lg="6" md="6" sm="6" xs="6" >
                                     <Image src={Check} alt="" width={16} /> {facility}
                                 </Col>
                             ))}

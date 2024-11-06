@@ -1,6 +1,9 @@
 import React from 'react';
-import Lottie from 'react-lottie';
+import dynamic from 'next/dynamic';
 import animationData from '../../assert/animations/Animation.json';
+
+// โหลด Lottie โดยใช้ dynamic import
+const Lottie = dynamic(() => import('react-lottie'), { ssr: false });
 
 const Loading = () => {
     // กำหนดค่าเริ่มต้นสำหรับแอนิเมชัน

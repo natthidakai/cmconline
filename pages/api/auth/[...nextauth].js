@@ -49,8 +49,8 @@ export default NextAuth({
                         postal_code: user.postal_code,
                     };
                 } catch (error) {
-                    console.error("Error accessing the database:", error);
-                    throw new Error(error.message);
+                    console.error("Authorize error:", error);
+                    throw new Error("เกิดข้อผิดพลาดในการตรวจสอบข้อมูล");
                 }
             }
         })
@@ -127,5 +127,5 @@ export default NextAuth({
             return session;
         }
     },
-    debug: process.env.NODE_ENV === 'development', // เปิด debug เฉพาะในโหมดพัฒนา
+    debug: process.env.NODE_ENV === 'development',
 });
