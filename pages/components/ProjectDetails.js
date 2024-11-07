@@ -8,7 +8,7 @@ import Map from "../../assert/images/map.png";
 import Check from "../../assert/images/check.png";
 import Default from "../../assert/images/default.jpg";
 
-import ProjectInfo from "../../data/projectinfo";
+import ProjectInfo from "../api/data/projectinfo";
 import Loading from "./loading";
 
 
@@ -31,7 +31,7 @@ const ProjectDetails = () => {
                 <Loading />
             ) : (
                 <>
-                    <Col xxl="4" xl="4" lg="6" md="6" sm="12" xs="12" className="hoverImageProjectInfo border-radius-20">
+                    <Col xxl="4" xl="4" lg="6" md="6" sm="10" xs="10" className="hoverImageProjectInfo border-radius-20">
                         {projectInfo.pic ? (
                             <Image
                                 src={projectInfo.pic}
@@ -50,7 +50,7 @@ const ProjectDetails = () => {
                             />
                         )}
                     </Col>
-                    <Col xxl="8" xl="8" lg="6" md="6" sm="12" xs="12" className="pl-2 py-4">
+                    <Col xxl="8" xl="8" lg="6" md="6" sm="10" xs="10" className="py-4 box-facility">
                         <Col className="mb-5">
                             <Col className="th project-name name-info">{projectInfo.nameProject}</Col>
                             <Col className="align-items-baseline">
@@ -72,14 +72,7 @@ const ProjectDetails = () => {
                                         {projectInfo.facilities.map((facility, index) => (
                                             <Col
                                                 key={index}
-                                                className="font-16 font-300 pb-2"
-                                                xxl="6"
-                                                xl="6"
-                                                lg="6"
-                                                md="6"
-                                                sm="6"
-                                                xs="6"
-                                            >
+                                                className="font-16 font-300 pb-2" xxl="6" xl="6" lg="6" md="6" sm="6" xs="6">
                                                 <Image src={Check} alt="" width={16} /> {facility}
                                             </Col>
                                         ))}

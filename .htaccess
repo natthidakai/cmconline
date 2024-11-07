@@ -1,0 +1,13 @@
+RewriteEngine On
+
+# เปลี่ยนเส้นทางคำขอที่มาจาก _next ไปที่ .next
+RewriteCond %{REQUEST_URI} ^/_next/
+RewriteRule ^_next/(.*)$ /.next/$1 [L]
+
+# Proxy ทุกคำขอไปยังแอปพลิเคชัน Next.js ที่พอร์ต 3000
+RewriteRule ^(.*)$ http://127.0.0.1:3000/$1 [P,L]
+
+# กำหนดให้เส้นทางทั้งหมดที่ไม่ใช่ไฟล์หรือโฟลเดอร์ส่งไปที่ Next.js
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ /index.html [L]

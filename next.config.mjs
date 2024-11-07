@@ -4,6 +4,7 @@ const nextConfig = {
   images: {
     domains: ['localhost'], // อนุญาตโดเมนนี้
   },
+  distDir: '_next',
 };
 
 export default nextConfig;
