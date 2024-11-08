@@ -69,7 +69,7 @@ export const useAuth = () => {
     };
 
     const handleSignOut = () => {
-        signOut({ callbackUrl: '/' });
+        signOut({ callbackUrl: process.env.NEXTAUTH_URL || '/' });
     };
 
     const handleSignInChange = (e) => {

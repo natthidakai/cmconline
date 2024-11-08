@@ -1,5 +1,5 @@
-import BHBN36 from "../assert/images/BH-BN36.jpg";
-import CTE18P from "../assert/images/CT-E18P.jpg";
+import BHBN36 from "../../../assert/images/BH-BN36.jpg";
+import CTE18P from "../../../assert/images/CT-E18P.jpg";
 
 const ProjectInfo = [
     {

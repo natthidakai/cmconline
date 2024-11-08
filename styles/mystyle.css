@@ -252,6 +252,15 @@ h5 {
     border-color: #034078;
 }
 
+.btn-primary {
+    background-color: #034078 !important;
+    border-color: #034078 !important;
+    padding: .6rem 2.5rem !important;
+    border-radius: 2em !important;
+    font-size: 1.1rem !important;
+    font-family: Noto Sans Thai !important;
+}
+
 a.btn-xl.th.btn.btn-primary:hover {
     color: #fff !important;
 }
@@ -396,7 +405,7 @@ a.btn-xl.th.btn.btn-primary:hover {
 
 .step-active {
     background-color: #034078;
-    /* เปลี่ยนเป็นสีที่ต้องการ */
+    box-shadow: 0 0 0 6px #c8e3f7;
     color: white;
 }
 
@@ -410,6 +419,9 @@ fieldset:disabled .btn {
 
 .btn.active {
     background-color: #034078 !important;
+}
+.font-12 {
+    font-size: 12px;
 }
 
 .font-13 {
@@ -473,6 +485,7 @@ fieldset:disabled .btn {
     transition: opacity 0.3s, transform 0.3s;
     background-color: #034078;
     border-color: #034078;
+    color: #fff;
 }
 
 .back-to-top:hover {
@@ -586,7 +599,7 @@ select,
 }
 
 .navbar-toggler:focus {
-    box-shadow: 0px 0px 2px 5px #0340788c;
+    box-shadow: 0 0 0 6px #c8e3f7;
 }
 
 .bg-body-tertiary {
@@ -10248,6 +10261,32 @@ select,
         padding: 0 30px 50px;
         box-shadow: 10px 10px 10px 10px rgb(221 221 221 / 75%);
         border-radius: 30px;
+    }
+
+    .font-12 {
+        font-size: 9px;
+    }
+
+    .back-to-top {
+        bottom: 50px;
+    }
+
+    .box-login-menu {
+        width: 80%;
+    }
+
+    .dropdown-menu.show, .box-profile-menu {
+        border: none;
+    }
+}
+
+@media (max-width: 1023.98px) {
+    .box-login-menu {
+        width: 80%;
+    }
+
+    .dropdown-menu.show, .box-profile-menu {
+        border: none;
     }
 }
 

@@ -50,7 +50,7 @@ export default NextAuth({
                     };
                 } catch (error) {
                     console.error("Authorize error:", error);
-                    throw new Error("เกิดข้อผิดพลาดในการตรวจสอบข้อมูล");
+                    throw new Error("เข้าสู่ระบบไม่สำเร็จ กรุณาตรวจสอบข้อมูล และลองใหม่อีกครั้ง");
                 }
             }
         })

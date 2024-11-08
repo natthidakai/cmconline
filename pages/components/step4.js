@@ -8,8 +8,8 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import Image from "next/image";
 import Loading from './loading';
 import LOGO from "../../assert/images/logo.jpg";
-import ProjectPayment from "../../data/payment";
-import ProjectInfo from "../../data/projectinfo";
+import ProjectPayment from "../api/data/payment";
+import ProjectInfo from "../api/data/projectinfo";
 
 const Step4 = () => {
     const { data: session, status } = useSession();

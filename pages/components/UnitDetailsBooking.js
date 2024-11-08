@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Pin from "../../assert/images/pin.png";
 import Call from "../../assert/images/phone-call.png";
 
-import ProjectInfo from "../../data/projectinfo";
+import ProjectInfo from "../api/data/projectinfo";
 
 import Loading from './loading';
 
@@ -102,7 +102,7 @@ const UnitDetailsBooking = ({
                                     />
                                 )}
                             </Col>
-                            <Col className='align-content-center pl-2' xxl="8" xl="8" lg="6" md="6" sm="10" xs="10">
+                            <Col className='align-content-center box-facility' xxl="8" xl="8" lg="6" md="6" sm="10" xs="10">
                                 <Col className="th project-name name-info">{projectInfo.nameProject}</Col>
                                 <Col xxl="7" xl="7" lg="7" md="10" sm="12" xs="12" className='mb-3'>
                                     <Row>

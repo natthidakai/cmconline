@@ -1,6 +1,6 @@
 // components/BackToTop.jsx
 import React, { useState, useEffect } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Col } from 'react-bootstrap';
 import { SlArrowUp } from "react-icons/sl";
 
 const BackToTop = () => {
@@ -8,7 +8,7 @@ const BackToTop = () => {
 
     useEffect(() => {
         const handleScroll = () => {
-            if (window.scrollY > 300) { // Show button after scrolling down 300px
+            if (window.scrollY > 100) { // Show button after scrolling down 300px
                 setShow(true);
             } else {
                 setShow(false);
@@ -30,13 +30,13 @@ const BackToTop = () => {
 
     return (
         show && (
-            <Button
+            <Col
                 className="back-to-top"
                 onClick={scrollToTop}
                 variant="primary"
             >
                 <SlArrowUp />
-            </Button>
+            </Col>
         )
     );
 };
