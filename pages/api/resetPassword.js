@@ -94,7 +94,7 @@ function generateOtp(length = 6) {
 }
 
 async function storeOtpInDatabase(memberId, otp) {
-    const expiryTime = new Date(Date.now() + 5 * 60 * 1000);
+    const expiryTime = new Date(Date.now() + 1 * 60 * 1000); // กำหนดอายุของ OTP เป็น 1 นาที
     const createdAt = new Date();
 
     const query = 'INSERT INTO otp_requests (member_id, otp, otp_expiry, created_at) VALUES (?, ?, ?, ?)';
@@ -108,8 +108,32 @@ async function sendOtpToEmail(memberId, email) {
 }
 
 async function validateOtp(email, otp) {
-    const query = 'SELECT * FROM otp_requests WHERE member_id = (SELECT member_id FROM members WHERE email = ?) AND otp = ? AND otp_expiry > NOW()';
+    console.log(`Validating OTP for email: ${email} with OTP: ${otp}`);
+    const query = `
+        SELECT * 
+        FROM otp_requests 
+        WHERE member_id = (SELECT member_id FROM members WHERE email = ?) 
+        AND otp = ? 
+        AND otp_expiry > NOW()
+    `;
     const [result] = await Mysql.query(query, [email, otp]);
 
-    return result.length > 0; // Return true if the OTP is valid
+    console.log('Validation result:', result);
+
+    if (result.length > 0) {
+        // ลบ OTP ที่ถูกใช้เพื่อลดความเสี่ยงในการใช้ซ้ำ
+        await Mysql.query('DELETE FROM otp_requests WHERE member_id = (SELECT member_id FROM members WHERE email = ?) AND otp = ?', [email, otp]);
+        return true; // OTP ถูกต้องและยังไม่หมดอายุ
+    }
+
+    return false; // OTP ไม่ถูกต้องหรือหมดอายุ
+}
+
+async function clearExpiredOtps() {
+    try {
+        await Mysql.query('DELETE FROM otp_requests WHERE otp_expiry <= NOW()');
+        console.log('Expired OTPs cleared from the database');
+    } catch (error) {
+        console.error('Error clearing expired OTPs:', error.message);
+    }
 }

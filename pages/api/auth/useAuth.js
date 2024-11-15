@@ -160,21 +160,38 @@ export const useAuth = () => {
         }
     };
 
+    const handleChangeCheckEmail = (e) => {
+        const { id, value } = e.target;
+        setResetPsw((prevData) => ({
+            ...prevData,
+            [id]: value, // Update the specific input's value
+        }));
+        if (errorsSignIn.message) {
+            setErrorsSignIn({}); // Clear errors if any
+        }
+    };
+
     const checkEmail = async (e) => {
         e.preventDefault();
-
-        if (!resetPsw.email) {
-            setErrorsSignIn({ message: 'กรุณาระบุอีเมล' });
-            return;
-        }
-
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(resetPsw.email)) {
-            setErrorsSignIn({ message: 'รูปแบบอีเมลไม่ถูกต้อง โปรดลองอีกครั้ง' });
-            return;
-        }
-
         setIsLoading(true);
+        setErrorsSignIn({});
 
+        // ตรวจสอบว่าอีเมลไม่เป็นค่าว่าง
+        if (!resetPsw.email) {
+            setErrorsSignIn({ message: "กรุณาระบุอีเมล" });
+            setIsLoading(false);
+            return;
+        }
+
+        // ตรวจสอบรูปแบบอีเมล
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(resetPsw.email)) {
+            setErrorsSignIn({ message: "รูปแบบอีเมลไม่ถูกต้อง โปรดลองอีกครั้ง" });
+            setIsLoading(false);
+            return;
+        }
+
+        // ส่งคำขอไปยัง API
         try {
             const response = await fetch('/api/resetPassword', {
                 method: 'POST',
@@ -189,15 +206,15 @@ export const useAuth = () => {
             if (response.ok) {
                 setShowNewPassword(true);
                 setEmailChecked(true);
-                setErrorsSignIn(''); // Clear errors on success
+                setErrorsSignIn('');
             } else {
-                setErrorsSignIn({ message: data.message }); // Display error message
+                setErrorsSignIn({ message: data.message });
             }
         } catch (error) {
             console.error('Error during email check:', error);
-            setErrorsSignIn({ message: 'เกิดข้อผิดพลาดในการตรวจสอบอีเมล' }); // General error message
+            setErrorsSignIn({ message: 'เกิดข้อผิดพลาดในการตรวจสอบอีเมล' });
         } finally {
-            setIsLoading(false); // Stop loading
+            setIsLoading(false);
         }
     };
 
@@ -207,6 +224,11 @@ export const useAuth = () => {
         // Validate email
         if (!resetPsw.email) {
             setErrorsSignIn({ message: 'กรุณาระบุอีเมล' });
+            return;
+        }
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(resetPsw.email)) {
+            setErrorsSignIn({ message: 'รูปแบบอีเมลไม่ถูกต้อง โปรดลองอีกครั้ง' });
             return;
         }
 
@@ -315,6 +337,7 @@ export const useAuth = () => {
         setEmailChecked,
         showNewPassword,
         requestNewOTP,
+        handleChangeCheckEmail,
         isLoggedIn: !!session,
     };
 };

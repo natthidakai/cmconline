@@ -8,26 +8,21 @@ import LOGO from "../../assert/images/logo.jpg";
 const ForgotPassword = () => {
     const {
         resetPsw,
-        setResetPsw,
         errorsSignIn,
-        setErrorsSignIn,
         checkEmail,
         resetPassword,
         emailChecked,
         showNewPassword,
         requestNewOTP,
         isLoading,
+        handleChangeCheckEmail
     } = useAuth();
 
     const { handleEmailKeyPress } = validationForm();
-    
-    const [timeLeft, setTimeLeft] = useState(1 * 60 * 1000); // OTP expires in 5 minutes
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setResetPsw((prev) => ({ ...prev, [name]: value }));
-        setErrorsSignIn((prev) => ({ ...prev, [name]: '' }));
-    };
+    const [timeLeft, setTimeLeft] = useState(1 * 60 * 1000); // OTP expires in 1 minutes
+
+
 
     // Countdown logic
     useEffect(() => {
@@ -63,7 +58,7 @@ const ForgotPassword = () => {
                     </div>
 
                     {!emailChecked ? (
-                        <form onSubmit={checkEmail}>
+                        <Col>
                             <Col className="mb-4">
                                 <label htmlFor="email" className="form-label th">อีเมล</label>
                                 <input
@@ -72,20 +67,20 @@ const ForgotPassword = () => {
                                     name="email"
                                     className="form-control"
                                     value={resetPsw.email}
-                                    onChange={handleInputChange}
-                                    onKeyPress={handleEmailKeyPress}
+                                    onChange={handleChangeCheckEmail}
+                                    onKeyDown={handleEmailKeyPress}
                                 />
-                                {errorsSignIn.message && <p className="mt-3 th text-center text-danger">{errorsSignIn.message}</p>}
+                                {errorsSignIn.message && (<div className="text-danger mt-3 th center"> {errorsSignIn.message} </div>)}
                             </Col>
                             <Col className="justify-content-center">
-                                <Button type="submit" className="btn-xl th" disabled={isLoading}>
+                                <Button type="submit" className="btn-xl th" disabled={isLoading} onClick={checkEmail}>
                                     {isLoading ? 'กำลังดำเนินการ...' : 'ตรวจสอบอีเมล'}
                                 </Button>
                             </Col>
-                        </form>
+                        </Col>
                     ) : (
                         showNewPassword && (
-                            <form onSubmit={resetPassword}>
+                            <Col>
                                 <Col className="mb-4">
                                     <label htmlFor="otp" className="form-label th">OTP</label>
                                     <input
@@ -94,7 +89,7 @@ const ForgotPassword = () => {
                                         name="otp"
                                         className="form-control"
                                         value={resetPsw.otp}
-                                        onChange={handleInputChange}
+                                        onChange={handleChangeCheckEmail}
                                     />
                                     <div className="th mt-3 font-14 center text-red">อายุ OTP: {minutes} นาที {seconds} วินาที</div>
                                     <div onClick={handleRequestNewOtp} className="th font-14 text-blue center pointer">ขอ OTP ใหม่</div>
@@ -107,7 +102,7 @@ const ForgotPassword = () => {
                                         name="newPassword"
                                         className="form-control"
                                         value={resetPsw.newPassword}
-                                        onChange={handleInputChange}
+                                        onChange={handleChangeCheckEmail}
                                     />
                                 </Col>
                                 <Col className="mb-4">
@@ -118,18 +113,18 @@ const ForgotPassword = () => {
                                         name="confirmPassword"
                                         className="form-control"
                                         value={resetPsw.confirmPassword}
-                                        onChange={handleInputChange}
+                                        onChange={handleChangeCheckEmail}
                                     />
                                 </Col>
                                 {errorsSignIn.message && <p className="mt-3 th text-center text-danger">{errorsSignIn.message}</p>}
                                 <Row>
                                     <Col className="justify-content-center">
-                                        <Button type='submit' className="btn-xl th" disabled={isLoading}>
+                                        <Button type='submit' className="btn-xl th" disabled={isLoading} onClick={resetPassword}>
                                             {isLoading ? 'กำลังดำเนินการ...' : 'รีเซ็ตรหัสผ่าน'}
                                         </Button>
                                     </Col>
                                 </Row>
-                            </form>
+                            </Col>
                         )
                     )}
                 </Row>

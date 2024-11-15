@@ -1,4 +1,3 @@
-// Import necessary modules
 import Mysql from '../../connect/mysql';
 import nodemailer from 'nodemailer';
 import { sqlConfig } from '../../connect/sql';

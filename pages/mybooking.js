@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import ProjectInfo from "./api/data/projectinfo";
 import { Container, Row, Col } from "react-bootstrap";
 import Image from 'next/image';
+import Link from 'next/link';
 import Default from "../assert/images/default.jpg";
 import Loading from "./components/loading";
 
@@ -91,7 +92,10 @@ const BookingList = () => {
                                                     height={300} // Adjust height
                                                 />
                                             </div>
-                                            <Col className={`th  ${getStatusClassName(booking.status)}`}>{booking.status}</Col>
+                                            <Link href={`/payment?projectID=${booking.projectID}&bookingID=${booking.booking_id}&unitNumber=${booking.unitNumber}`}>
+                                                <Col className={`th  ${getStatusClassName(booking.status)}`}>{booking.status}</Col>
+                                            </Link>
+                                            
                                             <Col className="bg-white p-4 border-radius-bottom">
                                                 <Col className="th project-name">{projectInfo.nameProject} {projectInfo.location}</Col>
                                                 <Col className="th">หมายเลขการจอง : {booking.booking_id}</Col>

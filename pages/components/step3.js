@@ -214,7 +214,7 @@ const Step3 = () => {
                 <Row>
                   <Col className="justify-content-center">
                     <Button type="button" className="btn-xl th" onClick={handleSubmit} disabled={isLoading}>
-                      {isLoading ? 'กำลังดำเนินการ...' : 'บันทึกข้อมูล'}
+                      {isLoading ? 'กำลังดำเนินการ...' : 'ลงทะเบียน'}
                     </Button>
                   </Col>
                 </Row>

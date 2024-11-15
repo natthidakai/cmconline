@@ -121,6 +121,7 @@ const FloorPlanAndUnits = () => {
                         </Col>
                     </Row>
 
+                    <Col className="relative">
                     {/* Display Floor Plan Image */}
                     <Row className="py-4">
                         <Col className="justify-content-center">
@@ -155,6 +156,7 @@ const FloorPlanAndUnits = () => {
                     ) : (
                         <p>ไม่มีข้อมูลยูนิตสำหรับชั้นนี้</p>
                     )}
+                    </Col>
                 </>
             )
             }

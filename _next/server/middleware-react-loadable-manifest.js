@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST="{}"
+self.__REACT_LOADABLE_MANIFEST="{\"pages\\\\components\\\\loading.js -> react-lottie\":{\"id\":\"pages\\\\components\\\\loading.js -> react-lottie\",\"files\":[\"static/chunks/node_modules_react-lottie_dist_index_js.js\"]}}"

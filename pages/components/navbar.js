@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Container, Navbar, Offcanvas, NavDropdown, Nav, Col } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
@@ -13,6 +13,25 @@ const Menubar = () => {
     const { data: session } = useSession();
     const [showOffcanvas, setShowOffcanvas] = useState(false);
     const { handleSignOut, isLoggedIn } = useAuth();
+    const [isMobile, setIsMobile] = useState(false);
+
+    // ตรวจสอบขนาดหน้าจอ
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 991.98);
+        };
+
+        // ตรวจสอบครั้งแรก
+        handleResize();
+
+        // เพิ่ม event listener สำหรับการเปลี่ยนแปลงขนาดหน้าจอ
+        window.addEventListener('resize', handleResize);
+
+        // ลบ event listener เมื่อ component ถูกทำลาย
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     const handleLinkClick = useCallback(() => {
         setShowOffcanvas(false);
@@ -45,7 +64,7 @@ const Menubar = () => {
                         </Offcanvas.Title>
                     </Offcanvas.Header>
 
-                    <Offcanvas.Body className="p-3 font-18">
+                    <Offcanvas.Body className="font-18">
                         <Nav className="mb-0">
                             <Nav.Link href="/bookingstep" className="th" onClick={handleLinkClick}>
                                 ขั้นตอนการจอง
@@ -53,44 +72,124 @@ const Menubar = () => {
                             <Nav.Link href="/mybooking" className="th" onClick={handleLinkClick}>
                                 แจ้งชำระเงิน
                             </Nav.Link>
+                            <Nav.Link href="https://www.cmc.co.th/%e0%b8%95%e0%b8%b4%e0%b8%94%e0%b8%95%e0%b9%88%e0%b8%ad%e0%b9%80%e0%b8%a3%e0%b8%b2/" target="_blank" className="th" onClick={handleLinkClick}>
+                                ติดต่อเรา
+                            </Nav.Link>
                         </Nav>
 
-                        {session ? (
-                            <NavDropdown
-                                title={
-                                    <span className="align-items-center nav-dropdown-title">
+                        {isMobile ? (
+                            <>
+                                {session ? (
+                                    <>
+                                        {isMobile ? (
+                                            <NavDropdown
+                                                title={
+                                                    <span className="align-items-center nav-dropdown-title">
+                                                        <Image src={User} alt="User Icon" width={20} height={20} />
+                                                        <span className="ms-2">ข้อมูลของฉัน</span>
+                                                    </span>
+                                                } 
+                                                id="basic-nav-dropdown" className="th font-18"
+                                            >
+                                                <NavDropdown.Item as={Link} href={`/profile`} onClick={handleLinkClick}>
+                                                    ข้อมูลส่วนตัว
+                                                </NavDropdown.Item>
+                                                <NavDropdown.Item as={Link} href={`/mybooking`} onClick={handleLinkClick}>
+                                                    รายการจอง
+                                                </NavDropdown.Item>
+                                                <NavDropdown.Item as={Link} href={`/password`} onClick={handleLinkClick}>
+                                                    เปลี่ยนรหัสผ่าน
+                                                </NavDropdown.Item>
+                                                <NavDropdown.Item href="#" onClick={handleSignOut}>
+                                                    ออกจากระบบ
+                                                </NavDropdown.Item>
+                                            </NavDropdown>
+                                        ) : (
+                                            <>
+                                                {/* เมนูปกติ */}
+                                                <NavDropdown.Item as={Link} href={`/profile`} onClick={handleLinkClick}>
+                                                    ข้อมูลส่วนตัว
+                                                </NavDropdown.Item>
+                                                <NavDropdown.Item as={Link} href={`/mybooking`} onClick={handleLinkClick}>
+                                                    รายการจอง
+                                                </NavDropdown.Item>
+                                                <NavDropdown.Item as={Link} href={`/password`} onClick={handleLinkClick}>
+                                                    เปลี่ยนรหัสผ่าน
+                                                </NavDropdown.Item>
+                                                <NavDropdown.Item href="#" onClick={handleSignOut}>
+                                                    ออกจากระบบ
+                                                </NavDropdown.Item>
+                                            </>
+                                        )}
+                                    </>
+                                ) : (
+                                    <div className="th box-login-menu d-flex align-items-center">
                                         <Image src={User} alt="User Icon" width={20} height={20} />
-                                        <span className="ms-2">ข้อมูลของฉัน</span>
-                                    </span>
-                                }
-                                id="basic-nav-dropdown"
-                                className="th font-18 mb-0 box-profile-menu ms-3"
-                            >
-                                <NavDropdown.Item as={Link} href={`/profile`} onClick={handleLinkClick}>
-                                    ข้อมูลส่วนตัว
-                                </NavDropdown.Item>
-                                <NavDropdown.Item as={Link} href={`/mybooking`} onClick={handleLinkClick}>
-                                    รายการจอง
-                                </NavDropdown.Item>
-                                <NavDropdown.Item as={Link} href={`/password`} onClick={handleLinkClick}>
-                                    เปลี่ยนรหัสผ่าน
-                                </NavDropdown.Item>
-                                <NavDropdown.Item href="#" onClick={handleSignOut}>
-                                    ออกจากระบบ
-                                </NavDropdown.Item>
-                            </NavDropdown>
+                                        <Link href={`/signup`} onClick={handleLinkClick} className="ms-2 text-blue">
+                                            สมัครสมาชิก
+                                        </Link>
+                                        <span className="ms-2">|</span>
+                                        <Link href={`/signin`} onClick={handleLinkClick} className="ms-2 text-blue">
+                                            เข้าสู่ระบบ
+                                        </Link>
+                                    </div>
+                                )}
+                            </>
                         ) : (
-                            <div className="th box-login-menu d-flex align-items-center">
-                                <Image src={User} alt="User Icon" width={20} height={20} />
-                                <Link href={`/signup`} onClick={handleLinkClick} className="ms-2 text-blue">
-                                    สมัครสมาชิก
-                                </Link>
-                                <span className="ms-2">|</span>
-                                <Link href={`/signin`} onClick={handleLinkClick} className="ms-2 text-blue">
-                                    เข้าสู่ระบบ
-                                </Link>
-                            </div>
+                            <>
+                                {/* เมนูปกติ */}
+                                {session ? (
+                                    <NavDropdown
+                                        title={
+                                            <span className="align-items-center nav-dropdown-title">
+                                                <Image src={User} alt="User Icon" width={20} height={20} />
+                                                <span className="ms-2">ข้อมูลของฉัน</span>
+                                            </span>
+                                        }
+                                        id="basic-nav-dropdown"
+                                        className="th font-18 mb-0 box-profile-menu ms-3"
+                                    >
+                                        {isMobile ? (
+                                            <>
+                                                {/* เมนูเพิ่มเติมเมื่อเป็นหน้าจอมือถือ */}
+                                                <NavDropdown.Item as={Link} href={`/mobile-profile`} onClick={handleLinkClick}>
+                                                    โปรไฟล์มือถือ
+                                                </NavDropdown.Item>
+                                            </>
+                                        ) : (
+                                            <>
+                                                {/* เมนูปกติ */}
+                                                <NavDropdown.Item as={Link} href={`/profile`} onClick={handleLinkClick}>
+                                                    ข้อมูลส่วนตัว
+                                                </NavDropdown.Item>
+                                                <NavDropdown.Item as={Link} href={`/mybooking`} onClick={handleLinkClick}>
+                                                    รายการจอง
+                                                </NavDropdown.Item>
+                                                <NavDropdown.Item as={Link} href={`/password`} onClick={handleLinkClick}>
+                                                    เปลี่ยนรหัสผ่าน
+                                                </NavDropdown.Item>
+                                                <NavDropdown.Item href="#" onClick={handleSignOut}>
+                                                    ออกจากระบบ
+                                                </NavDropdown.Item>
+                                            </>
+                                        )}
+                                    </NavDropdown>
+                                ) : (
+                                    <div className="th box-login-menu d-flex align-items-center">
+                                        <Image src={User} alt="User Icon" width={20} height={20} />
+                                        <Link href={`/signup`} onClick={handleLinkClick} className="ms-2 text-blue">
+                                            สมัครสมาชิก
+                                        </Link>
+                                        <span className="ms-2">|</span>
+                                        <Link href={`/signin`} onClick={handleLinkClick} className="ms-2 text-blue">
+                                            เข้าสู่ระบบ
+                                        </Link>
+                                    </div>
+                                )}
+                            </>
                         )}
+
+
                     </Offcanvas.Body>
                 </Navbar.Offcanvas>
             </Container>
