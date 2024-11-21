@@ -24,20 +24,15 @@ self.__BUILD_MANIFEST = {
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/bookingstep": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/bookingstep.js"
-    ],
     "/mybooking": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/mybooking.js"
     ],
-    "/payment": [
+    "/signin": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/payment.js"
+      "static/chunks/pages/signin.js"
     ],
     "/step/[step]": [
       "static/chunks/webpack.js",

@@ -73,7 +73,11 @@ const BookingList = () => {
                 </Col>
                 <Col xx="12" xl="12" lg="11" md="11" sm="10" xs="10">
                     {bookings.length === 0 ? (
-                        <p className='th center text-danger'>- ไม่มีรายการจอง -</p>
+                        <Col className='none-booking'>
+
+                            <p className='th center text-danger'>- ไม่มีรายการจอง -</p>
+
+                        </Col>
                     ) : (
                         <Row>
                             {bookings.map((booking) => {

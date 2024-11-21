@@ -2,15 +2,13 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/step/[step]": "pages/step/[step].js",
+  "/": "pages/index.js",
+  "/signin": "pages/signin.js",
   "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js",
+  "/api/callProject": "pages/api/callProject.js",
+  "/step/[step]": "pages/step/[step].js",
+  "/api/callStatus": "pages/api/callStatus.js",
   "/api/getModelIDs": "pages/api/getModelIDs.js",
   "/api/getDetail": "pages/api/getDetail.js",
-  "/api/getUser": "pages/api/getUser.js",
-  "/api/booking": "pages/api/booking.js",
-  "/api/callStatus": "pages/api/callStatus.js",
-  "/api/getBookings": "pages/api/getBookings.js",
-  "/mybooking": "pages/mybooking.js",
-  "/payment": "pages/payment.js",
-  "/api/notify": "pages/api/notify.js"
+  "/mybooking": "pages/mybooking.js"
 }
