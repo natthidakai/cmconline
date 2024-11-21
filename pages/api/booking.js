@@ -3,6 +3,7 @@ import nodemailer from 'nodemailer';
 import { sqlConfig } from '../../connect/sql';
 import ProjectPayment from "../api/data/payment";
 import sql from 'mssql';
+import fetch from 'node-fetch';
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
@@ -82,8 +83,6 @@ export default async function handler(req, res) {
             }
 
             // Find payment information
-            console.log('ProjectPayment:', ProjectPayment); // Log payment data
-            console.log('Project ID ที่รับมา:', projectID); // Log projectID
             const projectPayment = ProjectPayment.find(payment => payment.id === projectID);
             if (!projectPayment) {
                 return res.status(404).json({ error: 'ไม่พบข้อมูลการชำระเงินสำหรับโครงการนี้' });
@@ -93,6 +92,18 @@ export default async function handler(req, res) {
             await sendBooking(
                 first_name, last_name, email, phone, projectName, unitNumber, projectPayment
             );
+
+            const [bookingRow] = await connection.execute(`SELECT LAST_INSERT_ID() AS bookingID`);
+            const bookingID = bookingRow[0].bookingID;
+
+            // สร้างข้อความสำหรับ LINE Notify
+            const lineMessage = `แจ้งเตือนการจองใหม่:\nBooking ID: ${bookingID}\n- ชื่อ: ${first_name} ${last_name}\n- เบอร์โทร: ${phone}\n- โครงการ: ${projectName}\n- ห้อง: ${unitNumber}`;
+
+            // ส่งข้อความเข้า LINE Notify
+            const lineNotifyResult = await sendLineNotify(lineMessage);
+            if (!lineNotifyResult) {
+                console.error("LINE Notify ส่งข้อความล้มเหลว");
+            }
 
             res.status(200).json({ message: 'อัปเดตข้อมูลสมาชิกและเพิ่มการจองใหม่สำเร็จ' });
         } catch (err) {
@@ -149,7 +160,6 @@ async function sendBooking(first_name, last_name, email, phone, projectName, uni
             </div>
         `,
     };
-    
 
     try {
         await transporter.sendMail(mailOptions);
@@ -157,5 +167,34 @@ async function sendBooking(first_name, last_name, email, phone, projectName, uni
     } catch (error) {
         console.error('Error sending email:', error);
         throw new Error(`ไม่สามารถส่งอีเมลยืนยันการจอง: ${error.message}`);
+    }
+}
+
+// Function to send LINE Notify
+async function sendLineNotify(message) {
+    try {
+        const formData = new URLSearchParams();
+        formData.append("message", message);
+
+        const response = await fetch("https://notify-api.line.me/api/notify", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Authorization": `Bearer ${process.env.LINE_NOTIFY_TOKEN_CTE18P}`, // LINE Notify Token
+            },
+            body: formData,
+        });
+
+        if (!response.ok) {
+            const responseText = await response.text();
+            console.error("LINE Notify Error:", response.status, responseText);
+            return false;
+        }
+
+        console.log("LINE Notify Success");
+        return true;
+    } catch (error) {
+        console.error("Error sending LINE Notify:", error);
+        return false;
     }
 }

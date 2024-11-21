@@ -10,10 +10,7 @@ import ProjectInfo from "../api/data/projectinfo";
 
 import Loading from './loading';
 
-const UnitDetailsBooking = ({
-    selectedFloor,
-    selectedTower,
-}) => {
+const UnitDetailsBooking = () => {
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -160,7 +157,7 @@ const UnitDetailsBooking = ({
                                                 </Row>
 
                                                 {/* Corrected the Button and unitNumber reference */}
-                                                <Button className="btn-xl th" href={`/step/3?projectID=${projectID}&floorName=${selectedFloor}&towerName=${selectedTower}&unitNumber=${unitNumber}`}>
+                                                <Button className="btn-xl th" href={`/step/3?projectID=${projectID}&floorName=${floorName}&towerName=${towerName}&unitNumber=${unitNumber}`}>
                                                     จองทันที
                                                 </Button>
                                             </Col>

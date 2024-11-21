@@ -53,6 +53,8 @@ const BookingList = () => {
         switch (status) {
             case "รอชำระเงิน":
                 return "awaiting-payment";
+            case "ตรวจสอบการจอง":
+                return "check-booking";
             case "ยกเลิกการจอง":
                 return "cancel-reservation";
             case "การจองสำเร็จ":
@@ -83,19 +85,40 @@ const BookingList = () => {
                                         </div> */}
                                         <div className="project-shadows border-radius-20">
                                             <div className="hoverImageWrapper">
-                                                <Image
-                                                    src={projectInfo.pic || Default}
-                                                    alt={projectInfo.nameProject}
-                                                    className="img-100 p-0 hoverImage"
-                                                    layout="responsive"
-                                                    width={500} // Adjust width
-                                                    height={300} // Adjust height
-                                                />
+                                                {booking.status === "รอชำระเงิน" ? (
+                                                    <Link href={`/payment?projectID=${booking.projectID}&bookingID=${booking.booking_id}&unitNumber=${booking.unitNumber}`}>
+                                                        <Image
+                                                            src={projectInfo.pic || Default}
+                                                            alt={projectInfo.nameProject}
+                                                            className="img-100 p-0 hoverImage"
+                                                            layout="responsive"
+                                                            width={500} // Adjust width
+                                                            height={300} // Adjust height
+                                                        />
+                                                    </Link>
+                                                ) : (
+                                                    <Image
+                                                        src={projectInfo.pic || Default}
+                                                        alt={projectInfo.nameProject}
+                                                        className="img-100 p-0 hoverImage"
+                                                        layout="responsive"
+                                                        width={500} // Adjust width
+                                                        height={300} // Adjust height
+                                                    />
+                                                )}
                                             </div>
-                                            <Link href={`/payment?projectID=${booking.projectID}&bookingID=${booking.booking_id}&unitNumber=${booking.unitNumber}`}>
-                                                <Col className={`th  ${getStatusClassName(booking.status)}`}>{booking.status}</Col>
-                                            </Link>
-                                            
+                                            {booking.status === "รอชำระเงิน" ? (
+                                                <Link href={`/payment?projectID=${booking.projectID}&bookingID=${booking.booking_id}&unitNumber=${booking.unitNumber}`}>
+                                                    <Col className={`th ${getStatusClassName(booking.status)}`}>
+                                                        {booking.status}
+                                                    </Col>
+                                                </Link>
+                                            ) : (
+                                                <Col className={`th ${getStatusClassName(booking.status)}`}>
+                                                    {booking.status}
+                                                </Col>
+                                            )}
+
                                             <Col className="bg-white p-4 border-radius-bottom">
                                                 <Col className="th project-name">{projectInfo.nameProject} {projectInfo.location}</Col>
                                                 <Col className="th">หมายเลขการจอง : {booking.booking_id}</Col>

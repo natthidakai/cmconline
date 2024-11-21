@@ -19,38 +19,31 @@ const Payment = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         if (!file) {
             alert("กรุณาอัพโหลดไฟล์หลักฐานการชำระเงิน");
             return;
         }
-    
+
         if (!bookingID || !projectID || !unitNumber) {
             alert("ข้อมูลไม่ครบถ้วน กรุณาตรวจสอบ");
             console.error("Missing data:", { bookingID, projectID, unitNumber });
             return;
         }
-    
+
         const url = `/api/notify?bookingID=${bookingID}&projectID=${projectID}&unitNumber=${unitNumber}`;
-    
+
         const formData = new FormData();
-        formData.append("imageFile", file);  // ตรวจสอบว่าไฟล์ถูกส่งไปใน FormData
-    
-        console.log("Data being sent:");
-        console.log("API URL:", url);
-        console.log("bookingID:", bookingID);
-        console.log("projectID:", projectID);
-        console.log("unitNumber:", unitNumber);
-        console.log("File:", file);
-    
+        formData.append("imageFile", file); // Key ต้องตรงกับที่เซิร์ฟเวอร์ใช้
+
         setIsLoading(true);
-    
+
         try {
             const response = await fetch(url, {
                 method: "POST",
                 body: formData,  // ส่งฟอร์มไปยัง API
             });
-    
+
             if (!response.ok) {
                 const errorMessage = await response.text();
                 console.error("Server Error:", errorMessage);
@@ -58,8 +51,9 @@ const Payment = () => {
                 setIsLoading(false);
                 return;
             }
-    
-            alert("อัพโหลดข้อมูลสำเร็จ");
+
+            alert("แจ้งชำระเงินเรียบร้อย กรุณารอสถานะการจองอัพเดท");
+            router.push("/mybooking");
         } catch (error) {
             console.error("Error:", error);
             alert("เกิดข้อผิดพลาดในการส่งข้อมูล");
@@ -67,8 +61,8 @@ const Payment = () => {
             setIsLoading(false);
         }
     };
-    
-    
+
+
     const project = ProjectInfo.find((s) => s.id === projectID);
 
     return (

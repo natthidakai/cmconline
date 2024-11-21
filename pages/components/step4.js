@@ -83,7 +83,7 @@ const Step4 = () => {
                     <Col className='justify-content-center'>
                         <Button
                             className="btn-xl th"
-                            href={projectPayment.line}
+                            href={`/mybooking`}
                             target='_blank'
                             rel="noopener noreferrer" // Optional: for security reasons
                         >

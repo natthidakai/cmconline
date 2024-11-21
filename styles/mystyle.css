@@ -68,12 +68,16 @@ body {
 }
 
 a {
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 a:hover,
 a:active {
     color: #034078 !important;
+}
+
+.btn-xl:hover {
+    color: #fff!important;
 }
 
 .menu-shadows {
@@ -293,6 +297,7 @@ a.btn-xl.th.btn.btn-primary:hover {
 
 .awaiting-payment,
 .cancel-reservation,
+.check-booking,
 .reservation-successful {
     padding: .4rem 1rem;
     width: 100%;
@@ -307,15 +312,19 @@ a.btn-xl.th.btn.btn-primary:hover {
 }
 
 .awaiting-payment {
-    background-color: #ee6338;
+    background-color: #fe7f2d;
 }
 
 .cancel-reservation {
     background-color: #ec2e2e;
 }
 
+.check-booking {
+    background-color: #84a98c;
+}
+
 .reservation-successful {
-    background-color: #35582d;
+    background-color: #2d6a4f;
 }
 
 .img-full {
@@ -641,6 +650,7 @@ select,
 
 .offcanvas-body {
     justify-content: flex-end;
+    padding: 0 !important;
 }
 
 
@@ -1050,6 +1060,11 @@ select,
     font-style: italic;
 }
 
+/* .navbar-nav {
+    padding-top: 30px;
+    padding-left: 30px !important;
+} */
+
 /* Mobile น้อย */
 @media (max-width: 575.98px) {
 
@@ -1057,6 +1072,11 @@ select,
         width: 12px;
         height: 12px;
         border: 2px solid #fff;
+    }
+
+    .box-login-menu {
+        width: 63%;
+        margin-left: 20px;
     }
 
     .CT-E18P-101 {
@@ -1417,6 +1437,11 @@ select,
 
 /* Mobile ปกติ*/
 @media (min-width: 576px) and (max-width: 767.98px) {
+
+    .box-login-menu {
+        width: 80%;
+        margin-left: 20px;
+    }
 
     .box-booking {
         width: 13px;
@@ -1783,6 +1808,7 @@ select,
 @media (max-width: 767.98px) {
     .justify-content-center-m {
         justify-content: center;
+        display: flex;
     }
 
     .box-facility {
@@ -1829,9 +1855,9 @@ select,
         bottom: 50px;
     }
 
-    .box-login-menu {
+    /* .box-login-menu {
         width: 80%;
-    }
+    } */
 
     .dropdown-menu.show,
     .box-profile-menu {
@@ -1842,14 +1868,19 @@ select,
 
 @media (max-width: 991.98px) {
 
-    .offcanvas-body {
-        padding: 20px 0;
+    .navbar-nav {
+        padding-top: 30px;
+        padding-left: 30px !important;
     }
 
-    .box-login-menu {
-        width: 65%;
-        margin-left: 20px;
+    .navlogin {
+        padding-left: 30px;
     }
+
+    /* .box-login-menu {
+        width: 67%;
+        margin-left: 20px;
+    } */
 
     .dropdown-menu.show {
         border-radius: 0;
@@ -1860,22 +1891,23 @@ select,
 
     .dropdown-item {
         background-color: aliceblue; 
-        padding: 10px 60px;
+        padding: 10px 60px !important;
     }
 
     .dropdown-item:hover {
         background-color: #034078;
         color: #fff !important;
     }
-
-    .nav-link {
-        padding: 10px 30px;
-    }
 }
 
 
 /* Table น้อย*/
 @media (min-width: 768px) and (max-width: 991.98px) {
+
+    .box-login-menu {
+        width: 65%;
+        margin-left: 20px;
+    }
 
     .box-booking {
         width: 18px;

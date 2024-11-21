@@ -89,7 +89,7 @@ const Menubar = () => {
                                                         <span className="ms-2">ข้อมูลของฉัน</span>
                                                     </span>
                                                 } 
-                                                id="basic-nav-dropdown" className="th font-18"
+                                                id="basic-nav-dropdown" className="th font-18 navlogin"
                                             >
                                                 <NavDropdown.Item as={Link} href={`/profile`} onClick={handleLinkClick}>
                                                     ข้อมูลส่วนตัว
